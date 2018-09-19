@@ -6,5 +6,6 @@ package com.zalinius.architecture.input;
  */
 public interface Inputtable {
 	public int keyCode();
-	public void action();
+	public void pressed();
+	public void released();
 }

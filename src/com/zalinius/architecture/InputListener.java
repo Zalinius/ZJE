@@ -33,8 +33,14 @@ public class InputListener extends KeyAdapter {
 
 	private void keyPressSwitchBoard(int keyCode, boolean press){
 		if(inputs.containsKey(keyCode)) {
-			Inputtable input = inputs.get(keyCode);
-			input.action();
+			if(press) {
+				Inputtable input = inputs.get(keyCode);
+				input.pressed();
+			}
+			else {
+				Inputtable input = inputs.get(keyCode);
+				input.released();
+			}
 		}
 	}
 
