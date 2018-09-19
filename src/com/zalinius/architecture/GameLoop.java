@@ -1,7 +1,5 @@
 package com.zalinius.architecture;
 
-import com.zalinius.utilities.Debug;
-
 public class GameLoop {
     final int TARGET_FPS = 60;
     final long NS_IN_S = 1000000000;
@@ -71,7 +69,6 @@ public class GameLoop {
     	long secondIndex = totalTime/NS_IN_S ;
     	long lastSecondIndex = (totalTime-lastFrameLength)/NS_IN_S;
     	if(lastSecondIndex < secondIndex) {
-    		Debug.log("Framerate: " + framesInLastSecond);
     		stage.setFPS(framesInLastSecond);
     		framesInLastSecond = 0;
     	}

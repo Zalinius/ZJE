@@ -4,11 +4,8 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Collection;
-import java.awt.font.*;
-import javax.swing.*;
 
 import com.zalinius.architecture.input.Inputtable;
-import com.zalinius.utilities.Debug;
 
 public class GameStage extends DoubleBufferedFrame{
 	private static final long serialVersionUID = 1L;
@@ -49,7 +46,6 @@ public class GameStage extends DoubleBufferedFrame{
     	g.setColor(Color.red);
     	g.setFont(new Font("SansSerif", Font.BOLD, 20));
     	g.drawString(Integer.toString((int)currentFPS), 10, 50);
-    	//Debug.log("Meow");
     }
 
     public void addKeys(Collection<Inputtable> keys){
