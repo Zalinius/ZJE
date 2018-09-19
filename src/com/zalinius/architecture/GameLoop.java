@@ -1,12 +1,20 @@
 package com.zalinius.architecture;
 
+import com.zalinius.utilities.Debug;
+
 public class GameLoop {
     final int TARGET_FPS = 60;
+    final long NS_IN_S = 1000000000;
+    
+    long totalTime;
+    int framesInLastSecond;
 
     GameStage stage;
     ILogical logic;
 
     public GameLoop(GameStage stage, ILogical logic){
+    	totalTime = 0;
+    	framesInLastSecond = 0;
         this.stage = stage;
         this.logic = logic;
     }
@@ -20,7 +28,7 @@ public class GameLoop {
         long lastLoopTime = System.nanoTime();
         final long OPTIMAL_TIME = 1000000000 / TARGET_FPS; //1 Second / 60 fps
 
-        // keep looping round til the gameContainer ends
+        // keep looping round till the gameContainer ends
         boolean gameRunning = true;
         while (gameRunning)
         {
@@ -29,6 +37,9 @@ public class GameLoop {
             // move this loop
             long now = System.nanoTime();
             long updateLength = now - lastLoopTime;
+            totalTime += updateLength;
+            ++framesInLastSecond;
+            checkFramerate(updateLength);
             lastLoopTime = now;
             double delta = updateLength / 1E9;
 
@@ -56,7 +67,17 @@ public class GameLoop {
         }
     }
 
-    /**
+    private void checkFramerate(long lastFrameLength) {
+    	long secondIndex = totalTime/NS_IN_S ;
+    	long lastSecondIndex = (totalTime-lastFrameLength)/NS_IN_S;
+    	if(lastSecondIndex < secondIndex) {
+    		Debug.log("Framerate: " + framesInLastSecond);
+    		stage.setFPS(framesInLastSecond);
+    		framesInLastSecond = 0;
+    	}
+	}
+
+	/**
      * Updates the gameContainer logic
      * @param delta The ratio of the last frame time, with respect to a perfect 60 FPS
      */

@@ -4,8 +4,11 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Collection;
+import java.awt.font.*;
+import javax.swing.*;
 
 import com.zalinius.architecture.input.Inputtable;
+import com.zalinius.utilities.Debug;
 
 public class GameStage extends DoubleBufferedFrame{
 	private static final long serialVersionUID = 1L;
@@ -13,6 +16,7 @@ public class GameStage extends DoubleBufferedFrame{
 	public static final int GAME_WIDTH = 1366, GAME_HEIGHT = 768; //TODO make this changeable
 	
 	private IGraphical graphics;
+	private double currentFPS;
 
     public GameStage(IGraphical graphics) {
         this(graphics, "Game!", GAME_WIDTH, GAME_HEIGHT, Color.black);
@@ -42,11 +46,19 @@ public class GameStage extends DoubleBufferedFrame{
     
     public void paintBuffer(Graphics2D g){
     	graphics.render(g);
+    	g.setColor(Color.red);
+    	g.setFont(new Font("SansSerif", Font.BOLD, 20));
+    	g.drawString(Integer.toString((int)currentFPS), 10, 50);
+    	//Debug.log("Meow");
     }
 
     public void addKeys(Collection<Inputtable> keys){
     	
         addKeyListener(new InputListener(keys));
+    }
+    
+    public void setFPS(double fps) {
+    	currentFPS = fps;
     }
     
     private WindowAdapter defaultCloseAction() {
