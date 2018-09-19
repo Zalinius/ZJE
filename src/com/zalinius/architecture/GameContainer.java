@@ -1,17 +1,25 @@
 package com.zalinius.architecture;
 
 import java.awt.event.WindowAdapter;
+import java.util.Collection;
+
+import com.zalinius.architecture.input.Inputtable;
 
 public class GameContainer {
 	private GameLoop loop;
-	
+	private GameStage stage;
 
 	public GameContainer(IGraphical graphics, ILogical logic) {
-		loop = new GameLoop(new GameStage(graphics), logic);
+		stage = new GameStage(graphics);
+		loop = new GameLoop(stage, logic);
 	}
 	
 	public GameContainer(IGraphical graphics, ILogical logic, WindowAdapter exitAction ) {
 		loop = new GameLoop(new GameStage(graphics), logic);
+	}
+	
+	public void addControls(Collection<Inputtable> controls) {
+		stage.addKeys(controls);
 	}
 	
 	public void startGame() {

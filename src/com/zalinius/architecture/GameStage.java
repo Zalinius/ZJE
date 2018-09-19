@@ -3,6 +3,9 @@ package com.zalinius.architecture;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Collection;
+
+import com.zalinius.architecture.input.Inputtable;
 
 public class GameStage extends DoubleBufferedFrame{
 	private static final long serialVersionUID = 1L;
@@ -41,15 +44,9 @@ public class GameStage extends DoubleBufferedFrame{
     	graphics.render(g);
     }
 
-    public void addKeys(){
-        addKeyListener(new InputListener());
-        addWindowListener(new WindowAdapter() {
-                              public void windowClosing(WindowEvent e) {
-                                  dispose();
-                                  System.exit(0);
-                              }
-                          }
-        );
+    public void addKeys(Collection<Inputtable> keys){
+    	
+        addKeyListener(new InputListener(keys));
     }
     
     private WindowAdapter defaultCloseAction() {
