@@ -43,12 +43,24 @@ public class GameStage extends DoubleBufferedFrame{
     
     public void paintBuffer(Graphics2D g){
     	graphics.render(g);
-    	g.setColor(Color.red);
+    	g.setColor(fpsColor());
     	g.setFont(new Font("SansSerif", Font.BOLD, 20));
     	g.drawString(Integer.toString((int)currentFPS), 10, 50);
     }
 
-    public void addKeys(Collection<Inputtable> keys){
+    private Color fpsColor() {
+		if(currentFPS >= 50) {
+			return Color.GREEN;
+		}
+		else if(currentFPS >= 30) {
+			return Color.YELLOW;
+		}else
+		{
+			return Color.RED;
+		}
+	}
+
+	public void addKeys(Collection<Inputtable> keys){
     	
         addKeyListener(new InputListener(keys));
     }
