@@ -76,7 +76,11 @@ public class Collision {
 						   ZMath.isBetween(s2.start().y(), s2.end().y(), s1.end().y());
 				}
 				else {
-					throw new RuntimeException("Sorry Numa, still working on it");
+					if(l1.isVertical()) {
+						return l1.b == xIntercept;
+					}else {
+						return l2.b == xIntercept;
+					}
 				}
 			}
 			else {

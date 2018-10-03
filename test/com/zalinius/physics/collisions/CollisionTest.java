@@ -1,6 +1,7 @@
 package com.zalinius.physics.collisions;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static com.zalinius.physics.collisions.Collision.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +19,26 @@ public class CollisionTest {
 		boolean areOverlapping = Collision.isOverlapping(c1, c2);
 		
 		assertFalse(areOverlapping);
+	}
+	
+	@Test
+	void isOverlapping_twoConcentricIdenticalCircles_true() {
+		Circle c1 = new Circle(new Point2D(), 1);
+		Circle c2 = new Circle(new Point2D(), 1);
+
+		boolean isOverlapping = isOverlapping(c1, c2);
+		
+		assertTrue(isOverlapping);
+	}
+	
+	@Test
+	void isOverlapping_twoConcentricDifferentCircles_true() {
+		Circle c1 = new Circle(new Point2D(), 3);
+		Circle c2 = new Circle(new Point2D(), 2);
+
+		boolean isOverlapping = isOverlapping(c1, c2);
+		
+		assertTrue(isOverlapping);
 	}
 	
 	@Test
