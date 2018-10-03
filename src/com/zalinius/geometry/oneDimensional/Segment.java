@@ -1,9 +1,10 @@
 package com.zalinius.geometry.oneDimensional;
 
+import com.zalinius.geometry.Shape;
 import com.zalinius.physics.Point2D;
 import com.zalinius.utilities.Linear;
 
-public class Segment {
+public class Segment extends Shape{
 	private Point2D start, end;
 
 	public Segment(Point2D start, Point2D end) {
@@ -37,7 +38,22 @@ public class Segment {
 			return new Linear(a, b);
 		}
 	}
+
+	@Override
+	public Point2D center() {
+		return new Point2D((start.x() + end.x()) / 2, (start.y() + end.y())/2);
+	}
+
+	@Override
+	public boolean contains(Point2D p) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "[" + start + " => " + end + "]";
+	}
 	
-	
-	
+		
 }

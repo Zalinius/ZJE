@@ -35,5 +35,12 @@ public class Point2D {
 		
 		return Math.sqrt(x*x + y*y);
 	}
+
+	@Override
+	public String toString() {
+		return "(" + x + ", " + y + ")";
+	}
+	
+	
 	
 }

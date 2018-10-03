@@ -19,6 +19,18 @@ public class ZMath {
     		return false;
     	}
     	else if(right < left) {
+    		return x <= left && x >= right;
+    	}
+    	else {
+    		return x >= left && x <= right;
+    	}
+    }
+    
+    public static boolean isStrictlyBetween(double left, double right, double x) {
+    	if(left == right) {
+    		return false;
+    	}
+    	else if(right < left) {
     		return x < left && x > right;
     	}
     	else {

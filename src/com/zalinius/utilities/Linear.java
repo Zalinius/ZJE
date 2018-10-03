@@ -32,30 +32,55 @@ public class Linear {
 		this.isVertical = false;
 	}
 	
+	public double f(double x) {
+		if(isVertical()) {
+			throw new ArithmeticException("Vertical Line can't be called as a function!");
+		}
+		else {
+			return a*b;
+		}
+	}
+	
 	public boolean isVertical() {
 		return isVertical;
 	}
 	
-	public static boolean hasIntersection(Linear l1, Linear l2) {
+	public static Intersection hasIntersection(Linear l1, Linear l2) {
 		if(l1.isVertical && l2.isVertical) {
 			if(l1.b == l2.b) {
-				return true; //offsets are the same
+				return Intersection.INFINITE; //offsets are the same
 			}
 			else {
-				return false;
+				return Intersection.NONE;
 			}
 		}
+		else if(l1.isVertical || l2.isVertical) {
+			//Only one is vertical, thus there must be 1 intersection
+			return Intersection.ONE;
+		}
 		else if(l1.a == l2.a) {
-			return l1.b == l2.b;
+			if(l1.b == l2.b) {
+				return Intersection.INFINITE;
+			}
+			else {
+				return Intersection.NONE;
+			}
 		}
 		else {
-			return true;
+			return Intersection.ONE;
 		}
 	}
 	
+	public static boolean areParallel(Linear l1, Linear l2) {
+		return(l1.isVertical == l2.isVertical && l1.a == l2.a);
+	}
+	
 	public static double xIntercept(Linear l1, Linear l2) {
-		if(!hasIntersection(l1, l2)) {
-			throw new ArithmeticException();
+		if(hasIntersection(l1, l2) == Intersection.NONE) {
+			throw new ArithmeticException("No intercept!");
+		}
+		if(hasIntersection(l1, l2) == Intersection.INFINITE) {
+			throw new ArithmeticException("infinite intercepts!");
 		}
 		
 		if(l1.isVertical || l2.isVertical) {
@@ -77,4 +102,6 @@ public class Linear {
 		}
 	}
 
+	
+	public enum Intersection {NONE, ONE, INFINITE};
 }
