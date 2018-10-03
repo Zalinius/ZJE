@@ -74,8 +74,9 @@ public class Rectangle extends Shape{
 
 		@Override
 		public Segment next() {
+			int switchIndex = i;
 			++i;
-			switch(i) {
+			switch(switchIndex) {
 			case 0:
 				return new Segment(topLeft(), topRight());
 			case 1:
@@ -85,7 +86,7 @@ public class Rectangle extends Shape{
 			case 3:
 				return new Segment(botLeft(), topLeft());
 			default:
-				throw new IndexOutOfBoundsException();
+				throw new IndexOutOfBoundsException(": " + i);
 			}
 			
 		}
