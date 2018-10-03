@@ -13,4 +13,8 @@ public class ZMath {
 
         return clampedValue;
     }
+    
+    public static boolean isBetween(double left, double right, double x) {
+    	return x > left && x < right;
+    }
 }

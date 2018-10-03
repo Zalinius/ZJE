@@ -5,10 +5,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
+import com.zalinius.geometry.Rectangle;
+import com.zalinius.geometry.Shape;
 import com.zalinius.physics.collisions.Collision;
-
-import java.awt.geom.*;
-import java.awt.*;
 
 public class Vector2DTest {
 	@Test
@@ -22,9 +21,36 @@ public class Vector2DTest {
 	}
 	
 	@Test
+	void angle_upVector_90Degrees() {
+		Vector2D v = new Vector2D(0, 1);
+		
+		double angle = v.angle();
+		
+		assertEquals(90.0, angle);
+	}
+
+	@Test
+	void angle_upRightVector_45Degrees() {
+		Vector2D v = new Vector2D(1, 1);
+		
+		double angle = v.angle();
+		
+		assertEquals(45.0, angle);
+	}
+	
+	@Test
+	void angle_upLeftVector_135Degrees() {
+		Vector2D v = new Vector2D(-1, 1);
+		
+		double angle = v.angle();
+		
+		assertEquals(135.0, angle);
+	}
+	
+	@Test
 	public void meow() { //Checking
-		Shape s1 = new Rectangle2D.Double();
-		Shape s2 = new Rectangle2D.Double();
+		Shape s1 = new Rectangle(1, 1);
+		Shape s2 = new Rectangle(1, 1);
 		
 		assertThrows(RuntimeException.class, new Executable() {			
 			@Override

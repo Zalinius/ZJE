@@ -1,9 +1,8 @@
 package com.zalinius.physics.collisions;
 
-import java.awt.Shape;
-
 import com.zalinius.geometry.Circle;
-import com.zalinius.physics.Vector2D;
+import com.zalinius.geometry.Shape;
+import com.zalinius.physics.Point2D;
 
 public class Collision {
 
@@ -18,7 +17,7 @@ public class Collision {
 	}
 	
 	private static boolean isOverlapping(Circle c1, Circle c2) {
-		double distance = Vector2D.distance(c1.center(), c2.center());
+		double distance = Point2D.distance(c1.center(), c2.center());
 		double radii = c1.radius() + c2.radius();
 		
 		return distance < radii;
