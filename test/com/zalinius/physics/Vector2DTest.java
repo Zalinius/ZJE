@@ -3,11 +3,6 @@ package com.zalinius.physics;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
-
-import com.zalinius.geometry.Rectangle;
-import com.zalinius.geometry.Shape;
-import com.zalinius.physics.collisions.Collision;
 
 public class Vector2DTest {
 	@Test
@@ -47,16 +42,4 @@ public class Vector2DTest {
 		assertEquals(135.0, angle);
 	}
 	
-	@Test
-	public void meow() { //Checking
-		Shape s1 = new Rectangle(1, 1);
-		Shape s2 = new Rectangle(1, 1);
-		
-		assertThrows(RuntimeException.class, new Executable() {			
-			@Override
-			public void execute() throws Throwable {
-				Collision.isOverlapping(s1, s2);
-			}
-		});
-	}
 }

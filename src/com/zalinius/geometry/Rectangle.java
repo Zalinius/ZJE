@@ -1,5 +1,8 @@
 package com.zalinius.geometry;
 
+import java.util.Iterator;
+
+import com.zalinius.geometry.oneDimensional.Segment;
 import com.zalinius.physics.Point2D;
 import com.zalinius.physics.Vector2D;
 import com.zalinius.utilities.ZMath;
@@ -34,5 +37,58 @@ public class Rectangle extends Shape{
 	public boolean contains(Point2D p) {
 		return ZMath.isBetween(position.x(), position.x() + width, p.x())
 			&& ZMath.isBetween(position.y(), position.y() + width, p.y());
+	}
+	
+	public Iterable<Segment> edges(){
+		return new Iterable<Segment>() {			
+			@Override
+			public Iterator<Segment> iterator() {
+				return new SegmentIterator();
+			}
+		};
+		
+	}
+	
+	public Point2D topLeft() {
+		return position;
+	}
+	
+	public Point2D topRight() {
+		return new Point2D(position.x() + width, position.y() );
+	}
+	
+	public Point2D botLeft() {
+		return new Point2D(position.x(), position.y() + height);
+	}
+	public Point2D botRight() {
+		return new Point2D(position.x() + width, position.y() + height);
+	}
+	
+	private class SegmentIterator implements Iterator<Segment>{
+
+		int i = 0;
+		@Override
+		public boolean hasNext() {
+			return i < 4;
+		}
+
+		@Override
+		public Segment next() {
+			++i;
+			switch(i) {
+			case 0:
+				return new Segment(topLeft(), topRight());
+			case 1:
+				return new Segment(topRight(), botRight());
+			case 2:
+				return new Segment(botRight(), botLeft());
+			case 3:
+				return new Segment(botLeft(), topLeft());
+			default:
+				throw new IndexOutOfBoundsException();
+			}
+			
+		}
+		
 	}
 }

@@ -15,6 +15,14 @@ public class ZMath {
     }
     
     public static boolean isBetween(double left, double right, double x) {
-    	return x > left && x < right;
+    	if(left == right) {
+    		return false;
+    	}
+    	else if(right < left) {
+    		return x < left && x > right;
+    	}
+    	else {
+    		return x > left && x < right;
+    	}
     }
 }
