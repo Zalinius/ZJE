@@ -71,9 +71,19 @@ public class CollisionTest {
 	}
 	
 	@Test
-	void isOverlapping_alignedDistantSquares_false() {
+	void isOverlapping_horizontallyAlignedDistantSquares_false() {
 		Square s1 = new Square(new Point2D(), 1);
 		Square s2 = new Square(new Point2D(10, 0), 1);
+
+		boolean areOverlapping = Collision.isOverlapping(s1, s2);		
+		
+		assertFalse(areOverlapping);
+	}
+	
+	@Test
+	void isOverlapping_verticallyAlignedDistantSquares_false() {
+		Square s1 = new Square(new Point2D(), 1);
+		Square s2 = new Square(new Point2D(0, 10), 1);
 
 		boolean areOverlapping = Collision.isOverlapping(s1, s2);		
 		
@@ -253,6 +263,16 @@ public class CollisionTest {
 	
 	@Test
 	void isOverlapping_twoMoreKindaRandomPerpendicularLines_false() {
+		Segment s1 = new Segment(new Point2D(0, 0), new Point2D(1, 0));
+		Segment s2 = new Segment(new Point2D(0, 1.6), new Point2D(0, 0.6));
+		
+		boolean result = isOverlapping(s1, s2);
+		
+		assertFalse(result);
+	}
+	
+	@Test
+	void isOverlapping_twoMoreMoreKindaRandomPerpendicularLines_false() {
 		Segment s1 = new Segment(new Point2D(0, 0), new Point2D(1, 0));
 		Segment s2 = new Segment(new Point2D(0, 1.6), new Point2D(0, 0.6));
 		

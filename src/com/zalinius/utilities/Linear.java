@@ -37,7 +37,7 @@ public class Linear {
 			throw new ArithmeticException("Vertical Line can't be called as a function!");
 		}
 		else {
-			return a*b;
+			return a*x +b;
 		}
 	}
 	

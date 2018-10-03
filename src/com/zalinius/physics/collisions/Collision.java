@@ -66,7 +66,7 @@ public class Collision {
 		for (Tuple<Segment> edges : edgePairs) {
 			if(isOverlapping(edges.first(), edges.second())) {
 				System.err.println("True " + edges.first() + " : " + edges.second());
-				System.err.println(isOverlapping(edges.first(), edges.second()));
+				System.err.println(Linear.hasIntersection(edges.first().getFunction(), edges.second().getFunction()));
 				return true;
 			}
 		}
@@ -89,6 +89,7 @@ public class Collision {
 				}
 				else {
 					if(l1.isVertical()) {
+						System.err.println(l2.f(xIntercept));
 						return ZMath.isBetween(s2.start().x(), s2.end().x(), xIntercept) && ZMath.isBetween(s1.start().y(), s1.end().y(), l2.f(xIntercept));
 					}else {
 						return ZMath.isBetween(s1.start().x(), s1.end().x(), xIntercept) && ZMath.isBetween(s2.start().y(), s2.end().y(), l1.f(xIntercept));
