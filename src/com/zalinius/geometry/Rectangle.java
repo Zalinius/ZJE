@@ -40,7 +40,7 @@ public class Rectangle extends Shape{
 	@Override
 	public boolean contains(Point2D p) {
 		return ZMath.isBetween(position.x(), position.x() + width, p.x())
-			&& ZMath.isBetween(position.y(), position.y() + width, p.y());
+			&& ZMath.isBetween(position.y(), position.y() + height, p.y());
 	}
 	
 	public Iterable<Segment> edges(){

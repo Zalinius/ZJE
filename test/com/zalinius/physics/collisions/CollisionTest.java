@@ -6,6 +6,7 @@ import static com.zalinius.physics.collisions.Collision.*;
 import org.junit.jupiter.api.Test;
 
 import com.zalinius.geometry.Circle;
+import com.zalinius.geometry.Rectangle;
 import com.zalinius.geometry.Square;
 import com.zalinius.geometry.oneDimensional.Segment;
 import com.zalinius.physics.Point2D;
@@ -277,6 +278,16 @@ public class CollisionTest {
 		Segment s2 = new Segment(new Point2D(0, 1.6), new Point2D(0, 0.6));
 		
 		boolean result = isOverlapping(s1, s2);
+		
+		assertFalse(result);
+	}
+	
+	@Test //This is a weird one numa found, where one of the boxes it quite thin
+	void isOverlapping_twoRectanglesAtACertainDistance_false(){
+		Rectangle platform = new Rectangle(new Point2D(300, 250), 100, 10);
+		Rectangle player   = new Rectangle(new Point2D(300, 300), 100, 100);
+		
+		boolean result = isOverlapping(platform, player);
 		
 		assertFalse(result);
 	}
