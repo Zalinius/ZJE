@@ -103,5 +103,5 @@ public class Linear {
 	}
 
 	
-	public enum Intersection {NONE, ONE, INFINITE};
+	public enum Intersection {NONE, ONE, INFINITE}
 }

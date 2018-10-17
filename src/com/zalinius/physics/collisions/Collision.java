@@ -7,11 +7,9 @@ import com.zalinius.architecture.ICollidable;
 import com.zalinius.geometry.*;
 import com.zalinius.geometry.oneDimensional.Segment;
 import com.zalinius.physics.Point2D;
-import com.zalinius.utilities.Debug;
 import com.zalinius.utilities.Linear;
 import com.zalinius.utilities.Tuple;
 import com.zalinius.utilities.ZMath;
-import com.zalinius.utilities.Linear.Intersection;
 
 public class Collision {
 
@@ -51,7 +49,6 @@ public class Collision {
 
 	private static boolean isOverlapping(Rectangle r1, Rectangle r2) {
 		if (r1.contains(r2.center()) || r2.contains(r1.center())) {
-			System.err.println("True");
 			return true;
 		}
 		
@@ -65,8 +62,6 @@ public class Collision {
 		
 		for (Tuple<Segment> edges : edgePairs) {
 			if(isOverlapping(edges.first(), edges.second())) {
-				System.err.println("True " + edges.first() + " : " + edges.second());
-				System.err.println(Linear.hasIntersection(edges.first().getFunction(), edges.second().getFunction()));
 				return true;
 			}
 		}
@@ -89,7 +84,6 @@ public class Collision {
 				}
 				else {
 					if(l1.isVertical()) {
-						System.err.println(l2.f(xIntercept));
 						return ZMath.isBetween(s2.start().x(), s2.end().x(), xIntercept) && ZMath.isBetween(s1.start().y(), s1.end().y(), l2.f(xIntercept));
 					}else {
 						return ZMath.isBetween(s1.start().x(), s1.end().x(), xIntercept) && ZMath.isBetween(s2.start().y(), s2.end().y(), l1.f(xIntercept));

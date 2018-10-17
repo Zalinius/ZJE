@@ -1,5 +1,7 @@
 package com.zalinius.architecture;
 
+import java.util.Currency;
+
 public class GameLoop {
     final int TARGET_FPS = 60;
     final long NS_IN_S = 1000000000;
@@ -56,7 +58,12 @@ public class GameLoop {
             // us our final value to wait for
             // remember this is in ms, whereas our lastLoopTime etc. vars are in ns.
             try{
-                Thread.sleep( (lastLoopTime-System.nanoTime() + OPTIMAL_TIME)/1000000 );
+            	long current = System.nanoTime();
+            	long sleepTime = (lastLoopTime-current + OPTIMAL_TIME)/1000000;
+            	if(sleepTime < 0) {
+            		sleepTime = 0;
+            	}
+                Thread.sleep(sleepTime);
             }
             catch (IllegalArgumentException | InterruptedException e){
                 e.printStackTrace();
