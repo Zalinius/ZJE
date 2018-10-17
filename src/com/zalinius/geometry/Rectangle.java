@@ -20,6 +20,10 @@ public class Rectangle extends Shape{
 		this.width = width;
 		this.height = height;
 	}
+	
+	public void moveTo(Point2D newPosition) {
+		position = newPosition;
+	}
 
 	public double diagonal() {
 		return Math.sqrt(width*width + height*height);
