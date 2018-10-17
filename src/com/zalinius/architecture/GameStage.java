@@ -3,7 +3,6 @@ package com.zalinius.architecture;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.geom.AffineTransform;
 import java.util.Collection;
 
 import com.zalinius.architecture.input.Inputtable;

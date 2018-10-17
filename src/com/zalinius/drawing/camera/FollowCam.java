@@ -2,10 +2,8 @@ package com.zalinius.drawing.camera;
 
 import java.awt.geom.AffineTransform;
 
-import com.zalinius.architecture.GameContainer;
 import com.zalinius.architecture.GameStage;
 import com.zalinius.architecture.Locatable;
-import com.zalinius.physics.Point2D;
 
 public class FollowCam implements Camerable{
 

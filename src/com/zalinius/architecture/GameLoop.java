@@ -1,7 +1,5 @@
 package com.zalinius.architecture;
 
-import java.util.Currency;
-
 public class GameLoop {
     final int TARGET_FPS = 60;
     final long NS_IN_S = 1000000000;
