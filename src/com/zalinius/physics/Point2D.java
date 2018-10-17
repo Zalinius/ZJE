@@ -17,6 +17,11 @@ public class Point2D {
 		return x;
 	}
 	
+	public void add(double dX, double dY) {
+		x += dX;
+		y += dY;
+	}
+	
 	public double y() {
 		return y;
 	}
