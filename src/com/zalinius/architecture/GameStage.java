@@ -3,6 +3,7 @@ package com.zalinius.architecture;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.geom.AffineTransform;
 import java.util.Collection;
 
 import com.zalinius.architecture.input.Inputtable;
@@ -13,6 +14,7 @@ public class GameStage extends DoubleBufferedFrame{
 	public static final int GAME_WIDTH = 1366, GAME_HEIGHT = 768; //TODO make this changeable
 	
 	private IGraphical graphics;
+	private 
 	private double currentFPS;
 	private static InputListener input;
 
@@ -43,6 +45,8 @@ public class GameStage extends DoubleBufferedFrame{
     }
     
     public void paintBuffer(Graphics2D g){
+    	AffineTransform trans = new AffineTransform();
+    	g.setTransform(trans);
     	graphics.render(g);
     	g.setColor(fpsColor());
     	g.setFont(new Font("SansSerif", Font.BOLD, 20));
