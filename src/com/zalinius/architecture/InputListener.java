@@ -9,15 +9,20 @@ import java.util.HashMap;
 public class InputListener extends KeyAdapter {
 
 	HashMap<Integer, Inputtable> inputs;
+	HashMap<Integer, Boolean> states; //pressed or not
 
 
 	public InputListener(){
 		this.inputs = new HashMap<>();
+		this.states = new HashMap<>();
 	}
 
 	public InputListener(Collection<Inputtable> inputs) {
 		this.inputs = new HashMap<>();
 		inputs.forEach(input -> this.inputs.put(input.keyCode(), input));
+
+		this.states = new HashMap<>();
+		inputs.forEach(input -> this.states.put(input.keyCode(), false));
 	}
 
 	@Override
@@ -34,12 +39,16 @@ public class InputListener extends KeyAdapter {
 	private void keyPressSwitchBoard(int keyCode, boolean press){
 		if(inputs.containsKey(keyCode)) {
 			if(press) {
-				Inputtable input = inputs.get(keyCode);
-				input.pressed();
+				if(!states.get(keyCode)) {
+					Inputtable input = inputs.get(keyCode);
+					input.pressed();
+					states.put(keyCode, true);
+				}
 			}
 			else {
 				Inputtable input = inputs.get(keyCode);
 				input.released();
+				states.put(keyCode, false);
 			}
 		}
 	}
