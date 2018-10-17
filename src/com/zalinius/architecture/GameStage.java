@@ -14,6 +14,7 @@ public class GameStage extends DoubleBufferedFrame{
 	
 	private IGraphical graphics;
 	private double currentFPS;
+	private static InputListener input;
 
     public GameStage(IGraphical graphics) {
         this(graphics, "Game!", GAME_WIDTH, GAME_HEIGHT, Color.black);
@@ -61,10 +62,14 @@ public class GameStage extends DoubleBufferedFrame{
 	}
 
 	public void addKeys(Collection<Inputtable> keys){
-    	
-        addKeyListener(new InputListener(keys));
+    	input = new InputListener(keys);
+        addKeyListener(input);
     }
     
+	public static boolean isHeld(int keyCode) {
+		return input.isHeldDown(keyCode);
+	}
+	
     public void setFPS(double fps) {
     	currentFPS = fps;
     }

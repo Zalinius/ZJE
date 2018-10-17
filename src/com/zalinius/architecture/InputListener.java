@@ -1,12 +1,13 @@
 package com.zalinius.architecture;
 
+import com.zalinius.architecture.input.Holding;
 import com.zalinius.architecture.input.Inputtable;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class InputListener extends KeyAdapter {
+public class InputListener extends KeyAdapter implements Holding{
 
 	HashMap<Integer, Inputtable> inputs;
 	HashMap<Integer, Boolean> states; //pressed or not
@@ -51,6 +52,11 @@ public class InputListener extends KeyAdapter {
 				states.put(keyCode, false);
 			}
 		}
+	}
+
+	@Override
+	public boolean isHeldDown(int keyCode) {
+		return states.get(keyCode);
 	}
 
 }
