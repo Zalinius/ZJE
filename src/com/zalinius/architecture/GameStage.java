@@ -6,6 +6,8 @@ import java.awt.event.WindowEvent;
 import java.util.Collection;
 
 import com.zalinius.architecture.input.Inputtable;
+import com.zalinius.drawing.camera.Camerable;
+import com.zalinius.drawing.camera.StaticCam;
 
 public class GameStage extends DoubleBufferedFrame{
 	private static final long serialVersionUID = 1L;
@@ -13,6 +15,7 @@ public class GameStage extends DoubleBufferedFrame{
 	public static final int GAME_WIDTH = 1366, GAME_HEIGHT = 768; //TODO make this changeable
 	
 	private IGraphical graphics;
+	private Camerable camera;
 	private double currentFPS;
 	private static InputListener input;
 
@@ -29,9 +32,10 @@ public class GameStage extends DoubleBufferedFrame{
         setBackground(backgroundColor);
         addWindowListener(defaultCloseAction());
         addKeyListener(new InputListener());
+        this.camera = new StaticCam();
     }
     
-    public GameStage(IGraphical graphics, String windowText, int width, int height, Color backgroundColor, WindowAdapter closeAction) {
+    public GameStage(IGraphical graphics, String windowText, int width, int height, Color backgroundColor, WindowAdapter closeAction, Camerable camera) {
     	super(windowText);
     	this.graphics = graphics;
         setResizable(false);
@@ -40,9 +44,11 @@ public class GameStage extends DoubleBufferedFrame{
         setBackground(backgroundColor);
         addWindowListener(closeAction);
         addKeyListener(new InputListener());
+        this.camera = camera;
     }
     
     public void paintBuffer(Graphics2D g){
+    	g.setTransform(camera.getTransform());
     	graphics.render(g);
     	g.setColor(fpsColor());
     	g.setFont(new Font("SansSerif", Font.BOLD, 20));
@@ -68,6 +74,10 @@ public class GameStage extends DoubleBufferedFrame{
     
 	public static boolean isHeld(int keyCode) {
 		return input.isHeldDown(keyCode);
+	}
+	
+	public void setCamera(Camerable camera) {
+		this.camera = camera;
 	}
 	
     public void setFPS(double fps) {

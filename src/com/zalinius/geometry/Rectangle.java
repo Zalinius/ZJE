@@ -71,6 +71,10 @@ public class Rectangle extends Shape{
 	private class SegmentIterator implements Iterator<Segment>{
 
 		int i = 0;
+		
+		public SegmentIterator() {
+		}
+
 		@Override
 		public boolean hasNext() {
 			return i < 4;
