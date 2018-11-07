@@ -56,7 +56,10 @@ public class GameStage extends DoubleBufferedFrame{
     	
     	g.setColor(fpsColor());
     	g.setFont(new Font("SansSerif", Font.BOLD, 20));
-    	g.drawString(Integer.toString((int)currentFPS), 10 + (float)trans.getTranslateX(), 50 + (float)trans.getTranslateY());
+    	
+    	float offSetX = (float) trans.getTranslateX();
+    	float offSetY = (float) trans.getTranslateY();
+    	g.drawString(Integer.toString((int)currentFPS), 10 - offSetX, 50 - offSetY);
     }
 
     private Color fpsColor() {

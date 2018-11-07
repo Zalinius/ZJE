@@ -1,6 +1,7 @@
 package com.zalinius.architecture;
 
 import java.awt.*;
+import java.awt.geom.*;
 
 /**
  * This class extends the standard FRAME capabilities to allow double buffering when drawing to the screen.
@@ -30,7 +31,10 @@ public abstract class DoubleBufferedFrame extends Frame {
 
         if(bufferGraphics != null){
             //this clears the offscreen image, not the onscreen one
-            bufferGraphics.clearRect(0,0,bufferWidth,bufferHeight);
+        	AffineTransform trans = bufferGraphics.getTransform();
+        	int offSetX = (int) trans.getTranslateX();
+        	int offSetY = (int) trans.getTranslateY();
+            bufferGraphics.clearRect(-offSetX , -offSetY,bufferWidth,bufferHeight);
 
             //calls the paintbuffer method with
             //the offscreen graphics as a param
