@@ -15,7 +15,11 @@ public class GameClock{
 			throw new NullPointerException();
 		}
 		
-		timers.put(owner, new Timer(time));
+		timers.put(owner, new PassiveTimer(time));
+	}
+	
+	public static void addActionTimer(Runnable action, double time) {
+		timers.put(action, new ActionTimer(action, time));
 	}
 	
 	public static boolean isTimerDone(Object owner) {
