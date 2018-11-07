@@ -1,5 +1,7 @@
 package com.zalinius.architecture;
 
+import com.zalinius.utilities.time.GameClock;
+
 public class GameLoop {
     final int TARGET_FPS = 60;
     final long NS_IN_S = 1000000000;
@@ -84,6 +86,7 @@ public class GameLoop {
      * @param delta The ratio of the last frame time, with respect to a perfect 60 FPS
      */
     public void update(double delta) {
+    	GameClock.update(delta);
     	logic.update(delta);
     }
 
