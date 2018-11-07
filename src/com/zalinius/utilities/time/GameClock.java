@@ -6,6 +6,7 @@ import java.util.Hashtable;
 public class GameClock{
 
 	private static Hashtable<Object, Timer> timers = new Hashtable<>();
+	private static double time = 0;
 	
 	public GameClock() {
 	}
@@ -48,6 +49,7 @@ public class GameClock{
 	}
 
 	public static void update(double delta) {
+		time += delta;
 		for(Enumeration<Timer> t = timers.elements(); t.hasMoreElements();) {
 			t.nextElement().update(delta);
 		}
@@ -59,6 +61,10 @@ public class GameClock{
 			timers.remove(owner);
 		}
 		
+	}
+	
+	public static double timeNow() {
+		return time;
 	}
 	
 
