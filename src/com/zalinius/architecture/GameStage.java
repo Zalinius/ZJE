@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Collection;
+import java.awt.geom.AffineTransform;
 
 import com.zalinius.architecture.input.Inputtable;
 import com.zalinius.drawing.camera.Camerable;
@@ -48,11 +49,14 @@ public class GameStage extends DoubleBufferedFrame{
     }
     
     public void paintBuffer(Graphics2D g){
-    	g.setTransform(camera.getTransform());
+    	AffineTransform trans = camera.getTransform();
+    	g.setTransform(trans);
+
     	graphics.render(g);
+    	
     	g.setColor(fpsColor());
     	g.setFont(new Font("SansSerif", Font.BOLD, 20));
-    	g.drawString(Integer.toString((int)currentFPS), 10, 50);
+    	g.drawString(Integer.toString((int)currentFPS), 10 + (float)trans.getTranslateX(), 50 + (float)trans.getTranslateY());
     }
 
     private Color fpsColor() {
