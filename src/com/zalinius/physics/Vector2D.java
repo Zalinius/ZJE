@@ -12,6 +12,11 @@ public class Vector2D {
 		this.x = x;
 		this.y = y;
 	}
+	
+	public Vector2D(Point2D start, Point2D end) {
+		y = end.y() - start.y();
+		x = end.x() - start.x();
+	}
 
 	public double length() {
 		return Math.sqrt(x*x + y*y);
