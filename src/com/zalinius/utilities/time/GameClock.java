@@ -11,16 +11,16 @@ public class GameClock{
 	public GameClock() {
 	}
 		
-	public static void addTimer(Object owner, double time) {
+	public static void addTimer(Object owner, double timerTime) {
 		if(owner == null) {
 			throw new NullPointerException();
 		}
 		
-		timers.put(owner, new PassiveTimer(time));
+		timers.put(owner, new PassiveTimer(timerTime));
 	}
 	
-	public static void addActionTimer(Runnable action, double time) {
-		timers.put(action, new ActionTimer(action, time));
+	public static void addActionTimer(Runnable action, double timerTime) {
+		timers.put(action, new ActionTimer(action, timerTime));
 	}
 	
 	public static boolean isTimerDone(Object owner) {
