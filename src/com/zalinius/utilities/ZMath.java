@@ -1,17 +1,33 @@
 package com.zalinius.utilities;
 
+import com.zalinius.physics.Point2D;
+
 public class ZMath {
 
     public static double clamp(double value, double leftBoundary, double rightBoundary){
-        assert (leftBoundary <= rightBoundary);
         double clampedValue = value;
+        double realLeftBound = leftBoundary;
+        double realRightBound = leftBoundary;
         
-        if(value < leftBoundary)
-        	clampedValue = leftBoundary;
-        else if(value > rightBoundary)
-        	clampedValue = rightBoundary;
+        if(rightBoundary < leftBoundary) {
+        	double temp = leftBoundary;
+        	realLeftBound = rightBoundary;
+        	realRightBound = temp;
+        }
+        
+        if(value < realLeftBound)
+        	clampedValue = realLeftBound;
+        else if(value > realRightBound)
+        	clampedValue = realRightBound;
 
         return clampedValue;
+    }
+    
+    public static Point2D clamp(Point2D point, Point2D leftbound, Point2D rightBound) {
+    	double clampedX = clamp(point.x(), leftbound.x(), rightBound.x());
+    	double clampedY = clamp(point.y(), leftbound.y(), rightBound.y());
+    	
+    	return new Point2D(clampedX, clampedY);
     }
     
     public static boolean isBetween(double left, double right, double x) {

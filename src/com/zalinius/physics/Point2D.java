@@ -41,6 +41,10 @@ public class Point2D {
 		return Math.sqrt(x*x + y*y);
 	}
 
+	public boolean equals(Point2D other) {
+		return x == other.x && y == other.y;
+	}
+	
 	@Override
 	public String toString() {
 		return "(" + x + ", " + y + ")";
