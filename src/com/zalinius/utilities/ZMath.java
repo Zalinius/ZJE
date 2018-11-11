@@ -24,6 +24,10 @@ public class ZMath {
         return clampedValue;
     }
     
+    public static int clamp(int value, int leftBound, int rightBound) {
+    	return (int)clamp((double)value, leftBound, rightBound);
+    }
+    
     public static Point2D clamp(Point2D point, Point2D leftbound, Point2D rightBound) {
     	double clampedX = clamp(point.x, leftbound.x, rightBound.x);
     	double clampedY = clamp(point.y, leftbound.y, rightBound.y);
