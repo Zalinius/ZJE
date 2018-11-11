@@ -38,6 +38,14 @@ public class InputListener extends KeyAdapter implements Holding, MouseListener{
 			this.mouseInputs.get(clickable.mouseButtonCode()).add(clickable);
 		}
 	}
+	
+	public void addInput(Inputtable input) {
+		keyInputs.put(input.keyCode(), input);
+	}
+	
+	public void addInput(Clickable click) {
+		mouseInputs.get(click.mouseButtonCode()).add(click);
+	}
 
 
 	private void keyPressSwitchBoard(int keyCode, boolean press){

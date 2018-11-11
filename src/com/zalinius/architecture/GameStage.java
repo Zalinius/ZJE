@@ -80,10 +80,6 @@ public class GameStage extends DoubleBufferedFrame{
         addKeyListener(input);
         addMouseListener(input);
     }
-    
-	public static boolean isHeld(int keyCode) {
-		return input.isHeldDown(keyCode);
-	}
 	
 	public void setCamera(Camerable camera) {
 		this.camera = camera;
@@ -101,4 +97,17 @@ public class GameStage extends DoubleBufferedFrame{
             }
         };
     }
+    
+    
+	public static boolean isHeld(int keyCode) {
+		return input.isHeldDown(keyCode);
+	}
+	
+
+	public static void addInput(Inputtable keyInput) {
+		input.addInput(keyInput);
+	}
+	public static void addInput(Clickable mouseInput) {
+		input.addInput(mouseInput);
+	}
 }
