@@ -1,90 +1,104 @@
 package com.zalinius.physics;
 
 public class Vector2D {
-	public double x;
-	public double y;
+	public final Point2D start;
+	public final Point2D end;
 
 	public Vector2D() {
-		this(0.0, 0.0);
+		this(new Point2D(), new Point2D());
 	}
 
 	public Vector2D(double x, double y) {
-		this.x = x;
-		this.y = y;
+		this(new Point2D(), new Point2D(x, y));
+	}
+	
+	/**
+	 * Creates a new origin-vector, ending at end.
+	 * @param end The endpoint of the vector
+	 */
+	public Vector2D(Point2D end) {
+		this(new Point2D(), end);
 	}
 	
 	public Vector2D(Point2D start, Point2D end) {
-		y = end.y() - start.y();
-		x = end.x() - start.x();
+		this.start = start;
+		this.end = end;
 	}
 
 	public double length() {
-		return Math.sqrt(x*x + y*y);
+		return Point2D.distance(start, end);
 	}
 
-	public void scale(double k) {
-		x *= k;
-		y *= k;
+	/**
+	 * Scales a vector by moving its end point, but not its start point.
+	 * @param k The scaling scalar
+	 * @return A new scaled vector
+	 */
+	public Vector2D scale(double k) {
+		Vector2D base = originVector();
+		Vector2D scaledBase = new Vector2D(base.end.x * k, base.end.y * k);
+		
+		return new Vector2D(start, new Point2D(start.x + scaledBase.end.x, start.y + scaledBase.end.y));
 	}
 
-	public double angle() {
-		double angle = 0;
-		if(x == 0) {
-			if(y == 0) {
-				throw new ArithmeticException("0 vector has no angle");
-			}
-			else if(y > 0) {
-				angle = 90;
-			}
-			else {
-				angle = 270;
-			}
-		}
-		else if(y == 0) {
-			if(x > 0) {
-				angle = 0;
-			}
-			else {
-				angle = 180;
-			}
-		}
-		else {
-			angle = Math.atan(y/x) *360 / (2*Math.PI);
-
-			if(x < 0 && y < 0) {
-				angle += 180;
-			}
-			else if(x > 0 && y < 0) {
-				angle += 360;
-			}
-			else if(x < 0 && y > 0) {
-				angle += 180;
-			}
-			else if(x > 0 && y > 0) {
-				// do nothing
-			}
-		}
-
-
-		return angle;
+	/**
+	 * @return An equivalent vector, but starting at the origin.
+	 */
+	public Vector2D originVector() {
+		return new Vector2D(end.x - start.x, end.y - start.y);
 	}
 
-	public static double distance(Vector2D v1, Vector2D v2) {
-		double y = v1.y - v2.y;
-		double x = v1.x - v2.x;
-
-		return Math.sqrt(x*x + y*y);
+	public boolean isZeroVector() {
+		return start.equals(end);
+	}
+	
+	public boolean isUnitVector() {
+		return length() == 1.0;
+	}
+	
+	public boolean isOriginVector() {
+		return start.equals(new Point2D());
 	}
 
-	public static Vector2D add(Vector2D v1, Vector2D v2) {
-		return new Vector2D(v1.x + v2.x, v1.y +v2.y);
-	}
-
-	public static Vector2D subtract(Vector2D v1, Vector2D v2) {
-		return new Vector2D(v1.x - v2.x, v1.y - v2.y);
+	/**
+	 * Adds the v2 to v1
+	 * @param v1
+	 * @param v2
+	 * @return A new vector, which starts at this vectors source
+	 */
+	public Vector2D add(Vector2D other) {
+		Vector2D change = other.originVector();
+		return new Vector2D(start, Point2D.add(end, change.end));
 	}
 
 	public static double dotProduct(Vector2D v1, Vector2D v2) {
-		return v1.x * v2.x + v1.y * v2.y;
+		Point2D p1 = v1.originVector().end;
+		Point2D p2 = v2.originVector().end;
+		
+		return(p1.x * p2.x + p1.y * p2.y);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) {
+			return false;
+		}
+		else if(getClass() != obj.getClass()) {
+			return false;
+		}
+		else {
+			Vector2D otherVector = (Vector2D) obj;
+			return start.equals(otherVector.start) && end.equals(otherVector.end);
+		}
+	}
+	
+	@Override
+	public String toString() {
+		if(isOriginVector()) {
+			return "<" + end.x + ", " + end.y + ">";
+		}
+		else {
+			return "<" + start.toString() + "; " + end.toString() + ">";
+		}
 	}
 }

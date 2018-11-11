@@ -6,16 +6,34 @@ import org.junit.jupiter.api.Test;
 
 public class Vector2DTest {
 	@Test
-	public void distance_rectangularTriangle3And4_5() {
-		Vector2D v1 = new Vector2D(3, 0);
-		Vector2D v2 = new Vector2D(0, 4);
+	public void length_rectangularTriangle3And4_5() {
+		Vector2D v1 = new Vector2D(3, 4);
 		
-		double distance = Vector2D.distance(v1, v2);
+		double length = v1.length();
 		
-		assertEquals(5.0, distance);
+		assertEquals(5.0, length);
 	}
 	
 	@Test
+	void originVector_aVectorAlreadyAtOrigin_theSame() {
+		Vector2D v = new Vector2D(4, 7);
+		
+		Vector2D originV = v.originVector();
+		
+		assertEquals(v, originV);
+	}
+	
+	@Test
+	void originVector_aVector_becomesOriginVector() {
+		Vector2D v = new Vector2D(new Point2D(1, 1), new Point2D(4, 7));
+		
+		Vector2D originV = v.originVector();
+		
+		Vector2D expected = new Vector2D(3, 6);
+		assertEquals(originV, expected);
+	}
+	
+/*	@Test
 	void angle_upVector_90Degrees() {
 		Vector2D v = new Vector2D(0, 1);
 		
@@ -40,6 +58,6 @@ public class Vector2DTest {
 		double angle = v.angle();
 		
 		assertEquals(135.0, angle);
-	}
+	}*/
 	
 }

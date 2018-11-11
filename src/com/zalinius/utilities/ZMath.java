@@ -25,8 +25,8 @@ public class ZMath {
     }
     
     public static Point2D clamp(Point2D point, Point2D leftbound, Point2D rightBound) {
-    	double clampedX = clamp(point.x(), leftbound.x(), rightBound.x());
-    	double clampedY = clamp(point.y(), leftbound.y(), rightBound.y());
+    	double clampedX = clamp(point.x, leftbound.x, rightBound.x);
+    	double clampedY = clamp(point.y, leftbound.y, rightBound.y);
     	
     	return new Point2D(clampedX, clampedY);
     }

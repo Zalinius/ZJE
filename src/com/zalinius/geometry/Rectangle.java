@@ -39,8 +39,8 @@ public class Rectangle extends Shape{
 
 	@Override
 	public boolean contains(Point2D p) {
-		return ZMath.isBetween(position.x(), position.x() + width, p.x())
-			&& ZMath.isBetween(position.y(), position.y() + height, p.y());
+		return ZMath.isBetween(position.x, position.x + width, p.x)
+			&& ZMath.isBetween(position.y, position.y + height, p.y);
 	}
 	
 	public Iterable<Segment> edges(){
@@ -58,14 +58,14 @@ public class Rectangle extends Shape{
 	}
 	
 	public Point2D topRight() {
-		return new Point2D(position.x() + width, position.y() );
+		return new Point2D(position.x + width, position.y );
 	}
 	
 	public Point2D botLeft() {
-		return new Point2D(position.x(), position.y() + height);
+		return new Point2D(position.x, position.y + height);
 	}
 	public Point2D botRight() {
-		return new Point2D(position.x() + width, position.y() + height);
+		return new Point2D(position.x + width, position.y + height);
 	}
 	
 	private class SegmentIterator implements Iterator<Segment>{
