@@ -7,18 +7,19 @@ public class ZMath {
     public static double clamp(double value, double leftBoundary, double rightBoundary){
         double clampedValue = value;
         double realLeftBound = leftBoundary;
-        double realRightBound = leftBoundary;
+        double realRightBound = rightBoundary;
         
         if(rightBoundary < leftBoundary) {
-        	double temp = leftBoundary;
         	realLeftBound = rightBoundary;
-        	realRightBound = temp;
+        	realRightBound = leftBoundary;
         }
         
-        if(value < realLeftBound)
+        if(value < realLeftBound) {
         	clampedValue = realLeftBound;
-        else if(value > realRightBound)
+        }
+        else if(value > realRightBound) {
         	clampedValue = realRightBound;
+        }
 
         return clampedValue;
     }
