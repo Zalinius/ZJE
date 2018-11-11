@@ -44,6 +44,9 @@ public class InputListener extends KeyAdapter implements Holding, MouseListener{
 	}
 	
 	public void addInput(Clickable click) {
+		if(!this.mouseInputs.containsKey(click.mouseButtonCode() )) {
+			this.mouseInputs.put(click.mouseButtonCode(), new ArrayList<>());
+		}	
 		mouseInputs.get(click.mouseButtonCode()).add(click);
 	}
 

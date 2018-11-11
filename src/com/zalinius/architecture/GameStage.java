@@ -33,7 +33,8 @@ public class GameStage extends DoubleBufferedFrame{
         setVisible(true);
         setBackground(backgroundColor);
         addWindowListener(defaultCloseAction());
-        addKeyListener(new InputListener());
+        addKeyListener(getInput());
+        addMouseListener(getInput());
         this.camera = new StaticCam();
     }
     
@@ -45,7 +46,8 @@ public class GameStage extends DoubleBufferedFrame{
         setVisible(true);
         setBackground(backgroundColor);
         addWindowListener(closeAction);
-        addKeyListener(new InputListener());
+        addKeyListener(getInput());
+        addMouseListener(getInput());
         this.camera = camera;
     }
     
@@ -105,9 +107,23 @@ public class GameStage extends DoubleBufferedFrame{
 	
 
 	public static void addInput(Inputtable keyInput) {
+		if(input == null) {
+			input = new InputListener();
+		}
 		input.addInput(keyInput);
 	}
 	public static void addInput(Clickable mouseInput) {
+		if(input == null) {
+			input = new InputListener();
+		}
 		input.addInput(mouseInput);
+	}
+	
+	private static InputListener getInput() {
+		if(input == null) {
+			input = new InputListener();
+		}
+		
+		return input;
 	}
 }
