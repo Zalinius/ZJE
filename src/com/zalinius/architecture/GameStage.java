@@ -16,16 +16,16 @@ public class GameStage extends DoubleBufferedFrame{
 
 	public static final int GAME_WIDTH = 1366, GAME_HEIGHT = 768; //TODO make this changeable
 	
-	private IGraphical graphics;
+	private Graphical graphics;
 	private Camerable camera;
 	private double currentFPS;
 	private static InputListener input;
 
-    public GameStage(IGraphical graphics) {
+    public GameStage(Graphical graphics) {
         this(graphics, "Game!", GAME_WIDTH, GAME_HEIGHT, Color.black);
     }
 
-    public GameStage(IGraphical graphics, String windowText, int width, int height, Color backgroundColor) {
+    public GameStage(Graphical graphics, String windowText, int width, int height, Color backgroundColor) {
     	super(windowText);
     	this.graphics = graphics;
         setResizable(false);
@@ -37,7 +37,7 @@ public class GameStage extends DoubleBufferedFrame{
         this.camera = new StaticCam();
     }
     
-    public GameStage(IGraphical graphics, String windowText, int width, int height, Color backgroundColor, WindowAdapter closeAction, Camerable camera) {
+    public GameStage(Graphical graphics, String windowText, int width, int height, Color backgroundColor, WindowAdapter closeAction, Camerable camera) {
     	super(windowText);
     	this.graphics = graphics;
         setResizable(false);

@@ -3,7 +3,7 @@ package com.zalinius.physics.collisions;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.zalinius.architecture.ICollidable;
+import com.zalinius.architecture.Collidable;
 import com.zalinius.geometry.*;
 import com.zalinius.geometry.oneDimensional.Segment;
 import com.zalinius.physics.Point2D;
@@ -13,7 +13,7 @@ import com.zalinius.utilities.ZMath;
 
 public class Collision {
 
-	public static boolean isOverlapping(ICollidable object1, ICollidable object2) {
+	public static boolean isOverlapping(Collidable object1, Collidable object2) {
 		return isOverlapping(object1.getCollisionBox(), object2.getCollisionBox());
 	}
 	

@@ -2,7 +2,7 @@ package com.zalinius.architecture;
 
 import java.awt.Graphics2D;
 
-public interface IGraphical {
+public interface Graphical {
 
     /**
      * Called every frame. Anything drawn to the screen goes here.

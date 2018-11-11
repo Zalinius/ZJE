@@ -2,7 +2,7 @@ package com.zalinius.architecture;
 
 import java.awt.*;
 
-public interface IGameObject extends IGraphical, ILogical{
+public interface GameObject extends Graphical, Logical{
 
     /**
      * Called every frame. Game logic goes here.

@@ -10,9 +10,9 @@ public class GameLoop {
     int framesInLastSecond;
 
     GameStage stage;
-    ILogical logic;
+    Logical logic;
 
-    public GameLoop(GameStage stage, ILogical logic){
+    public GameLoop(GameStage stage, Logical logic){
     	totalTime = 0;
     	framesInLastSecond = 0;
         this.stage = stage;

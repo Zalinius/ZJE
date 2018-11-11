@@ -12,12 +12,12 @@ public class GameContainer {
 	private GameLoop loop;
 	private GameStage stage;
 
-	public GameContainer(IGraphical graphics, ILogical logic) {
+	public GameContainer(Graphical graphics, Logical logic) {
 		stage = new GameStage(graphics);
 		loop = new GameLoop(stage, logic);
 	}
 	
-	public GameContainer(IGraphical graphics, ILogical logic, WindowAdapter exitAction ) {
+	public GameContainer(Graphical graphics, Logical logic, WindowAdapter exitAction ) {
 		loop = new GameLoop(new GameStage(graphics), logic);
 	}
 	

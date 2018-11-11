@@ -1,6 +1,6 @@
 package com.zalinius.architecture;
 
-public interface ILogical {
+public interface Logical {
     /**
      * Called every frame. Game logic goes here.
      * @param delta The time increment since the last frame, in seconds.

@@ -5,7 +5,7 @@ import com.zalinius.geometry.Shape;
 /**
  * For objects with colliders.
  */
-public interface ICollidable {
+public interface Collidable {
 
     /**
      * @param point A point in 2D space.
