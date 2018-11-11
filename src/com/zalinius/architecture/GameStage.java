@@ -6,6 +6,7 @@ import java.awt.event.WindowEvent;
 import java.util.Collection;
 import java.awt.geom.AffineTransform;
 
+import com.zalinius.architecture.input.Clickable;
 import com.zalinius.architecture.input.Inputtable;
 import com.zalinius.drawing.camera.Camerable;
 import com.zalinius.drawing.camera.StaticCam;
@@ -74,9 +75,10 @@ public class GameStage extends DoubleBufferedFrame{
 		}
 	}
 
-	public void addKeys(Collection<Inputtable> keys){
-    	input = new InputListener(keys);
+	public void addKeys(Collection<Inputtable> keys, Collection<Clickable> clicks){
+    	input = new InputListener(keys, clicks);
         addKeyListener(input);
+        addMouseListener(input);
     }
     
 	public static boolean isHeld(int keyCode) {
