@@ -7,7 +7,7 @@ import com.zalinius.architecture.Locatable;
 
 public class FollowCam implements Camerable{
 
-	Locatable loc;
+	private Locatable loc;
 	public FollowCam(Locatable loc) {
 		this.loc = loc;
 	}
