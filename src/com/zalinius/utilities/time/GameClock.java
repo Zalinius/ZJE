@@ -31,7 +31,7 @@ public class GameClock{
 		if(timers.containsKey(owner)) {
 			return timers.get(owner).isDone();
 		}else {
-			return false;
+			return true;
 		}
 	}
 	
