@@ -37,7 +37,7 @@ public class ZMath {
     
     public static boolean isBetween(double left, double right, double x) {
     	if(left == right) {
-    		return false;
+    		return x == left;
     	}
     	else if(right < left) {
     		return x <= left && x >= right;

@@ -5,7 +5,8 @@ import com.zalinius.physics.Point2D;
 import com.zalinius.utilities.Linear;
 
 public class Segment extends Shape{
-	private Point2D start, end;
+	public final Point2D start;
+	public final Point2D end;
 
 	public Segment(Point2D start, Point2D end) {
 		this.start = start;
@@ -14,14 +15,6 @@ public class Segment extends Shape{
 	
 	public double length() {
 		return Point2D.distance(start, end);
-	}
-	
-	public Point2D start() {
-		return start;
-	}
-	
-	public Point2D end() {
-		return end;
 	}
 	
 	public Linear getFunction() {
@@ -47,7 +40,7 @@ public class Segment extends Shape{
 	@Override
 	public boolean contains(Point2D p) {
 		// TODO Auto-generated method stub
-		return false;
+		throw new RuntimeException("Not implemented!");
 	}
 
 	@Override

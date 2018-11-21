@@ -77,21 +77,21 @@ public class Collision {
 			double xIntercept = Linear.xIntercept(l1, l2);
 			if(l1.isVertical() || l2.isVertical()) {
 				if(l1.isVertical() && l2.isVertical()) {
-					return ZMath.isBetween(s1.start().y, s1.end().y, s2.start().y) ||
-						   ZMath.isBetween(s1.start().y, s1.end().y, s2.end().y) ||
-						   ZMath.isBetween(s2.start().y, s2.end().y, s1.start().y) ||
-						   ZMath.isBetween(s2.start().y, s2.end().y, s1.end().y);
+					return ZMath.isBetween(s1.start.y, s1.end.y, s2.start.y) ||
+						   ZMath.isBetween(s1.start.y, s1.end.y, s2.end.y) ||
+						   ZMath.isBetween(s2.start.y, s2.end.y, s1.start.y) ||
+						   ZMath.isBetween(s2.start.y, s2.end.y, s1.end.y);
 				}
 				else {
 					if(l1.isVertical()) {
-						return ZMath.isBetween(s2.start().x, s2.end().x, xIntercept) && ZMath.isBetween(s1.start().y, s1.end().y, l2.f(xIntercept));
+						return ZMath.isBetween(s2.start.x, s2.end.x, xIntercept) && ZMath.isBetween(s1.start.y, s1.end.y, l2.f(xIntercept));
 					}else {
-						return ZMath.isBetween(s1.start().x, s1.end().x, xIntercept) && ZMath.isBetween(s2.start().y, s2.end().y, l1.f(xIntercept));
+						return ZMath.isBetween(s1.start.x, s1.end.x, xIntercept) && ZMath.isBetween(s2.start.y, s2.end.y, l1.f(xIntercept));
 					}
 				}
 			}
 			else {
-				return (ZMath.isBetween(s1.start().x, s1.end().x, xIntercept) && ZMath.isBetween(s2.start().x, s2.end().x, xIntercept));
+				return (ZMath.isBetween(s1.start.x, s1.end.x, xIntercept) && ZMath.isBetween(s2.start.x, s2.end.x, xIntercept));
 			}
 		case INFINITE:
 			if(l1.isVertical()) {
@@ -108,17 +108,17 @@ public class Collision {
 	}
 	
 	private static boolean areTwoVerticalLinesOverlapping(Segment s1, Segment s2){
-		return ZMath.isBetween(s1.start().y, s1.end().y, s2.start().y) ||
-			   ZMath.isBetween(s1.start().y, s1.end().y, s2.end().y) ||
-			   ZMath.isBetween(s2.start().y, s2.end().y, s1.start().y) ||
-			   ZMath.isBetween(s2.start().y, s2.end().y, s1.end().y);
+		return ZMath.isBetween(s1.start.y, s1.end.y, s2.start.y) ||
+			   ZMath.isBetween(s1.start.y, s1.end.y, s2.end.y) ||
+			   ZMath.isBetween(s2.start.y, s2.end.y, s1.start.y) ||
+			   ZMath.isBetween(s2.start.y, s2.end.y, s1.end.y);
 	}
 	
 	private static boolean areTwoNonVerticalLinesOverlapping(Segment s1, Segment s2) {
-		return ZMath.isBetween(s1.start().x, s1.end().x, s2.start().x) ||
-			   ZMath.isBetween(s1.start().x, s1.end().x, s2.end().x) ||
-			   ZMath.isBetween(s2.start().x, s2.end().x, s1.start().x) ||
-			   ZMath.isBetween(s2.start().x, s2.end().x, s1.end().x);
+		return ZMath.isBetween(s1.start.x, s1.end.x, s2.start.x) ||
+			   ZMath.isBetween(s1.start.x, s1.end.x, s2.end.x) ||
+			   ZMath.isBetween(s2.start.x, s2.end.x, s1.start.x) ||
+			   ZMath.isBetween(s2.start.x, s2.end.x, s1.end.x);
 	}
 
 }
