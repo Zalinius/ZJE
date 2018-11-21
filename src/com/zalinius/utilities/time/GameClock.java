@@ -1,6 +1,5 @@
 package com.zalinius.utilities.time;
 
-import java.security.InvalidAlgorithmParameterException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -55,7 +54,7 @@ public class GameClock{
 			return timers.get(owner).timeLeft();
 		}
 		else {
-			return -1.0;
+			return 0.0;
 		}
 	}
 
@@ -67,13 +66,20 @@ public class GameClock{
 		
 	}
 
-	public static void removeTimer(Object owner) {
+	public static boolean removeTimer(Object owner) {
 		if(timers.containsKey(owner)) {
 			timers.remove(owner);
+			return true;
+		}
+		else {
+			return false;
 		}
 		
 	}
 	
+	/**
+	 * @return The time since the beginning of the game, in seconds
+	 */
 	public static double timeNow() {
 		return time;
 	}
