@@ -7,4 +7,7 @@ public interface Locatable {
 	public Point2D center();
 	
 	public boolean facingRight();
+	
+	public double width();
+	public double height();
 }
