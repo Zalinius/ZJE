@@ -1,5 +1,6 @@
 package com.zalinius.utilities.time;
 
+import java.security.InvalidAlgorithmParameterException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -21,6 +22,16 @@ public class GameClock{
 	
 	public static void addActionTimer(Runnable action, double timerTime) {
 		timers.put(action, new ActionTimer(action, timerTime));
+	}
+	
+	public static void addActionTimer(Runnable action, double timerTime, int instances) {
+		if(instances < 0) {
+			throw new RuntimeException("Negative number of instances: " + instances);
+		}
+		
+		for(int i = 0; i != instances; ++i) {
+			addActionTimer(action, timerTime * (i+1) );
+		}
 	}
 	
 	public static boolean isTimerDone(Object owner) {
