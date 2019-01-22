@@ -33,7 +33,7 @@ public class Vector2DTest {
 		assertEquals(originV, expected);
 	}
 	
-/*	@Test
+	@Test
 	void angle_upVector_90Degrees() {
 		Vector2D v = new Vector2D(0, 1);
 		
@@ -58,6 +58,60 @@ public class Vector2DTest {
 		double angle = v.angle();
 		
 		assertEquals(135.0, angle);
-	}*/
+	}
+	
+	@Test
+	void angle_leftVector_180Degrees() {
+		Vector2D v = new Vector2D(-1, 0);
+		
+		double angle = v.angle();
+		
+		assertEquals(180.0, angle);
+	}
+	
+	@Test
+	void angle_downLeftVector_225Degrees() {
+		Vector2D v = new Vector2D(-1, -1);
+		
+		double angle = v.angle();
+		
+		assertEquals(225.0, angle);
+	}
+	
+	@Test
+	void angle_downVector_270Degrees() {
+		Vector2D v = new Vector2D(0, -1);
+		
+		double angle = v.angle();
+		
+		assertEquals(270.0, angle);
+	}
+	
+	@Test
+	void angle_downRightVector_315Degrees() {
+		Vector2D v = new Vector2D(1, -1);
+		
+		double angle = v.angle();
+		
+		assertEquals(315.0, angle);
+	}
+	
+	@Test
+	void angle_rightVector_0Degrees() {
+		Vector2D v = new Vector2D(1, 0);
+		
+		double angle = v.angle();
+		
+		assertEquals(0.0, angle);
+	}
+	
+	@Test
+	void angle_unitCircleVector_60Degrees() {
+		Vector2D v = new Vector2D(0.5, Math.sqrt(3) / 2.0);
+		
+		double angle = v.angle();
+		
+		assertEquals(60, angle);
+	}
 	
 }
