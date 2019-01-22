@@ -1,6 +1,7 @@
 package com.zalinius.physics.collisions;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.zalinius.architecture.Collidable;
@@ -35,6 +36,17 @@ public class Collision {
 			Segment g2 = (Segment) s2;
 			return isOverlapping(g1, g2);
 		}
+		
+		if(s1 instanceof Segment && s2 instanceof Rectangle){
+			Segment g = (Segment) s1;
+			Rectangle r = (Rectangle) s2;
+			return isOverlapping(r, g);
+		} 
+		if(s1 instanceof Rectangle && s2 instanceof Segment) {
+			Segment g = (Segment) s2;
+			Rectangle r = (Rectangle) s1;
+			return isOverlapping(r, g);
+		}
 
 		throw new RuntimeException("Overlapping of " + s1.getClass().toString() + " and " + s2.getClass().toString()
 				+ " has not been implemented yet");
@@ -45,6 +57,27 @@ public class Collision {
 		double radii = c1.radius() + c2.radius();
 
 		return distance <= radii;
+	}
+	
+	private static boolean isOverlapping(Rectangle r, Segment s) {
+		if(r.contains(s.center())) {
+			return true;
+		}
+		
+		List<Tuple<Segment>> edgePairs = new ArrayList<>();
+		Iterator<Segment> it = r.edges().iterator();
+		while (it.hasNext()) {
+			Segment segment = it.next();
+			edgePairs.add(new Tuple<>(s, segment));
+		}
+		
+		for (Tuple<Segment> edges : edgePairs) {
+			if(isOverlapping(edges.first(), edges.second())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static boolean isOverlapping(Rectangle r1, Rectangle r2) {
