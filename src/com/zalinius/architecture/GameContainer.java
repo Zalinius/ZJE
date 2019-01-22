@@ -38,6 +38,11 @@ public class GameContainer {
 	public void startGame() {
 		loop.start();
 	}
+
+	public void exit() {
+		stage.dispose();
+		System.exit(0);
+	}
 	
 
 }

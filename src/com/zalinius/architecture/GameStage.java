@@ -91,7 +91,7 @@ public class GameStage extends DoubleBufferedFrame{
     	currentFPS = fps;
     }
     
-    private WindowAdapter defaultCloseAction() {
+    public WindowAdapter defaultCloseAction() {
     	return new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 dispose();
