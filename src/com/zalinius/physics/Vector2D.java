@@ -28,6 +28,45 @@ public class Vector2D {
 	public double length() {
 		return Point2D.distance(start, end);
 	}
+	
+	/**
+	 * @return the vector's angle in degrees
+	 */
+	public double angle() {
+		double x = end.x;
+		double y = end.y;
+		
+		if(x == 0 && y == 0) {
+			return Double.NaN;
+		}
+		else if(x != 0 && y == 0) {
+			if(x > 0)
+				return 0.0;
+			else
+				return 180.0;
+		}
+		else if(x == 0 && y !=0) {
+			if(y > 0)
+				return 90.0;
+			else
+				return 270.0;
+		}
+		else {
+			double theta = Math.atan(y/x) / Math.PI * 180.0;
+			if(x > 0 && y > 0) {
+				return theta;
+			}
+			else if(x < 0 && y > 0) {
+				return theta + 180;
+			}
+			else if(x < 0 && y < 0) {
+				return theta + 180;
+			}
+			else {
+				return theta + 360;
+			}
+		}
+	}
 
 	/**
 	 * Scales a vector by moving its end point, but not its start point.
