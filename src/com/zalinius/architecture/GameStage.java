@@ -11,8 +11,16 @@ import com.zalinius.architecture.input.Inputtable;
 import com.zalinius.drawing.camera.Camerable;
 import com.zalinius.drawing.camera.StaticCam;
 
-public class GameStage extends DoubleBufferedFrame{
-	private static final long serialVersionUID = 1L;
+import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.transform.Affine;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
+public class GameStage extends Application{
 
 	public static final int GAME_WIDTH = 1366, GAME_HEIGHT = 768; //TODO make this changeable
 	
@@ -20,42 +28,76 @@ public class GameStage extends DoubleBufferedFrame{
 	private Camerable camera;
 	private double currentFPS;
 	private static InputListener input;
+	
 
-    public GameStage(Graphical graphics) {
-        this(graphics, "Game!", GAME_WIDTH, GAME_HEIGHT, Color.black);
-    }
+//	
+//    public GameStage(Graphical graphics) {
+//      //  this(graphics, "Game!", GAME_WIDTH, GAME_HEIGHT, Color.black);
+//    }
+//    
+    public static void main(String[] args) {
+    	launch();
+	}
+    
+   // public abstract Graphical getGraphics();
+    //public abstract Graphical getLogic();
+    
 
-    public GameStage(Graphical graphics, String windowText, int width, int height, Color backgroundColor) {
-    	super(windowText);
-    	this.graphics = graphics;
-        setResizable(false);
-        setSize(width, height);
-        setVisible(true);
-        setBackground(backgroundColor);
-        addWindowListener(defaultCloseAction());
-        addKeyListener(getInput());
-        addMouseListener(getInput());
-        this.camera = new StaticCam();
-    }
-    
-    public GameStage(Graphical graphics, String windowText, int width, int height, Color backgroundColor, WindowAdapter closeAction, Camerable camera) {
-    	super(windowText);
-    	this.graphics = graphics;
-        setResizable(false);
-        setSize(width, height);
-        setVisible(true);
-        setBackground(backgroundColor);
-        addWindowListener(closeAction);
-        addKeyListener(getInput());
-        addMouseListener(getInput());
-        this.camera = camera;
-    }
-    
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		primaryStage.initStyle(StageStyle.DECORATED);
+		primaryStage.setTitle("Moon Factory 🌙");
+
+		Group root  = new Group();
+		Scene scene = new Scene(root);
+
+		primaryStage.setScene(scene);
+		Canvas canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
+		root.getChildren().add(canvas);
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+		
+		gc.setTransform(new Affine(1, 0, 0, 0, -1, GAME_HEIGHT));
+		
+		Logical l = new Logical() {
+			
+			@Override
+			public void update(double delta) {
+				System.out.println("Meow");
+			}
+		};
+	}
+//
+//    public GameStage(Graphical graphics, String windowText, int width, int height, Color backgroundColor) {
+//    	super(windowText);
+//    	this.graphics = graphics;
+//        setResizable(false);
+//        setSize(width, height);
+//        setVisible(true);
+//        setBackground(backgroundColor);
+//        addWindowListener(defaultCloseAction());
+//        addKeyListener(getInput());
+//        addMouseListener(getInput());
+//        this.camera = new StaticCam();
+//    }
+//    
+//    public GameStage(Graphical graphics, String windowText, int width, int height, Color backgroundColor, WindowAdapter closeAction, Camerable camera) {
+//    	super(windowText);
+//    	this.graphics = graphics;
+//        setResizable(false);
+//        setSize(width, height);
+//        setVisible(true);
+//        setBackground(backgroundColor);
+//        addWindowListener(closeAction);
+//        addKeyListener(getInput());
+//        addMouseListener(getInput());
+//        this.camera = camera;
+//    }
+//    
     public void paintBuffer(Graphics2D g){
     	AffineTransform trans = camera.getTransform();
     	g.setTransform(trans);
 
-    	graphics.render(g);
+    	//graphics.render(g);
     	
     	g.setColor(fpsColor());
     	g.setFont(new Font("SansSerif", Font.BOLD, 20));
@@ -76,12 +118,12 @@ public class GameStage extends DoubleBufferedFrame{
 			return Color.RED;
 		}
 	}
-
-	public void addKeys(Collection<Inputtable> keys, Collection<Clickable> clicks){
-    	input = new InputListener(keys, clicks);
-        addKeyListener(input);
-        addMouseListener(input);
-    }
+//
+//	public void addKeys(Collection<Inputtable> keys, Collection<Clickable> clicks){
+//    	input = new InputListener(keys, clicks);
+//        addKeyListener(input);
+//        addMouseListener(input);
+//    }
 	
 	public void setCamera(Camerable camera) {
 		this.camera = camera;
@@ -90,15 +132,15 @@ public class GameStage extends DoubleBufferedFrame{
     public void setFPS(double fps) {
     	currentFPS = fps;
     }
-    
-    private WindowAdapter defaultCloseAction() {
-    	return new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                dispose();
-                System.exit(0);
-            }
-        };
-    }
+//    
+//    private WindowAdapter defaultCloseAction() {
+//    	return new WindowAdapter() {
+//            public void windowClosing(WindowEvent e) {
+//                dispose();
+//                System.exit(0);
+//            }
+//        };
+//    }
     
     
 	public static boolean isHeld(int keyCode) {
@@ -126,4 +168,5 @@ public class GameStage extends DoubleBufferedFrame{
 		
 		return input;
 	}
+
 }
