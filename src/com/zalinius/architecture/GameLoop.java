@@ -14,19 +14,17 @@ public class GameLoop extends AnimationTimer{
 
 	int framesInLastSecond;
 
-	Graphical graphics;
 	Logical logic;
-	GraphicsContext renderer;
+	GameStage renderer;
 
-	public GameLoop(Graphical stage, Logical logic, GraphicsContext gc){
+	public GameLoop(Logical logic, GameStage gs){
 		System.out.println("Initializing Game Loop!");
 		time = 0;
 		lastFrameTime = 0;
 		framesInLastSecond = 0;
 		accumulator = 0;
-		this.graphics = stage;
 		this.logic = logic;
-		this.renderer = gc;
+		this.renderer = gs;
 	}
 
 	public void handle(long now)
@@ -72,6 +70,6 @@ public class GameLoop extends AnimationTimer{
 	}
 
 	public void render() {
-		graphics.render(renderer);
+		renderer.render();
 	}
 }

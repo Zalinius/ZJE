@@ -10,6 +10,7 @@ import com.zalinius.architecture.input.Clickable;
 import com.zalinius.architecture.input.Inputtable;
 import com.zalinius.drawing.camera.Camerable;
 import com.zalinius.drawing.camera.StaticCam;
+import com.zalinius.physics.Point2D;
 
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -20,52 +21,70 @@ import javafx.scene.transform.Affine;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class GameStage extends Application{
+public class GameStage{
 
-	public static final int GAME_WIDTH = 1366, GAME_HEIGHT = 768; //TODO make this changeable
-	
+	private Canvas canvas;
+	private Stage stage;
+	private GraphicsContext gc;
 	private Graphical graphics;
 	private Camerable camera;
+	
+	public GameStage(Stage primaryStage, Graphical graphics, Point2D size) {
+		primaryStage.initStyle(StageStyle.DECORATED);
+		primaryStage.setTitle("Game");
+		stage = primaryStage;
+		this.graphics = graphics;
+
+		Group root  = new Group();
+		Scene scene = new Scene(root);
+		primaryStage.setScene(scene);
+		canvas = new Canvas(size.x, size.y);
+		root.getChildren().add(canvas);
+		gc = canvas.getGraphicsContext2D();
+		gc.setTransform(defaultCamera().getTransform());
+
+	}
+	
+	public void setCamera(Camerable camera) {
+		this.camera = camera;
+	}
+	
+	public Camerable defaultCamera() {
+		return new Camerable() {
+			@Override
+			public Affine getTransform() {
+				return new Affine(1, 0, 0, -1, 0, height());
+			}
+		};
+	}
+	
+	
+	
+	public void resizeWindow(double width, double height) {
+		canvas.setHeight(height);
+		canvas.setWidth(width);
+		stage.sizeToScene();
+	}
+	
+	public void resizeAndScale(double width, double height) {
+		double xRatio = width / width();
+		double yRatio = height / height();
+		resizeWindow(width, height);
+		gc.transform(xRatio, 0, 0, yRatio, 0, 0);
+	}
+	
+	public double width() {
+		return canvas.getWidth();
+	}
+	
+	public double height() {
+		return canvas.getHeight();
+	}
+	
 	private double currentFPS;
 	private static InputListener input;
 	
 
-//	
-//    public GameStage(Graphical graphics) {
-//      //  this(graphics, "Game!", GAME_WIDTH, GAME_HEIGHT, Color.black);
-//    }
-//    
-    public static void main(String[] args) {
-    	launch();
-	}
-    
-   // public abstract Graphical getGraphics();
-    //public abstract Graphical getLogic();
-    
-
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		primaryStage.initStyle(StageStyle.DECORATED);
-		primaryStage.setTitle("Moon Factory 🌙");
-
-		Group root  = new Group();
-		Scene scene = new Scene(root);
-
-		primaryStage.setScene(scene);
-		Canvas canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
-		root.getChildren().add(canvas);
-		GraphicsContext gc = canvas.getGraphicsContext2D();
-		
-		gc.setTransform(new Affine(1, 0, 0, 0, -1, GAME_HEIGHT));
-		
-		Logical l = new Logical() {
-			
-			@Override
-			public void update(double delta) {
-				System.out.println("Meow");
-			}
-		};
-	}
 //
 //    public GameStage(Graphical graphics, String windowText, int width, int height, Color backgroundColor) {
 //    	super(windowText);
@@ -125,9 +144,6 @@ public class GameStage extends Application{
 //        addMouseListener(input);
 //    }
 	
-	public void setCamera(Camerable camera) {
-		this.camera = camera;
-	}
 	
     public void setFPS(double fps) {
     	currentFPS = fps;
@@ -167,6 +183,11 @@ public class GameStage extends Application{
 		}
 		
 		return input;
+	}
+
+	public void render() {
+		gc.setTransform(camera.getTransform());
+		graphics.render(gc);
 	}
 
 }

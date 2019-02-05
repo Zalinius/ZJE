@@ -16,7 +16,7 @@ public class FollowCam implements Camerable{
 	@Override
 	public Affine getTransform() {
 		Affine af = new Affine();
-		Transform.translate(-loc.center().x + GameStage.GAME_WIDTH/2, -loc.center().y + GameStage.GAME_HEIGHT/2);
+		//Transform.translate(-loc.center().x + GameStage.GAME_WIDTH/2, -loc.center().y + GameStage.GAME_HEIGHT/2);
 		return af;
 	}
 
