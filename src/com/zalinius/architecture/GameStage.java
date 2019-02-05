@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Collection;
+import java.util.Iterator;
 import java.awt.geom.AffineTransform;
 
 import com.zalinius.architecture.input.Clickable;
@@ -28,6 +29,7 @@ public class GameStage{
 	private GraphicsContext gc;
 	private Graphical graphics;
 	private Camerable camera;
+	private InputListener input;
 	
 	public GameStage(Stage primaryStage, Graphical graphics, Point2D size) {
 		primaryStage.initStyle(StageStyle.DECORATED);
@@ -42,7 +44,12 @@ public class GameStage{
 		root.getChildren().add(canvas);
 		gc = canvas.getGraphicsContext2D();
 		gc.setTransform(defaultCamera().getTransform());
+		
+		input = new InputListener();
+		scene.setOnKeyPressed(input);
+		scene.setOnKeyReleased(input);
 
+		camera = defaultCamera();
 	}
 	
 	public void setCamera(Camerable camera) {
@@ -53,7 +60,7 @@ public class GameStage{
 		return new Camerable() {
 			@Override
 			public Affine getTransform() {
-				return new Affine(1, 0, 0, -1, 0, height());
+				return new Affine(1, 0, 0, 0, -1, height());
 			}
 		};
 	}
@@ -82,7 +89,6 @@ public class GameStage{
 	}
 	
 	private double currentFPS;
-	private static InputListener input;
 	
 
 //
@@ -137,12 +143,21 @@ public class GameStage{
 			return Color.RED;
 		}
 	}
-//
-//	public void addKeys(Collection<Inputtable> keys, Collection<Clickable> clicks){
-//    	input = new InputListener(keys, clicks);
-//        addKeyListener(input);
-//        addMouseListener(input);
-//    }
+
+	public void addKeys(Collection<Inputtable> keys, Collection<Clickable> clicks){
+		Iterator<Inputtable> keysIt = keys.iterator();
+		while (keysIt.hasNext()) {
+			Inputtable inputtable = keysIt.next();
+			input.addInput(inputtable);
+		}
+		
+		Iterator<Clickable> mouseIt = clicks.iterator();
+		while (mouseIt.hasNext()) {
+			Clickable clickable = mouseIt.next();
+			input.addInput(clickable);
+		}
+		
+    }
 	
 	
     public void setFPS(double fps) {
@@ -159,25 +174,25 @@ public class GameStage{
 //    }
     
     
-	public static boolean isHeld(int keyCode) {
+	public boolean isHeld(int keyCode) {
 		return input.isHeldDown(keyCode);
 	}
 	
 
-	public static void addInput(Inputtable keyInput) {
+	public void addInput(Inputtable keyInput) {
 		if(input == null) {
 			input = new InputListener();
 		}
 		input.addInput(keyInput);
 	}
-	public static void addInput(Clickable mouseInput) {
+	public void addInput(Clickable mouseInput) {
 		if(input == null) {
 			input = new InputListener();
 		}
 		input.addInput(mouseInput);
 	}
 	
-	private static InputListener getInput() {
+	private InputListener getInput() {
 		if(input == null) {
 			input = new InputListener();
 		}

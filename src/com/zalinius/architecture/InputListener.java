@@ -3,17 +3,24 @@ package com.zalinius.architecture;
 import com.zalinius.architecture.input.Clickable;
 import com.zalinius.architecture.input.Holding;
 import com.zalinius.architecture.input.Inputtable;
-import java.awt.event.*;
+
+import javafx.event.EventHandler;
+import javafx.event.EventType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
-public class InputListener extends KeyAdapter implements Holding, MouseListener{
+public class InputListener implements Holding, EventHandler<KeyEvent>{
 
-	HashMap<Integer, Inputtable> keyInputs;
-	HashMap<Integer, Boolean> keyStates; //pressed or not
+	Map<KeyCode, Inputtable> keyInputs;
+	Map<KeyCode, Boolean> keyStates; //pressed or not
 	
-	HashMap<Integer, Collection<Clickable>> mouseInputs;
+	Map<Integer, Collection<Clickable>> mouseInputs;
 
 
 	public InputListener(){
@@ -41,6 +48,7 @@ public class InputListener extends KeyAdapter implements Holding, MouseListener{
 	
 	public void addInput(Inputtable input) {
 		keyInputs.put(input.keyCode(), input);
+		keyStates.put(input.keyCode(), false);
 	}
 	
 	public void addInput(Clickable click) {
@@ -49,18 +57,25 @@ public class InputListener extends KeyAdapter implements Holding, MouseListener{
 		}	
 		mouseInputs.get(click.mouseButtonCode()).add(click);
 	}
+	
+
+	@Override
+	public void handle(KeyEvent event) {
+		keyPressSwitchBoard(event.getCode(), event.getEventType());
+	}
 
 
-	private void keyPressSwitchBoard(int keyCode, boolean press){
+
+	private void keyPressSwitchBoard(KeyCode keyCode, EventType<KeyEvent> type){
 		if(keyInputs.containsKey(keyCode)) {
-			if(press) {
+			if(type.equals(KeyEvent.KEY_PRESSED)) {
 				if(!keyStates.get(keyCode)) {
 					Inputtable input = keyInputs.get(keyCode);
 					input.pressed();
 					keyStates.put(keyCode, true);
 				}
 			}
-			else {
+			else if(type.equals(KeyEvent.KEY_RELEASED)) {
 				Inputtable input = keyInputs.get(keyCode);
 				input.released();
 				keyStates.put(keyCode, false);
@@ -68,16 +83,7 @@ public class InputListener extends KeyAdapter implements Holding, MouseListener{
 		}
 	}
 	
-	
-	@Override
-	public void keyPressed(KeyEvent e) {
-		keyPressSwitchBoard(e.getKeyCode(), true);
-	}
 
-	@Override
-	public void keyReleased(KeyEvent e) {
-		keyPressSwitchBoard(e.getKeyCode(), false);
-	}
 
 	@Override
 	public boolean isHeldDown(int keyCode) {
@@ -85,50 +91,46 @@ public class InputListener extends KeyAdapter implements Holding, MouseListener{
 	}
 	
 	
-
-	@Override
-	public void mouseClicked(MouseEvent event) {
-		if(mouseInputs.containsKey(event.getButton())) {
-			for (Clickable clickable : mouseInputs.get(event.getButton())) {
-				if(clickable.clickArea().contains(event.getPoint())) {
-					clickable.mouseClicked();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent event) {
-		if(mouseInputs.containsKey(event.getButton())) {
-			for (Clickable clickable : mouseInputs.get(event.getButton())) {
-				if(clickable.clickArea().contains(event.getPoint())) {
-					clickable.mousePressed();
-				}
-			}
-		}		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent event) {
-		if(mouseInputs.containsKey(event.getButton())) {
-			for (Clickable clickable : mouseInputs.get(event.getButton())) {
-				if(clickable.clickArea().contains(event.getPoint())) {
-					clickable.mouseReleased();
-				}
-			}
-		}				
-	}
+//
+//	public void mouseClicked(MouseEvent event) {
+//		if(mouseInputs.containsKey(event.getButton())) {
+//			for (Clickable clickable : mouseInputs.get(event.getButton())) {
+//				if(clickable.clickArea().contains(event.getPoint())) {
+//					clickable.mouseClicked();
+//				}
+//			}
+//		}
+//	}
+//
+//	public void mouseEntered(MouseEvent arg0) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	public void mouseExited(MouseEvent arg0) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	public void mousePressed(MouseEvent event) {
+//		if(mouseInputs.containsKey(event.getButton())) {
+//			for (Clickable clickable : mouseInputs.get(event.getButton())) {
+//				if(clickable.clickArea().contains(event.getPoint())) {
+//					clickable.mousePressed();
+//				}
+//			}
+//		}		
+//	}
+//
+//	@Override
+//	public void mouseReleased(MouseEvent event) {
+//		if(mouseInputs.containsKey(event.getButton())) {
+//			for (Clickable clickable : mouseInputs.get(event.getButton())) {
+//				if(clickable.clickArea().contains(event.getPoint())) {
+//					clickable.mouseReleased();
+//				}
+//			}
+//		}				
+//	}
 
 }

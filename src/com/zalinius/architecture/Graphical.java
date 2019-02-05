@@ -1,7 +1,5 @@
 package com.zalinius.architecture;
 
-import java.awt.Graphics2D;
-
 import javafx.scene.canvas.GraphicsContext;
 
 public interface Graphical {

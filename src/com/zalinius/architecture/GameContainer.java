@@ -24,7 +24,7 @@ public abstract class GameContainer extends Application {
 		if(mouseControls == null) {
 			mouseControls = new ArrayList<>();
 		}
-		//stage.addKeys(keyControls, mouseControls);
+		gameStage.addKeys(keyControls, mouseControls);
 	}
 
 
