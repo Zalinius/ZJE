@@ -1,9 +1,9 @@
 package com.zalinius.drawing.camera;
 
-import java.awt.geom.AffineTransform;
+import javafx.scene.transform.Affine;
 
 public interface Camerable {
 	
-	public AffineTransform getTransform();
+	public Affine getTransform();
 
 }

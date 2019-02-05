@@ -1,17 +1,15 @@
 package com.zalinius.drawing.camera;
 
-import java.awt.geom.AffineTransform;
+import javafx.scene.transform.Affine;
 
 public class StaticCam implements Camerable {
 
 	public StaticCam() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public AffineTransform getTransform() {
-		// TODO Auto-generated method stub
-		return new AffineTransform();
+	public Affine getTransform() {
+		return new Affine();
 	}
 
 }

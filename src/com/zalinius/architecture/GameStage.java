@@ -94,18 +94,18 @@ public class GameStage extends Application{
 //    }
 //    
     public void paintBuffer(Graphics2D g){
-    	AffineTransform trans = camera.getTransform();
-    	g.setTransform(trans);
-
-    	//graphics.render(g);
-    	
-    	g.setColor(fpsColor());
-    	g.setFont(new Font("SansSerif", Font.BOLD, 20));
-    	
-    	float offSetX = (float) trans.getTranslateX();
-    	float offSetY = (float) trans.getTranslateY();
-    	g.drawString(Integer.toString((int)currentFPS), 10 - offSetX, 50 - offSetY);
-    }
+//    	AffineTransform trans = camera.getTransform();
+//    	g.setTransform(trans);
+//
+//    	//graphics.render(g);
+//    	
+//    	g.setColor(fpsColor());
+//    	g.setFont(new Font("SansSerif", Font.BOLD, 20));
+//    	
+//    	float offSetX = (float) trans.getTranslateX();
+//    	float offSetY = (float) trans.getTranslateY();
+//    	g.drawString(Integer.toString((int)currentFPS), 10 - offSetX, 50 - offSetY);
+      }
 
     private Color fpsColor() {
 		if(currentFPS >= 50) {
