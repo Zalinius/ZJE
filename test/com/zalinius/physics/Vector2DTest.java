@@ -14,23 +14,14 @@ public class Vector2DTest {
 		assertEquals(5.0, length);
 	}
 	
-	@Test
-	void originVector_aVectorAlreadyAtOrigin_theSame() {
-		Vector2D v = new Vector2D(4, 7);
-		
-		Vector2D originV = v.originVector();
-		
-		assertEquals(v, originV);
-	}
-	
+
 	@Test
 	void originVector_aVector_becomesOriginVector() {
-		Vector2D v = new Vector2D(new Point2D(1, 1), new Point2D(4, 7));
+		Vector2D v = Point2D.subtract(new Point2D(1, 1), new Point2D(4, 7));
 		
-		Vector2D originV = v.originVector();
 		
 		Vector2D expected = new Vector2D(3, 6);
-		assertEquals(originV, expected);
+		assertEquals(v, expected);
 	}
 	
 /*	@Test
