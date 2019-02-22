@@ -8,6 +8,10 @@ public class UnitVector extends Vector2D{
 	
 	public UnitVector(Vector2D v) {
 		super(v.x / v.length(), v.y / v.length());
+		
+		if(v.x == 0 && v.y == 0) {
+			throw new ArithmeticException("A unit vector cannot be initialized from a zero vector: " + v.toString());
+		}
 	}
 	
 	public static UnitVector up() {
