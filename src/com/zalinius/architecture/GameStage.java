@@ -1,19 +1,13 @@
 package com.zalinius.architecture;
 
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.Collection;
 import java.util.Iterator;
-import java.awt.geom.AffineTransform;
-
 import com.zalinius.architecture.input.Clickable;
 import com.zalinius.architecture.input.Inputtable;
 import com.zalinius.drawing.camera.Camerable;
-import com.zalinius.drawing.camera.StaticCam;
 import com.zalinius.physics.Point2D;
 
-import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -31,9 +25,9 @@ public class GameStage{
 	private Camerable camera;
 	private InputListener input;
 	
-	public GameStage(Stage primaryStage, Graphical graphics, Point2D size) {
+	public GameStage(Stage primaryStage, Graphical graphics, Point2D size, String title) {
 		primaryStage.initStyle(StageStyle.DECORATED);
-		primaryStage.setTitle("Game");
+		primaryStage.setTitle(title);
 		stage = primaryStage;
 		this.graphics = graphics;
 

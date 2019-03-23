@@ -30,7 +30,7 @@ public abstract class GameContainer extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		gameStage = new GameStage(primaryStage, gameGraphics(), windowSize());
+		gameStage = new GameStage(primaryStage, gameGraphics(), windowSize(), windowTitle());
 		loop = new GameLoop(gameLogic(), gameStage);
 		loop.start();
 		primaryStage.show();
@@ -43,5 +43,6 @@ public abstract class GameContainer extends Application {
 	public abstract Logical gameLogic();	
 	public abstract Graphical gameGraphics();
 	public abstract Point2D windowSize();
+	public abstract String windowTitle();
 
 }

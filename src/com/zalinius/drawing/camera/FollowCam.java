@@ -1,10 +1,8 @@
 package com.zalinius.drawing.camera;
 
-import com.zalinius.architecture.GameStage;
 import com.zalinius.architecture.Locatable;
 
 import javafx.scene.transform.Affine;
-import javafx.scene.transform.Transform;
 
 public class FollowCam implements Camerable{
 

@@ -8,8 +8,6 @@ import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;

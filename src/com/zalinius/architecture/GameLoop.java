@@ -3,7 +3,6 @@ package com.zalinius.architecture;
 import com.zalinius.utilities.time.GameClock;
 
 import javafx.animation.AnimationTimer;
-import javafx.scene.canvas.GraphicsContext;
 
 public class GameLoop extends AnimationTimer{
 	final long NS_IN_S = 1_000_000_000;
@@ -18,7 +17,6 @@ public class GameLoop extends AnimationTimer{
 	GameStage renderer;
 
 	public GameLoop(Logical logic, GameStage gs){
-		System.out.println("Initializing Game Loop!");
 		time = 0;
 		lastFrameTime = 0;
 		framesInLastSecond = 0;
