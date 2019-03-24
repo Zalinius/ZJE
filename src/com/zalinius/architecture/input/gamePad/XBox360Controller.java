@@ -14,7 +14,7 @@ import com.zalinius.architecture.Logical;
 
 import net.java.games.input.Controller;
 
-public class XBox360Controller implements Logical{
+public class XBox360Controller{
 	
 	public enum Button360{A, B, X, Y, LC, RC, LB, RB, ST, SL, D_UP, D_DOWN, D_LEFT, D_RIGHT}
 	public enum Axis{L, R, DPAD, triggers}
@@ -38,39 +38,6 @@ public class XBox360Controller implements Logical{
 	private static Identifier ID_LB = Identifier.Button._4;
 	private static Identifier ID_RB = Identifier.Button._5;
 	private static Identifier ID_DPAD = Identifier.Axis.POV;
-
-	private Controller controller;
-	private Map<Identifier, Component> inputs;
-	public final int id;
-	
-	private static int count = 0;
-
-	public XBox360Controller(Controller controller) {
-		++count;
-		id = count;
-		System.out.println("RUMBLERS: " + controller.getRumblers().length);
-		this.controller = controller;
-		this.inputs = new HashMap<>();
-		Collection<Component> rawInputs = Arrays.asList(controller.getComponents());
-		for (Iterator<Component> inputIt = rawInputs.iterator(); inputIt.hasNext();) {
-			Component component = inputIt.next();
-			inputs.put(component.getIdentifier(), component);
-		}
-	}
-
-	@Override
-	public void update(double delta) {
-		controller.poll();
-		pollInputs();
-	}
-	
-	private void pollInputs() {
-		for (Iterator<Component> iterator = inputs.values().iterator(); iterator.hasNext();) {
-			Component component = iterator.next();
-			float value = component.getPollData();
-				System.out.println(id + ": " + component.getIdentifier() + " " + component.getPollData());
-		}
-	}
 
 	public static Identifier getIdentifier(Button360 button) {
 		switch (button) {

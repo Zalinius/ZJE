@@ -1,6 +1,5 @@
 package com.zalinius.architecture.input;
 
-import com.zalinius.architecture.input.gamePad.XBox360Controller;
 import com.zalinius.architecture.input.gamePad.XBox360Controller.Button360;
 
 import javafx.scene.input.KeyCode;
