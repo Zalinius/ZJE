@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.Collection;
 import java.util.Iterator;
 import com.zalinius.architecture.input.Clickable;
+import com.zalinius.architecture.input.InputListener;
 import com.zalinius.architecture.input.Inputtable;
 import com.zalinius.drawing.camera.Camerable;
 import com.zalinius.physics.Point2D;
@@ -16,7 +17,7 @@ import javafx.scene.transform.Affine;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class GameStage{
+public class GameStage implements Logical{
 
 	private Canvas canvas;
 	private Stage stage;
@@ -166,12 +167,6 @@ public class GameStage{
 //            }
 //        };
 //    }
-    
-    
-	public boolean isHeld(int keyCode) {
-		return input.isHeldDown(keyCode);
-	}
-	
 
 	public void addInput(Inputtable keyInput) {
 		if(input == null) {
@@ -185,18 +180,15 @@ public class GameStage{
 		}
 		input.addInput(mouseInput);
 	}
-	
-	private InputListener getInput() {
-		if(input == null) {
-			input = new InputListener();
-		}
-		
-		return input;
-	}
 
 	public void render() {
 		gc.setTransform(camera.getTransform());
 		graphics.render(gc);
+	}
+
+	@Override
+	public void update(double delta) {
+		input.update(delta);
 	}
 
 }

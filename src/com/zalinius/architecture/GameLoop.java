@@ -64,6 +64,7 @@ public class GameLoop extends AnimationTimer{
 	 */
 	public void update(double delta) {
 		GameClock.update(delta);
+		renderer.update(delta);
 		logic.update(delta);
 	}
 
