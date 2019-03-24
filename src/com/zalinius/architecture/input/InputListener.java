@@ -3,8 +3,6 @@ package com.zalinius.architecture.input;
 import com.zalinius.architecture.Logical;
 import com.zalinius.architecture.input.gamePad.XBox360Controller;
 import com.zalinius.architecture.input.gamePad.XBox360Controller.Button360;
-import com.zalinius.utilities.Debug;
-
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.input.KeyCode;
@@ -75,7 +73,6 @@ public class InputListener implements EventHandler<KeyEvent>, Logical{
 		
 		if(!gamePads.isEmpty()) {
 		    this.controller = gamePads.get(0);
-		    Debug.log("Added Controller!");
 		}
 	}
 	
@@ -140,9 +137,7 @@ public class InputListener implements EventHandler<KeyEvent>, Logical{
 			Button360 button360 = iterator.next();
 			Identifier id = XBox360Controller.getIdentifier(button360);
 			float value = controller.getComponent(id).getPollData();
-			if(button360 == Button360.A) {
-				System.out.print(value+ "\n");
-			}
+
 			if(value != 0 && (button360 == Button360.D_UP || button360 == Button360.D_DOWN || button360 == Button360.D_LEFT || button360 == Button360.D_RIGHT)) {
 				Button360 pressedButton = XBox360Controller.getDpadDirection(value);
 				
@@ -180,7 +175,6 @@ public class InputListener implements EventHandler<KeyEvent>, Logical{
 				}
 				else if(oldState == false && newState == true) {
 					action.pressed();
-					System.out.println("pressed!");
 				}
 				else if(oldState == true && newState == false) {
 					action.released();

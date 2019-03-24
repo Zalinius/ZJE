@@ -1,18 +1,10 @@
 package com.zalinius.architecture.input.gamePad;
 
-import net.java.games.input.Component;
 import net.java.games.input.Component.Identifier;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
-
-import com.zalinius.architecture.Logical;
-
-import net.java.games.input.Controller;
 
 public class XBox360Controller{
 	

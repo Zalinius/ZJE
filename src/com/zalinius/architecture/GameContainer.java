@@ -1,24 +1,13 @@
 package com.zalinius.architecture;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
 import com.zalinius.architecture.input.Clickable;
 import com.zalinius.architecture.input.Inputtable;
-import com.zalinius.architecture.input.gamePad.XBox360Controller;
 import com.zalinius.physics.Point2D;
 
 import javafx.application.Application;
-import javafx.event.Event;
 import javafx.stage.Stage;
-import net.java.games.input.Component;
-import net.java.games.input.Controller;
-import net.java.games.input.Controller.Type;
-import net.java.games.input.ControllerEnvironment;
-import net.java.games.input.EventQueue;
 
 public abstract class GameContainer extends Application {
 	private GameLoop loop;
