@@ -13,12 +13,20 @@ public class Vector2D {
 		this.y = y;
 	}
 	
+	public Vector2D(Point2D tail, Point2D tip) {
+		this(tip.x - tail.x, tip.y - tail.y);
+	}
+	
 	/**
 	 * Creates a new vector, pointing at tip.
 	 * @param tip The tip of the vector
 	 */
 	public Vector2D(Point2D tip) {
 		this(tip.x, tip.y);
+	}
+	
+	public static Vector2D zeroVector() {
+		return new Vector2D();
 	}
 	
 	/**
@@ -71,6 +79,39 @@ public class Vector2D {
 		else {
 			Vector2D otherVector = (Vector2D) obj;
 			return x == otherVector.x && y == otherVector.y;
+		}
+	}
+	
+	public double angle() {
+		if(x == 0 && y == 0) {
+			return Double.NaN;
+		}
+		else if(x != 0 && y == 0) {
+			if(x > 0)
+				return 0.0;
+			else
+				return 180.0;
+		}
+		else if(x == 0 && y !=0) {
+			if(y > 0)
+				return 90.0;
+			else
+				return 270.0;
+		}
+		else {
+			double theta = Math.atan(y/x) / Math.PI * 180.0;
+			if(x > 0 && y > 0) {
+				return theta;
+			}
+			else if(x < 0 && y > 0) {
+				return theta + 180;
+			}
+			else if(x < 0 && y < 0) {
+				return theta + 180;
+			}
+			else {
+				return theta + 360;
+			}
 		}
 	}
 	

@@ -11,6 +11,10 @@ public class Rectangle extends Shape{
 	private Point2D position;
 	private double width, height;
 	 	
+	public Rectangle(Point2D bottomLeftCorner, Point2D topRightCorner) {
+		this(bottomLeftCorner, topRightCorner.x - bottomLeftCorner.x, topRightCorner.y - bottomLeftCorner.y);
+	}
+	
 	public Rectangle(double width, double height) {
 		this(new Point2D(), width, height);
 	}

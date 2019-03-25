@@ -24,7 +24,7 @@ public class Vector2DTest {
 		assertEquals(v, expected);
 	}
 	
-/*	@Test
+	@Test
 	void angle_upVector_90Degrees() {
 		Vector2D v = new Vector2D(0, 1);
 		
@@ -49,6 +49,6 @@ public class Vector2DTest {
 		double angle = v.angle();
 		
 		assertEquals(135.0, angle);
-	}*/
+	}
 	
 }
