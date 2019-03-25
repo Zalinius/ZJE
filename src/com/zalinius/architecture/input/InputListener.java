@@ -3,6 +3,8 @@ package com.zalinius.architecture.input;
 import com.zalinius.architecture.Logical;
 import com.zalinius.architecture.input.gamePad.XBox360Controller;
 import com.zalinius.architecture.input.gamePad.XBox360Controller.Button360;
+import com.zalinius.utilities.Debug;
+
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.input.KeyCode;
@@ -17,6 +19,7 @@ import java.util.Collection;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class InputListener implements EventHandler<KeyEvent>, Logical{
@@ -25,8 +28,11 @@ public class InputListener implements EventHandler<KeyEvent>, Logical{
 	Map<KeyCode, Boolean> keyStates; //pressed or not
 	Map<Button360, Inputtable> buttonInputs;
 	Map<Button360, Boolean> buttonStates;
-	Controller controller;
-	
+
+	Map<Integer, Map<Button360, Inputtable>> controllerInputs;
+	Map<Integer, Map<Button360, Boolean>> controllerStates;
+	Map<Integer, Controller> controllers;
+
 	Map<Integer, Collection<Clickable>> mouseInputs;
 
 
@@ -40,7 +46,7 @@ public class InputListener implements EventHandler<KeyEvent>, Logical{
 		this.buttonInputs = new EnumMap<>(Button360.class);
 		this.buttonStates = new EnumMap<>(Button360.class);
 
-		
+
 		for (Iterator<Inputtable> iterator = keyInputs.iterator(); iterator.hasNext();) {
 			Inputtable inputtable = iterator.next();
 			if(inputtable.button().isKey()) {
@@ -52,30 +58,26 @@ public class InputListener implements EventHandler<KeyEvent>, Logical{
 				this.buttonStates.put(inputtable.button().button360(), false);
 			}
 		}
-		
+
 		this.mouseInputs = new HashMap<>();
 		for (Clickable clickable : mouseInputs) {
 			if(!this.mouseInputs.containsKey(clickable.mouseButtonCode() )) {
 				this.mouseInputs.put(clickable.mouseButtonCode(), new ArrayList<>());
 			}
-			
+
 			this.mouseInputs.get(clickable.mouseButtonCode()).add(clickable);
 		}
-		
+
 		Controller[] ca = ControllerEnvironment.getDefaultEnvironment().getControllers();
-		ArrayList<Controller> gamePads = new ArrayList<>();
+		controllers = new HashMap<>();
 		for(int i =0;i<ca.length;i++){
 			if(ca[i].getType().equals(Type.GAMEPAD)) {
-				gamePads.add(ca[i]);
-				
+				controllers.put(i, ca[i]);		
 			}
 		}
-		
-		if(!gamePads.isEmpty()) {
-		    this.controller = gamePads.get(0);
-		}
+		Debug.log("Gamepads found: " + controllers.size() + ".");
 	}
-	
+
 	public void addInput(Inputtable input) {
 		if(input.button().isKey()) {
 			this.keyInputs.put(input.button().keyCode(), input);
@@ -86,21 +88,21 @@ public class InputListener implements EventHandler<KeyEvent>, Logical{
 			this.buttonStates.put(input.button().button360(), false);
 		}
 	}
-	
+
 	public void addInput(Clickable click) {
 		if(!this.mouseInputs.containsKey(click.mouseButtonCode() )) {
 			this.mouseInputs.put(click.mouseButtonCode(), new ArrayList<>());
 		}	
 		mouseInputs.get(click.mouseButtonCode()).add(click);
 	}
-	
+
 
 	@Override
 	public void handle(KeyEvent event) {
 		keyPressSwitchBoard(event.getCode(), event.getEventType());
 	}
-	
-	
+
+
 
 
 
@@ -130,9 +132,20 @@ public class InputListener implements EventHandler<KeyEvent>, Logical{
 				keyInputs.get(key).held(delta);
 			}
 		}
-		
+
+		for (Iterator<Integer> iterator = controllers.keySet().iterator(); iterator.hasNext();) {
+			Integer controllerKey = iterator.next();
+			Controller controller = controllers.get(controllerKey);
+			boolean controllerStillAvailable = controller.poll();
+			if(controllerStillAvailable) {
+				updateController(controller , delta);
+			}
+		}
+
+	}
+
+	private void updateController(Controller controller, double delta) {
 		//Poll controllers
-		controller.poll();
 		for (Iterator<Button360> iterator = buttonInputs.keySet().iterator(); iterator.hasNext();) {
 			Button360 button360 = iterator.next();
 			Identifier id = XBox360Controller.getIdentifier(button360);
@@ -140,10 +153,10 @@ public class InputListener implements EventHandler<KeyEvent>, Logical{
 
 			if(value != 0 && (button360 == Button360.D_UP || button360 == Button360.D_DOWN || button360 == Button360.D_LEFT || button360 == Button360.D_RIGHT)) {
 				Button360 pressedButton = XBox360Controller.getDpadDirection(value);
-				
+
 				for (Iterator<Button360> dpadIt = XBox360Controller.dpadButtons(); dpadIt.hasNext();) {
 					Button360 dpadButt = dpadIt.next();
-					
+
 					if(pressedButton == dpadButt) {//Active dpad
 						if(buttonStates.get(dpadButt)) {
 							buttonInputs.get(dpadButt).held(delta);
@@ -161,15 +174,15 @@ public class InputListener implements EventHandler<KeyEvent>, Logical{
 						}
 					}
 				}
-				
-				
+
+
 			}
 			else {
 				boolean oldState = buttonStates.get(button360);
 				boolean newState = value == 1.0;
 				buttonStates.put(button360, newState);
 				Inputtable action = buttonInputs.get(button360);
-				
+
 				if(oldState == true && newState == true) {
 					action.held(delta);
 				}
@@ -183,48 +196,47 @@ public class InputListener implements EventHandler<KeyEvent>, Logical{
 			}
 		}
 	}
-		
-	
-//
-//	public void mouseClicked(MouseEvent event) {
-//		if(mouseInputs.containsKey(event.getButton())) {
-//			for (Clickable clickable : mouseInputs.get(event.getButton())) {
-//				if(clickable.clickArea().contains(event.getPoint())) {
-//					clickable.mouseClicked();
-//				}
-//			}
-//		}
-//	}
-//
-//	public void mouseEntered(MouseEvent arg0) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	public void mouseExited(MouseEvent arg0) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	public void mousePressed(MouseEvent event) {
-//		if(mouseInputs.containsKey(event.getButton())) {
-//			for (Clickable clickable : mouseInputs.get(event.getButton())) {
-//				if(clickable.clickArea().contains(event.getPoint())) {
-//					clickable.mousePressed();
-//				}
-//			}
-//		}		
-//	}
-//
-//	@Override
-//	public void mouseReleased(MouseEvent event) {
-//		if(mouseInputs.containsKey(event.getButton())) {
-//			for (Clickable clickable : mouseInputs.get(event.getButton())) {
-//				if(clickable.clickArea().contains(event.getPoint())) {
-//					clickable.mouseReleased();
-//				}
-//			}
-//		}				
-//	}
+
+	//
+	//	public void mouseClicked(MouseEvent event) {
+	//		if(mouseInputs.containsKey(event.getButton())) {
+	//			for (Clickable clickable : mouseInputs.get(event.getButton())) {
+	//				if(clickable.clickArea().contains(event.getPoint())) {
+	//					clickable.mouseClicked();
+	//				}
+	//			}
+	//		}
+	//	}
+	//
+	//	public void mouseEntered(MouseEvent arg0) {
+	//		// TODO Auto-generated method stub
+	//		
+	//	}
+	//
+	//	public void mouseExited(MouseEvent arg0) {
+	//		// TODO Auto-generated method stub
+	//		
+	//	}
+	//
+	//	public void mousePressed(MouseEvent event) {
+	//		if(mouseInputs.containsKey(event.getButton())) {
+	//			for (Clickable clickable : mouseInputs.get(event.getButton())) {
+	//				if(clickable.clickArea().contains(event.getPoint())) {
+	//					clickable.mousePressed();
+	//				}
+	//			}
+	//		}		
+	//	}
+	//
+	//	@Override
+	//	public void mouseReleased(MouseEvent event) {
+	//		if(mouseInputs.containsKey(event.getButton())) {
+	//			for (Clickable clickable : mouseInputs.get(event.getButton())) {
+	//				if(clickable.clickArea().contains(event.getPoint())) {
+	//					clickable.mouseReleased();
+	//				}
+	//			}
+	//		}				
+	//	}
 
 }
