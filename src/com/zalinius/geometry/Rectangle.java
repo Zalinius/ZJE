@@ -25,6 +25,10 @@ public class Rectangle extends Shape{
 		this.height = height;
 	}
 	
+	public Rectangle(double x, double y, double width, double height) {
+		this(new Point2D(x, y), width, height);
+	}
+
 	public void moveTo(Point2D newPosition) {
 		position = newPosition;
 	}

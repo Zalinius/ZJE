@@ -168,6 +168,7 @@ public class GameStage implements Logical{
 //        };
 //    }
 
+
 	public void addInput(Inputtable keyInput) {
 		if(input == null) {
 			input = new InputListener();
