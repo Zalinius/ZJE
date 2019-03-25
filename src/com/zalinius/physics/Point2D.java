@@ -23,18 +23,13 @@ public class Point2D {
 		return new Point2D(x + dX, y + dY);
 	}
 	
-	public static Point2D add(Point2D p1, Point2D p2) {
-		return new Point2D(p1.x + p2.x, p1.y +p2.y);
-	}
-	
 	/**
 	 * @param p
 	 * @param v
 	 * @return A new Point2D, which is p moved by an amount equivalent to v
 	 */
 	public static Point2D add(Point2D p, Vector2D v) {
-		Point2D change = v.originVector().end;
-		return Point2D.add(p, change);		
+		return new Point2D(p.x + v.x, p.y + v.y);	
 	}
 	
 	public static double distance(Point2D p1, Point2D p2) {
@@ -42,6 +37,10 @@ public class Point2D {
 		double x = p1.x - p2.x;
 		
 		return Math.sqrt(x*x + y*y);
+	}
+	
+	public static Vector2D subtract(Point2D p1, Point2D p2) {
+		return new Vector2D(p2.x - p1.x, p2.y - p1.y);
 	}
 
 	public boolean equals(Object obj) {

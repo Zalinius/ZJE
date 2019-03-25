@@ -2,95 +2,73 @@ package com.zalinius.architecture;
 
 import com.zalinius.utilities.time.GameClock;
 
-public class GameLoop {
-    final int TARGET_FPS = 60;
-    final long NS_IN_S = 1000000000;
-    
-    long totalTime;
-    int framesInLastSecond;
+import javafx.animation.AnimationTimer;
 
-    GameStage stage;
-    Logical logic;
+public class GameLoop extends AnimationTimer{
+	final long NS_IN_S = 1_000_000_000;
 
-    public GameLoop(GameStage stage, Logical logic){
-    	totalTime = 0;
-    	framesInLastSecond = 0;
-        this.stage = stage;
-        this.logic = logic;
-    }
-    
-    public void start() {
-    	gameLoop();
-    }
+	long time;
+	long lastFrameTime;
+	long accumulator;
 
-    private void gameLoop()
-    {
-        long lastLoopTime = System.nanoTime();
-        final long OPTIMAL_TIME = 1000000000 / TARGET_FPS; //1 Second / 60 fps
+	int framesInLastSecond;
 
-        // keep looping round till the gameContainer ends
-        boolean gameRunning = true;
-        while (gameRunning)
-        {
-            // work out how long its been since the last update, this
-            // will be used to calculate how far the entities should
-            // move this loop
-            long now = System.nanoTime();
-            long updateLength = now - lastLoopTime;
-            totalTime += updateLength;
-            ++framesInLastSecond;
-            checkFramerate(updateLength);
-            lastLoopTime = now;
-            double delta = updateLength / 1E9;
+	Logical logic;
+	GameStage renderer;
 
-            //System.out.print((lastLoopTime-System.nanoTime() + OPTIMAL_TIME)/1000000 + "\n");
+	public GameLoop(Logical logic, GameStage gs){
+		time = 0;
+		lastFrameTime = 0;
+		framesInLastSecond = 0;
+		accumulator = 0;
+		this.logic = logic;
+		this.renderer = gs;
+	}
 
-            //System.out.print("FPS: " + 1/delta + "\n");
+	public void handle(long now)
+	{	
 
-            // update the gameContainer logic
-            update(delta);
-            // draw everything
-            render();
+		long differential = now - lastFrameTime;
+		if(lastFrameTime == 0) {
+			differential = 0;
+		}
+		time += now;
+		double delta = (double) differential / NS_IN_S ;
+		lastFrameTime = now;
 
-            // we want each frame to take 10 milliseconds, to do this
-            // we've recorded when we started the frame. We add 10 milliseconds
-            // to this and then factor in the current time to give
-            // us our final value to wait for
-            // remember this is in ms, whereas our lastLoopTime etc. vars are in ns.
-            try{
-            	long current = System.nanoTime();
-            	long sleepTime = (lastLoopTime-current + OPTIMAL_TIME)/1000000;
-            	if(sleepTime < 0) {
-            		sleepTime = 0;
-            	}
-                Thread.sleep(sleepTime);
-            }
-            catch (IllegalArgumentException | InterruptedException e){
-                e.printStackTrace();
-            }
+		++framesInLastSecond;
+		accumulator += differential;
+		//checkFramerate();
 
-        }
-    }
+		// update the gameContainer logic
+		update(delta);
+		// draw everything
+		render();
 
-    private void checkFramerate(long lastFrameLength) {
-    	long secondIndex = totalTime/NS_IN_S ;
-    	long lastSecondIndex = (totalTime-lastFrameLength)/NS_IN_S;
-    	if(lastSecondIndex < secondIndex) {
-    		stage.setFPS(framesInLastSecond);
-    		framesInLastSecond = 0;
-    	}
+	}
+
+
+	private void checkFramerate() {
+		long secondsAccumulated = accumulator/NS_IN_S ;
+		if(secondsAccumulated >0) {
+			System.out.println(framesInLastSecond);
+			//stage.setFPS(framesInLastSecond);
+			framesInLastSecond = 0;
+			accumulator -= NS_IN_S;
+		}
 	}
 
 	/**
-     * Updates the gameContainer logic
-     * @param delta The ratio of the last frame time, with respect to a perfect 60 FPS
-     */
-    public void update(double delta) {
-    	GameClock.update(delta);
-    	logic.update(delta);
-    }
+	 * Updates the gameContainer logic
+	 * @param delta The ratio of the last frame time, with respect to a perfect 60 FPS
+	 */
+	public void update(double delta) {
+		GameClock.update(delta);
+		renderer.update(delta);
+		logic.update(delta);
+	}
 
-    public void render() {
-        stage.repaint();
-    }
+	public void render() {
+		renderer.render();
+	}
 }

@@ -1,15 +1,13 @@
 package com.zalinius.drawing;
 
-import com.zalinius.architecture.GameStage;
-
-import java.awt.*;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Background {
 	Color backgroundColor;
 	
-    public void drawBackground(Graphics2D g){
-        Rectangle screen = new Rectangle(GameStage.GAME_WIDTH, GameStage.GAME_HEIGHT);
-        g.setColor(backgroundColor);
-        g.fill(screen);
+    public void drawBackground(GraphicsContext gc){
+        gc.setFill(backgroundColor);
+        gc.fillRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
     }
 }

@@ -1,26 +1,21 @@
 package com.zalinius.architecture;
 
-import java.awt.event.WindowAdapter;
 import java.util.ArrayList;
 import java.util.Collection;
-
 import com.zalinius.architecture.input.Clickable;
 import com.zalinius.architecture.input.Inputtable;
-import com.zalinius.drawing.camera.Camerable;
+import com.zalinius.physics.Point2D;
 
-public class GameContainer {
+import javafx.application.Application;
+import javafx.stage.Stage;
+
+public abstract class GameContainer extends Application {
 	private GameLoop loop;
-	private GameStage stage;
+	private GameStage gameStage;
+	//TODO window exit action?
+	//TODO adding controls from where?
 
-	public GameContainer(Graphical graphics, Logical logic) {
-		stage = new GameStage(graphics);
-		loop = new GameLoop(stage, logic);
-	}
-	
-	public GameContainer(Graphical graphics, Logical logic, WindowAdapter exitAction ) {
-		loop = new GameLoop(new GameStage(graphics), logic);
-	}
-	
+
 	public void addControls(Collection<Inputtable> keyControls, Collection<Clickable> mouseControls) {
 		if(keyControls == null) {
 			keyControls = new ArrayList<>();
@@ -28,21 +23,25 @@ public class GameContainer {
 		if(mouseControls == null) {
 			mouseControls = new ArrayList<>();
 		}
-		stage.addKeys(keyControls, mouseControls);
-	}
-	
-	public void setCamera(Camerable camera) {
-		stage.setCamera(camera);
-	}
-	
-	public void startGame() {
-		loop.start();
+		gameStage.addKeys(keyControls, mouseControls);
 	}
 
-	public void exit() {
-		stage.dispose();
-		System.exit(0);
+
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		gameStage = new GameStage(primaryStage, gameGraphics(), windowSize(), windowTitle());
+		loop = new GameLoop(gameLogic(), gameStage);
+		loop.start();
+		primaryStage.show();
 	}
-	
+
+	public GameStage gameStage() {
+		return gameStage;
+	}
+
+	public abstract Logical gameLogic();	
+	public abstract Graphical gameGraphics();
+	public abstract Point2D windowSize();
+	public abstract String windowTitle();
 
 }
