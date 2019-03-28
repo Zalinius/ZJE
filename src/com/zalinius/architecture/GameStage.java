@@ -1,6 +1,5 @@
 package com.zalinius.architecture;
 
-import java.awt.*;
 import java.util.Collection;
 import java.util.Iterator;
 import com.zalinius.architecture.input.Clickable;
@@ -13,6 +12,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.scene.transform.Affine;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -38,7 +38,7 @@ public class GameStage implements Logical{
 		canvas = new Canvas(size.x, size.y);
 		root.getChildren().add(canvas);
 		gc = canvas.getGraphicsContext2D();
-		gc.setTransform(defaultCamera().getTransform());
+		gc.setTransform(defaultCamera().getTransform(new Point2D()));
 		
 		input = new InputListener();
 		scene.setOnKeyPressed(input);
@@ -54,7 +54,7 @@ public class GameStage implements Logical{
 	public Camerable defaultCamera() {
 		return new Camerable() {
 			@Override
-			public Affine getTransform() {
+			public Affine getTransform(Point2D canvasSize) {
 				return new Affine(1, 0, 0, 0, -1, height());
 			}
 		};
@@ -113,19 +113,6 @@ public class GameStage implements Logical{
 //        this.camera = camera;
 //    }
 //    
-    public void paintBuffer(Graphics2D g){
-//    	AffineTransform trans = camera.getTransform();
-//    	g.setTransform(trans);
-//
-//    	//graphics.render(g);
-//    	
-//    	g.setColor(fpsColor());
-//    	g.setFont(new Font("SansSerif", Font.BOLD, 20));
-//    	
-//    	float offSetX = (float) trans.getTranslateX();
-//    	float offSetY = (float) trans.getTranslateY();
-//    	g.drawString(Integer.toString((int)currentFPS), 10 - offSetX, 50 - offSetY);
-      }
 
     private Color fpsColor() {
 		if(currentFPS >= 50) {
@@ -183,7 +170,27 @@ public class GameStage implements Logical{
 	}
 
 	public void render() {
-		gc.setTransform(camera.getTransform());
+		Affine cameraTransform = camera.getTransform(new Point2D(width(), height()));
+		//System.out.println("1:" + cameraTransform);
+		cameraTransform.setMyy(cameraTransform.getMyy() * -1);
+		cameraTransform.setTy(height() - cameraTransform.getTy());
+		gc.setTransform(cameraTransform);
+		
+    	double offSetX = cameraTransform.getTx();
+    	double offSetY = height() - cameraTransform.getTy();
+    	//System.out.println("Clearing rectangle: " + -offSetX + " " + -offSetY + ", width height " + width() + " " + height());
+        gc.clearRect(-offSetX , -offSetY,width(), height());
+        gc.setFill(Color.BLACK);
+        gc.fillRect(-offSetX, -offSetY, width(), height());
+        
+        gc.setStroke(Color.WHITE);
+        gc.strokeLine(-1000, 0, 1000, 0);
+        gc.strokeLine(0, -1000, 0, 1000);
+		//System.out.println("2:" + cameraTransform);
+		//System.out.println();
+		
+
+		gc.setFill(Color.YELLOW);
 		graphics.render(gc);
 	}
 

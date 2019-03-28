@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import com.zalinius.architecture.input.Clickable;
 import com.zalinius.architecture.input.Inputtable;
+import com.zalinius.drawing.camera.Camerable;
 import com.zalinius.physics.Point2D;
 
 import javafx.application.Application;
@@ -24,6 +25,10 @@ public abstract class GameContainer extends Application {
 			mouseControls = new ArrayList<>();
 		}
 		gameStage.addKeys(keyControls, mouseControls);
+	}
+	
+	public void setCamera(Camerable camera) {
+		gameStage.setCamera(camera);
 	}
 
 
