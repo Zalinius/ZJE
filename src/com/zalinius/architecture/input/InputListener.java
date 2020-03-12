@@ -1,37 +1,21 @@
 package com.zalinius.architecture.input;
 
 import com.zalinius.architecture.Logical;
-import com.zalinius.architecture.input.gamePad.XBox360Controller;
-import com.zalinius.architecture.input.gamePad.XBox360Controller.Button360;
-import com.zalinius.utilities.Debug;
-
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import net.java.games.input.Component.Identifier;
-import net.java.games.input.Controller.Type;
-import net.java.games.input.Controller;
-import net.java.games.input.ControllerEnvironment;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 public class InputListener implements EventHandler<KeyEvent>, Logical{
 
 	Map<KeyCode, Inputtable> keyInputs;
 	Map<KeyCode, Boolean> keyStates; //pressed or not
-	Map<Button360, Inputtable> buttonInputs;
-	Map<Button360, Boolean> buttonStates;
-
-	Map<Integer, Map<Button360, Inputtable>> controllerInputs;
-	Map<Integer, Map<Button360, Boolean>> controllerStates;
-	Map<Integer, Controller> controllers;
 
 	Map<Integer, Collection<Clickable>> mouseInputs;
 
@@ -43,20 +27,13 @@ public class InputListener implements EventHandler<KeyEvent>, Logical{
 	public InputListener(Collection<Inputtable> keyInputs, Collection<Clickable> mouseInputs) {
 		this.keyInputs = new HashMap<>();
 		this.keyStates = new HashMap<>();
-		this.buttonInputs = new EnumMap<>(Button360.class);
-		this.buttonStates = new EnumMap<>(Button360.class);
-
 
 		for (Iterator<Inputtable> iterator = keyInputs.iterator(); iterator.hasNext();) {
 			Inputtable inputtable = iterator.next();
-			if(inputtable.button().isKey()) {
-				this.keyInputs.put(inputtable.button().keyCode(), inputtable);
-				this.keyStates.put(inputtable.button().keyCode(), false);
-			}
-			else if(inputtable.button().is360Button()) {
-				this.buttonInputs.put(inputtable.button().button360(), inputtable);
-				this.buttonStates.put(inputtable.button().button360(), false);
-			}
+			this.keyInputs.put(inputtable.keyCode(), inputtable);
+			this.keyStates.put(inputtable.keyCode(), false);
+
+
 		}
 
 		this.mouseInputs = new HashMap<>();
@@ -67,26 +44,12 @@ public class InputListener implements EventHandler<KeyEvent>, Logical{
 
 			this.mouseInputs.get(clickable.mouseButtonCode()).add(clickable);
 		}
-
-		Controller[] ca = ControllerEnvironment.getDefaultEnvironment().getControllers();
-		controllers = new HashMap<>();
-		for(int i =0;i<ca.length;i++){
-			if(ca[i].getType().equals(Type.GAMEPAD)) {
-				controllers.put(i, ca[i]);		
-			}
-		}
-		Debug.log("Gamepads found: " + controllers.size() + ".");
 	}
 
 	public void addInput(Inputtable input) {
-		if(input.button().isKey()) {
-			this.keyInputs.put(input.button().keyCode(), input);
-			this.keyStates.put(input.button().keyCode(), false);
-		}
-		else if(input.button().is360Button()) {
-			this.buttonInputs.put(input.button().button360(), input);
-			this.buttonStates.put(input.button().button360(), false);
-		}
+			this.keyInputs.put(input.keyCode(), input);
+			this.keyStates.put(input.keyCode(), false);
+
 	}
 
 	public void addInput(Clickable click) {
@@ -130,69 +93,6 @@ public class InputListener implements EventHandler<KeyEvent>, Logical{
 			KeyCode key = iterator.next();
 			if(keyStates.get(key)) {
 				keyInputs.get(key).held(delta);
-			}
-		}
-
-		for (Iterator<Integer> iterator = controllers.keySet().iterator(); iterator.hasNext();) {
-			Integer controllerKey = iterator.next();
-			Controller controller = controllers.get(controllerKey);
-			boolean controllerStillAvailable = controller.poll();
-			if(controllerStillAvailable) {
-				updateController(controller , delta);
-			}
-		}
-
-	}
-
-	private void updateController(Controller controller, double delta) {
-		//Poll controllers
-		for (Iterator<Button360> iterator = buttonInputs.keySet().iterator(); iterator.hasNext();) {
-			Button360 button360 = iterator.next();
-			Identifier id = XBox360Controller.getIdentifier(button360);
-			float value = controller.getComponent(id).getPollData();
-
-			if(value != 0 && (button360 == Button360.D_UP || button360 == Button360.D_DOWN || button360 == Button360.D_LEFT || button360 == Button360.D_RIGHT)) {
-				Button360 pressedButton = XBox360Controller.getDpadDirection(value);
-
-				for (Iterator<Button360> dpadIt = XBox360Controller.dpadButtons(); dpadIt.hasNext();) {
-					Button360 dpadButt = dpadIt.next();
-
-					if(pressedButton == dpadButt) {//Active dpad
-						if(buttonStates.get(dpadButt)) {
-							buttonInputs.get(dpadButt).held(delta);
-						}
-						else {
-							buttonInputs.get(dpadButt).pressed();
-							buttonStates.put(dpadButt, true);
-						}
-
-					}
-					else {//Inactive dpad
-						if(buttonStates.get(dpadButt)) {
-							buttonInputs.get(dpadButt).released();
-							buttonStates.put(dpadButt, false);
-						}
-					}
-				}
-
-
-			}
-			else {
-				boolean oldState = buttonStates.get(button360);
-				boolean newState = value == 1.0;
-				buttonStates.put(button360, newState);
-				Inputtable action = buttonInputs.get(button360);
-
-				if(oldState == true && newState == true) {
-					action.held(delta);
-				}
-				else if(oldState == false && newState == true) {
-					action.pressed();
-				}
-				else if(oldState == true && newState == false) {
-					action.released();
-				}
-
 			}
 		}
 	}

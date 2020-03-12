@@ -8,6 +8,7 @@ import com.zalinius.drawing.camera.Camerable;
 import com.zalinius.physics.Point2D;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 public abstract class GameContainer extends Application {
@@ -42,6 +43,10 @@ public abstract class GameContainer extends Application {
 
 	public GameStage gameStage() {
 		return gameStage;
+	}
+	
+	public void exitGame() {
+		Platform.exit();
 	}
 
 	public abstract Logical gameLogic();	
