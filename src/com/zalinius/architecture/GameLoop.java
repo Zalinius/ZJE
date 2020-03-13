@@ -1,28 +1,26 @@
 package com.zalinius.architecture;
 
+import java.util.Iterator;
+import java.util.List;
+
+import com.zalinius.plugins.Plugin;
 import com.zalinius.utilities.time.GameClock;
 
 import javafx.animation.AnimationTimer;
 
 public class GameLoop extends AnimationTimer{
-	final long NS_IN_S = 1_000_000_000;
+	private final long NS_IN_S = 1_000_000_000;
 
-	long time;
-	long lastFrameTime;
-	long accumulator;
+	private long lastFrameTime;
+	private Logical logic;
+	private GameStage renderer;
+	private List<Plugin> plugins;
 
-	int framesInLastSecond;
-
-	Logical logic;
-	GameStage renderer;
-
-	public GameLoop(Logical logic, GameStage gs){
-		time = 0;
+	public GameLoop(Logical logic, GameStage gs, List<Plugin> plugins){
 		lastFrameTime = 0;
-		framesInLastSecond = 0;
-		accumulator = 0;
 		this.logic = logic;
 		this.renderer = gs;
+		this.plugins = plugins;
 	}
 
 	public void handle(long now)
@@ -32,30 +30,14 @@ public class GameLoop extends AnimationTimer{
 		if(lastFrameTime == 0) {
 			differential = 0;
 		}
-		time += now;
 		double delta = (double) differential / NS_IN_S ;
 		lastFrameTime = now;
-
-		++framesInLastSecond;
-		accumulator += differential;
-		//checkFramerate();
 
 		// update the gameContainer logic
 		update(delta);
 		// draw everything
 		render();
 
-	}
-
-
-	private void checkFramerate() {
-		long secondsAccumulated = accumulator/NS_IN_S ;
-		if(secondsAccumulated >0) {
-			System.out.println(framesInLastSecond);
-			//stage.setFPS(framesInLastSecond);
-			framesInLastSecond = 0;
-			accumulator -= NS_IN_S;
-		}
 	}
 
 	/**
@@ -66,9 +48,15 @@ public class GameLoop extends AnimationTimer{
 		GameClock.update(delta);
 		renderer.update(delta);
 		logic.update(delta);
+
+		for (Iterator<Plugin> iterator = plugins.iterator(); iterator.hasNext();) {
+			Plugin plugin = iterator.next();
+			plugin.update(delta);
+		}
 	}
 
 	public void render() {
 		renderer.render();
+
 	}
 }

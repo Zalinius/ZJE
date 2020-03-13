@@ -2,11 +2,14 @@ package com.zalinius.architecture;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+
 import com.zalinius.architecture.input.Clickable;
 import com.zalinius.architecture.input.InputListener;
 import com.zalinius.architecture.input.Inputtable;
 import com.zalinius.drawing.camera.Camerable;
 import com.zalinius.physics.Point2D;
+import com.zalinius.plugins.Plugin;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -26,7 +29,9 @@ public class GameStage implements Logical{
 	private Camerable camera;
 	private InputListener input;
 	
-	public GameStage(Stage primaryStage, Graphical graphics, Point2D size, String title) {
+	private List<Plugin> plugins;
+	
+	public GameStage(Stage primaryStage, Graphical graphics, Point2D size, String title, List<Plugin> plugins) {
 		primaryStage.initStyle(StageStyle.DECORATED);
 		primaryStage.setTitle(title);
 		stage = primaryStage;
@@ -45,6 +50,8 @@ public class GameStage implements Logical{
 		scene.setOnKeyReleased(input);
 
 		camera = defaultCamera();
+		
+		this.plugins = plugins;
 	}
 	
 	public void setCamera(Camerable camera) {
@@ -55,7 +62,7 @@ public class GameStage implements Logical{
 		return new Camerable() {
 			@Override
 			public Affine getTransform(Point2D canvasSize) {
-				return new Affine(1, 0, 0, 0, -1, height());
+				return new Affine(1, 0, 0, 0, 1, 0);
 			}
 		};
 	}
@@ -82,49 +89,7 @@ public class GameStage implements Logical{
 	public double height() {
 		return canvas.getHeight();
 	}
-	
-	private double currentFPS;
-	
-
-//
-//    public GameStage(Graphical graphics, String windowText, int width, int height, Color backgroundColor) {
-//    	super(windowText);
-//    	this.graphics = graphics;
-//        setResizable(false);
-//        setSize(width, height);
-//        setVisible(true);
-//        setBackground(backgroundColor);
-//        addWindowListener(defaultCloseAction());
-//        addKeyListener(getInput());
-//        addMouseListener(getInput());
-//        this.camera = new StaticCam();
-//    }
-//    
-//    public GameStage(Graphical graphics, String windowText, int width, int height, Color backgroundColor, WindowAdapter closeAction, Camerable camera) {
-//    	super(windowText);
-//    	this.graphics = graphics;
-//        setResizable(false);
-//        setSize(width, height);
-//        setVisible(true);
-//        setBackground(backgroundColor);
-//        addWindowListener(closeAction);
-//        addKeyListener(getInput());
-//        addMouseListener(getInput());
-//        this.camera = camera;
-//    }
-//    
-
-    private Color fpsColor() {
-		if(currentFPS >= 50) {
-			return Color.GREEN;
-		}
-		else if(currentFPS >= 30) {
-			return Color.YELLOW;
-		}else
-		{
-			return Color.RED;
-		}
-	}
+	  
 
 	public void addKeys(Collection<Inputtable> keys, Collection<Clickable> clicks){
 		Iterator<Inputtable> keysIt = keys.iterator();
@@ -141,10 +106,7 @@ public class GameStage implements Logical{
 		
     }
 	
-	
-    public void setFPS(double fps) {
-    	currentFPS = fps;
-    }
+
 //    
 //    private WindowAdapter defaultCloseAction() {
 //    	return new WindowAdapter() {
@@ -182,16 +144,11 @@ public class GameStage implements Logical{
         gc.clearRect(-offSetX , -offSetY,width(), height());
         gc.setFill(Color.BLACK);
         gc.fillRect(-offSetX, -offSetY, width(), height());
-        
-        gc.setStroke(Color.WHITE);
-        gc.strokeLine(-1000, 0, 1000, 0);
-        gc.strokeLine(0, -1000, 0, 1000);
-		//System.out.println("2:" + cameraTransform);
-		//System.out.println();
-		
-
-		gc.setFill(Color.YELLOW);
 		graphics.render(gc);
+		for (Iterator<Plugin> iterator = plugins.iterator(); iterator.hasNext();) {
+			Plugin plugin = iterator.next();
+			plugin.render(gc);
+		}
 	}
 
 	@Override

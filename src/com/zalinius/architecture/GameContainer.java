@@ -2,10 +2,13 @@ package com.zalinius.architecture;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
 import com.zalinius.architecture.input.Clickable;
 import com.zalinius.architecture.input.Inputtable;
 import com.zalinius.drawing.camera.Camerable;
 import com.zalinius.physics.Point2D;
+import com.zalinius.plugins.Plugin;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -14,6 +17,7 @@ import javafx.stage.Stage;
 public abstract class GameContainer extends Application {
 	private GameLoop loop;
 	private GameStage gameStage;
+	private List<Plugin> plugins;
 	//TODO window exit action?
 	//TODO adding controls from where?
 
@@ -35,8 +39,9 @@ public abstract class GameContainer extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		gameStage = new GameStage(primaryStage, gameGraphics(), windowSize(), windowTitle());
-		loop = new GameLoop(gameLogic(), gameStage);
+		plugins = getPlugins();
+		gameStage = new GameStage(primaryStage, gameGraphics(), windowSize(), windowTitle(), plugins);
+		loop = new GameLoop(gameLogic(), gameStage, plugins);
 		loop.start();
 		primaryStage.show();
 	}
@@ -47,6 +52,10 @@ public abstract class GameContainer extends Application {
 	
 	public void exitGame() {
 		Platform.exit();
+	}
+	
+	public List<Plugin> getPlugins(){
+		return new ArrayList<>();
 	}
 
 	public abstract Logical gameLogic();	
