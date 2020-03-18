@@ -15,7 +15,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 import javafx.scene.transform.Affine;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -68,7 +67,6 @@ public class GameStage implements Logical{
 	}
 	
 	
-	
 	public void resizeWindow(double width, double height) {
 		canvas.setHeight(height);
 		canvas.setWidth(width);
@@ -88,8 +86,7 @@ public class GameStage implements Logical{
 	
 	public double height() {
 		return canvas.getHeight();
-	}
-	  
+	}	  
 
 	public void addKeys(Collection<Inputtable> keys, Collection<Clickable> clicks){
 		Iterator<Inputtable> keysIt = keys.iterator();
@@ -105,18 +102,6 @@ public class GameStage implements Logical{
 		}
 		
     }
-	
-
-//    
-//    private WindowAdapter defaultCloseAction() {
-//    	return new WindowAdapter() {
-//            public void windowClosing(WindowEvent e) {
-//                dispose();
-//                System.exit(0);
-//            }
-//        };
-//    }
-
 
 	public void addInput(Inputtable keyInput) {
 		if(input == null) {
@@ -133,18 +118,11 @@ public class GameStage implements Logical{
 
 	public void render() {
 		Affine cameraTransform = camera.getTransform(new Point2D(width(), height()));
-		//System.out.println("1:" + cameraTransform);
-		cameraTransform.setMyy(cameraTransform.getMyy() * -1);
-		cameraTransform.setTy(height() - cameraTransform.getTy());
 		gc.setTransform(cameraTransform);
 		
-    	double offSetX = cameraTransform.getTx();
-    	double offSetY = height() - cameraTransform.getTy();
-    	//System.out.println("Clearing rectangle: " + -offSetX + " " + -offSetY + ", width height " + width() + " " + height());
-        gc.clearRect(-offSetX , -offSetY,width(), height());
-        gc.setFill(Color.BLACK);
-        gc.fillRect(-offSetX, -offSetY, width(), height());
+        gc.clearRect(0,0,width(), height());
 		graphics.render(gc);
+		
 		for (Iterator<Plugin> iterator = plugins.iterator(); iterator.hasNext();) {
 			Plugin plugin = iterator.next();
 			plugin.render(gc);
