@@ -1,10 +1,10 @@
 package com.zalinius.architecture;
 
-import com.zalinius.physics.Point2D;
+import com.zalinius.physics.Point;
 
 public interface Locatable {
 	
-	public Point2D center();
+	public Point center();
 	
 	public boolean facingRight();
 	

@@ -1,6 +1,6 @@
 package com.zalinius.utilities;
 
-import com.zalinius.physics.Point2D;
+import com.zalinius.physics.Point;
 
 public class ZMath {
 
@@ -81,11 +81,11 @@ public class ZMath {
     }
     
 
-    public static Point2D clamp(Point2D point, Point2D bound1, Point2D bound2) {
+    public static Point clamp(Point point, Point bound1, Point bound2) {
     	double clampedX = clamp(point.x, bound1.x, bound2.x);
     	double clampedY = clamp(point.y, bound1.y, bound2.y);
     	
-    	return new Point2D(clampedX, clampedY);
+    	return new Point(clampedX, clampedY);
     }
     
     
