@@ -8,17 +8,13 @@ import com.zalinius.architecture.input.Clickable;
 import com.zalinius.architecture.input.Inputtable;
 import com.zalinius.drawing.camera.Camerable;
 
-public class GameContainer {
+public abstract class GameContainer implements Graphical, Logical {
 	private GameLoop loop;
 	private GameStage stage;
 
-	public GameContainer(Graphical graphics, Logical logic) {
-		stage = new GameStage(graphics);
-		loop = new GameLoop(stage, logic);
-	}
-	
-	public GameContainer(Graphical graphics, Logical logic, WindowAdapter exitAction ) {
-		loop = new GameLoop(new GameStage(graphics), logic);
+	public GameContainer() {
+		stage = new GameStage(this);
+		loop = new GameLoop(stage, this);
 	}
 	
 	public void addControls(Collection<Inputtable> keyControls, Collection<Clickable> mouseControls) {
@@ -42,6 +38,10 @@ public class GameContainer {
 	public void exit() {
 		stage.dispose();
 		System.exit(0);
+	}
+	
+	public Locatable mouseLocator() {
+		return stage.mouseLocator();
 	}
 	
 

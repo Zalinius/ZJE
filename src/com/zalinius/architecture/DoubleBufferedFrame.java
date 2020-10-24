@@ -67,6 +67,7 @@ public abstract class DoubleBufferedFrame extends Frame {
         //    create the new image with the size of the panel
         bufferImage=createImage(bufferWidth,bufferHeight);
         bufferGraphics=(Graphics2D) bufferImage.getGraphics();
+        bufferGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     }
 
 }

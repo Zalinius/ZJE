@@ -35,6 +35,7 @@ public class GameStage extends DoubleBufferedFrame{
         addWindowListener(defaultCloseAction());
         addKeyListener(getInput());
         addMouseListener(getInput());
+        addMouseMotionListener(getInput());
         this.camera = new StaticCam();
     }
     
@@ -48,6 +49,7 @@ public class GameStage extends DoubleBufferedFrame{
         addWindowListener(closeAction);
         addKeyListener(getInput());
         addMouseListener(getInput());
+        addMouseMotionListener(getInput());
         this.camera = camera;
     }
     
@@ -124,6 +126,10 @@ public class GameStage extends DoubleBufferedFrame{
 			input = new InputListener();
 		}
 		
+		return input;
+	}
+	
+	public Locatable mouseLocator() {
 		return input;
 	}
 }

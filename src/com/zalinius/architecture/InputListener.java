@@ -3,23 +3,28 @@ package com.zalinius.architecture;
 import com.zalinius.architecture.input.Clickable;
 import com.zalinius.architecture.input.Holding;
 import com.zalinius.architecture.input.Inputtable;
+
+import java.awt.Point;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class InputListener extends KeyAdapter implements Holding, MouseListener{
+public class InputListener extends KeyAdapter implements Holding, MouseListener, MouseMotionListener, Locatable{
 
 	HashMap<Integer, Inputtable> keyInputs;
 	HashMap<Integer, Boolean> keyStates; //pressed or not
 	
 	HashMap<Integer, Collection<Clickable>> mouseInputs;
+	
+	private int mouseX, mouseY;
 
 
 	public InputListener(){
 		this.keyInputs = new HashMap<>();
 		this.keyStates = new HashMap<>();
 		this.mouseInputs = new HashMap<>();
+		mouseX = mouseY = 0;
 	}
 	
 	public InputListener(Collection<Inputtable> keyInputs, Collection<Clickable> mouseInputs) {
@@ -124,11 +129,30 @@ public class InputListener extends KeyAdapter implements Holding, MouseListener{
 	public void mouseReleased(MouseEvent event) {
 		if(mouseInputs.containsKey(event.getButton())) {
 			for (Clickable clickable : mouseInputs.get(event.getButton())) {
-				if(clickable.clickArea().contains(event.getPoint())) {
+		//todo		if(clickable.clickArea().contains(event.getPoint())) {
 					clickable.mouseReleased();
-				}
+				//}
 			}
 		}				
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		Point mouse = e.getPoint();
+		mouseX = mouse.x;
+		mouseY = mouse.y;
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		Point mouse = e.getPoint();
+		mouseX = mouse.x;
+		mouseY = mouse.y;
+	}
+
+	@Override
+	public com.zalinius.physics.Point center() {
+		return new com.zalinius.physics.Point(mouseX, mouseY);
 	}
 
 }
