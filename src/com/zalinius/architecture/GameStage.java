@@ -14,7 +14,6 @@ import com.zalinius.drawing.camera.StaticCam;
 public class GameStage extends DoubleBufferedFrame{
 	private static final long serialVersionUID = 1L;
 
-	public static final int GAME_WIDTH = 1366, GAME_HEIGHT = 768; //TODO make this changeable
 	
 	private Graphical graphics;
 	private Camerable camera;
@@ -22,7 +21,7 @@ public class GameStage extends DoubleBufferedFrame{
 	private static InputListener input;
 
     public GameStage(Graphical graphics) {
-        this(graphics, "Game!", GAME_WIDTH, GAME_HEIGHT, Color.black);
+        this(graphics, "Game!", 500, 500, Color.black);
     }
 
     public GameStage(Graphical graphics, String windowText, int width, int height, Color backgroundColor) {
