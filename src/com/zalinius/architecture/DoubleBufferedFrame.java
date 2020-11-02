@@ -34,7 +34,7 @@ public abstract class DoubleBufferedFrame extends Frame {
         	AffineTransform trans = bufferGraphics.getTransform();
         	int offSetX = (int) trans.getTranslateX();
         	int offSetY = (int) trans.getTranslateY();
-            bufferGraphics.clearRect(-offSetX , -offSetY,bufferWidth,bufferHeight);
+            bufferGraphics.clearRect(-offSetX -50, -offSetY -50,bufferWidth+50,bufferHeight+50);
 
             //calls the paintbuffer method with
             //the offscreen graphics as a param

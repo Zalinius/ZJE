@@ -1,41 +1,49 @@
 package com.zalinius.physics;
 
 public class Vector {
-	public final Point start;
-	public final Point end;
+	public final double x;
+	public final double y;
 
 	public Vector() {
-		this(new Point(), new Point());
+		this(0,0);
 	}
 
 	public Vector(double x, double y) {
-		this(new Point(), new Point(x, y));
+		this.x = x;
+		this.y = y;
 	}
 	
 	/**
-	 * Creates a new origin-vector, ending at end.
-	 * @param end The endpoint of the vector
+	 * Creates a new vector pointin at Point.
+	 * @param point The endpoint of the vector
 	 */
-	public Vector(Point end) {
-		this(new Point(), end);
+	public Vector(Point point) {
+		this(point.x, point.y);
+	}
+	
+	public Vector(Vector vector) {
+		this.x = vector.x;
+		this.y = vector.y;
+	}
+
+	public Vector(double x1, double y1, double x2, double y2) {
+		this.x = x2 - x1;
+		this.y = y2 - y1;
 	}
 	
 	public Vector(Point start, Point end) {
-		this.start = start;
-		this.end = end;
+		this(start.x, start.y, end.x, end.y);
 	}
+	
 
 	public double length() {
-		return Point.distance(start, end);
+		return Math.sqrt(x*x + y*y);
 	}
 	
 	/**
 	 * @return the vector's angle in degrees
 	 */
 	public double angle() {
-		double x = end.x;
-		double y = end.y;
-		
 		if(x == 0 && y == 0) {
 			return Double.NaN;
 		}
@@ -74,31 +82,17 @@ public class Vector {
 	 * @return A new scaled vector
 	 */
 	public Vector scale(double k) {
-		Vector base = originVector();
-		Vector scaledBase = new Vector(base.end.x * k, base.end.y * k);
-		
-		return new Vector(start, new Point(start.x + scaledBase.end.x, start.y + scaledBase.end.y));
-	}
-
-	/**
-	 * @return An equivalent vector, but starting at the origin.
-	 */
-	public Vector originVector() {
-		return new Vector(end.x - start.x, end.y - start.y);
+		return new Vector(k*x, k*y);
 	}
 
 	public boolean isZeroVector() {
-		return start.equals(end);
+		return x == 0 && y == 0;
 	}
 	
 	public boolean isUnitVector() {
 		return length() == 1.0;
 	}
 	
-	public boolean isOriginVector() {
-		return start.equals(new Point());
-	}
-
 	/**
 	 * Adds the v2 to v1
 	 * @param v1
@@ -106,42 +100,92 @@ public class Vector {
 	 * @return A new vector, which starts at this vectors source
 	 */
 	public Vector add(Vector other) {
-		Vector change = other.originVector();
-		return new Vector(start, Point.add(end, change.end));
+		return new Vector(x + other.x, y + other.y);
+	}
+	public Vector add(double dx, double dy) {
+		return new Vector(x + dx, y + dy);
+	}
+	public Vector subtract(Vector other) {
+		return subtract(other.x, other.y);
+	}
+	public Vector subtract(double dx, double dy) {
+		return new Vector(x - dx, y - dy);
 	}
 
 	public static double dotProduct(Vector v1, Vector v2) {
-		Point p1 = v1.originVector().end;
-		Point p2 = v2.originVector().end;
-		
-		return(p1.x * p2.x + p1.y * p2.y);
+		return(v1.x * v2.x + v1.y * v2.y);
 	}
 	
 	public Vector normalize() {
 		return scale(1/length());
 	}
-	
+		
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(x);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(y);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
-		if(obj == null) {
+		if (this == obj)
+			return true;
+		if (obj == null)
 			return false;
-		}
-		else if(getClass() != obj.getClass()) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
-		else {
-			Vector otherVector = (Vector) obj;
-			return start.equals(otherVector.start) && end.equals(otherVector.end);
-		}
+		Vector other = (Vector) obj;
+		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
+			return false;
+		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
+			return false;
+		return true;
 	}
-	
+
 	@Override
 	public String toString() {
-		if(isOriginVector()) {
-			return "<" + end.x + ", " + end.y + ">";
-		}
-		else {
-			return "<" + start.toString() + "; " + end.toString() + ">";
-		}
+		return "<" + x + ", " + y + ">";
 	}
+
+	//Projects a pointonto a vector
+	public Point projection(Point point) {
+		Vector pointVector = new Vector(point);
+		Vector result = projection(pointVector);
+		return new Point(result.x, result.y);
+	}
+	public Vector projection(Vector vector) {
+		Vector normalizedTarget = this.normalize();
+		double resultMagnitude = dotProduct(vector, normalizedTarget);
+		return normalizedTarget.scale(resultMagnitude);		
+	}
+
+	public double projectionMagnitude(Point point) {
+		Vector pointVector = new Vector(point);
+		return projectionMagnitude(pointVector);
+	}
+	
+	public double projectionMagnitude(Vector vector) {
+		double resultMagnitude = dotProduct(vector, this.normalize());
+		return resultMagnitude;
+	}
+
+	public Vector rejection(Vector vector) {
+		return vector.subtract(projection(vector));
+	}
+	public Vector rejection(Point point) {
+		Vector pointVector = new Vector(point);
+		return pointVector.subtract(projection(pointVector));
+	}
+
+	
+	public Point toPoint() {
+		return new Point(x, y);
+	}
+	
 }

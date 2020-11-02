@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-public class Vector2DTest {
+public class VectorTest {
 	@Test
 	public void length_rectangularTriangle3And4_5() {
 		Vector v1 = new Vector(3, 4);
@@ -12,25 +12,6 @@ public class Vector2DTest {
 		double length = v1.length();
 		
 		assertEquals(5.0, length);
-	}
-	
-	@Test
-	void originVector_aVectorAlreadyAtOrigin_theSame() {
-		Vector v = new Vector(4, 7);
-		
-		Vector originV = v.originVector();
-		
-		assertEquals(v, originV);
-	}
-	
-	@Test
-	void originVector_aVector_becomesOriginVector() {
-		Vector v = new Vector(new Point(1, 1), new Point(4, 7));
-		
-		Vector originV = v.originVector();
-		
-		Vector expected = new Vector(3, 6);
-		assertEquals(originV, expected);
 	}
 	
 	@Test
@@ -112,6 +93,68 @@ public class Vector2DTest {
 		double angle = v.angle();
 		
 		assertEquals(60, angle);
+	}	
+	
+	
+	@Test
+	void projectionMagnitude_perpendicularVectors_0() {
+		Vector v1 = new Vector(0, 1);
+		Vector v2 = new Vector(1, 0);
+		
+		double projection = v1.projectionMagnitude(v2);
+		
+		assertEquals(0, projection);
 	}
+	
+	@Test
+	void projectionMagnitude_parallelVectors_lengthOfProjectedVector() {
+		Vector v1 = new Vector(1, 0);
+		Vector v2 = new Vector(1, 0);
+		Vector v3 = new Vector(4, 0);
+		Vector v4 = new Vector(7, 9);
+		
+		double projection1 = v1.projectionMagnitude(v2);
+		double projection2 = v3.projectionMagnitude(v4);
+		
+		assertEquals(1, projection1);
+		assertEquals(7, projection2);
+	}
+
+
+	@Test
+	void projection_parallelVectors_unchanged() {
+		Vector v1 = new Vector(1, 0);
+		Vector v2 = new Vector(2, 0);
+		Vector v3 = new Vector(2, 4);
+		Vector v4 = new Vector(4, 8);
+		
+		Vector projection1 = v1.projection(v2);
+		Vector projection2 = v3.projection(v4);
+		
+		Vector expected1 = new Vector(v2);
+		Vector expected2 = new Vector(v4);
+		
+		assertEquals(expected1, projection1);
+		assertEquals(expected2, projection2);
+	}	
+	
+	
+	@Test
+	void rejection_parallelVectors_zeroVector() {
+		Vector v1 = new Vector(1, 0);
+		Vector v2 = new Vector(2, 0);
+		Vector v3 = new Vector(2, 4);
+		Vector v4 = new Vector(4, 8);
+		
+		Vector rejection1 = v1.rejection(v2);
+		Vector rejection2 = v3.rejection(v4);
+		
+		Vector zeroVector = new Vector();
+		
+		assertEquals(zeroVector, rejection1);
+		assertEquals(zeroVector, rejection2);
+	}	
+	
+	
 	
 }

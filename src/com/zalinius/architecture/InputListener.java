@@ -46,6 +46,7 @@ public class InputListener extends KeyAdapter implements Holding, MouseListener,
 	
 	public void addInput(Inputtable input) {
 		keyInputs.put(input.keyCode(), input);
+		keyStates.put(input.keyCode(), false);
 	}
 	
 	public void addInput(Clickable click) {

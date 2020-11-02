@@ -1,5 +1,6 @@
 package com.zalinius.physics;
 
+import java.awt.geom.Point2D;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -39,9 +40,13 @@ public class Point {
 	 * @return A new Point2D, which is p moved by an amount equivalent to v
 	 */
 	public static Point add(Point p, Vector v) {
-		Point change = v.originVector().end;
-		return Point.add(p, change);		
+		return p.add(v.x, v.y);		
 	}
+	
+	public Point subtract(double dX, double dY) {
+		return new Point(x - dX, y - dY);
+	}
+
 	
 	public static double distance(Point p1, Point p2) {
 		double y = p1.y - p2.y;
@@ -95,6 +100,10 @@ public class Point {
 		return true;
 	}	
 	
+	
+	public Point2D point2D() {
+		return new Point2D.Double(x, y);
+	}
 	
 	
 	

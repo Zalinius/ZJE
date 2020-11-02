@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Collection;
+import java.util.Iterator;
 import java.awt.geom.AffineTransform;
 
 import com.zalinius.architecture.input.Clickable;
@@ -28,6 +29,7 @@ public class GameStage extends DoubleBufferedFrame{
     	super(windowText);
     	this.graphics = graphics;
         setResizable(false);
+        setUndecorated(true);
         setSize(width, height);
         setVisible(true);
         setBackground(backgroundColor);
@@ -63,7 +65,7 @@ public class GameStage extends DoubleBufferedFrame{
     	
     	//float offSetX = (float) trans.getTranslateX();
     	//float offSetY = (float) trans.getTranslateY();
-    	g.drawString(Integer.toString((int)currentFPS), 10, 50);
+    	//g.drawString(Integer.toString((int)currentFPS), 10, 50);
     }
 
     private Color fpsColor() {
@@ -79,9 +81,15 @@ public class GameStage extends DoubleBufferedFrame{
 	}
 
 	public void addKeys(Collection<Inputtable> keys, Collection<Clickable> clicks){
-    	input = new InputListener(keys, clicks);
-        addKeyListener(input);
-        addMouseListener(input);
+		for (Iterator<Clickable> it = clicks.iterator(); it.hasNext();) {
+			Clickable clickable = it.next();
+			input.addInput(clickable);
+			
+		}
+		for (Iterator<Inputtable> it = keys.iterator(); it.hasNext();) {
+			Inputtable inputtable = it.next();
+			input.addInput(inputtable);
+		}
     }
 	
 	public void setCamera(Camerable camera) {
