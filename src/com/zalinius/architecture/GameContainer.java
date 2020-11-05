@@ -32,6 +32,7 @@ public abstract class GameContainer implements Graphical, Logical {
 	}
 		
 	public void startGame() {
+		stage.setVisible(true);
 		loop.start();
 	}
 

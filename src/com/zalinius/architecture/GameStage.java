@@ -31,7 +31,6 @@ public class GameStage extends DoubleBufferedFrame{
         setResizable(false);
         setUndecorated(true);
         setSize(width, height);
-        setVisible(true);
         setBackground(backgroundColor);
         addWindowListener(defaultCloseAction());
         addKeyListener(getInput());
@@ -45,7 +44,6 @@ public class GameStage extends DoubleBufferedFrame{
     	this.graphics = graphics;
         setResizable(false);
         setSize(width, height);
-        setVisible(true);
         setBackground(backgroundColor);
         addWindowListener(closeAction);
         addKeyListener(getInput());
