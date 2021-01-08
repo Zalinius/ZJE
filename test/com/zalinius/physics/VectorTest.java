@@ -18,7 +18,7 @@ public class VectorTest {
 	void angle_upVector_90Degrees() {
 		Vector v = new Vector(0, 1);
 		
-		double angle = v.angle();
+		double angle = v.angleDegrees();
 		
 		assertEquals(90.0, angle);
 	}
@@ -27,7 +27,7 @@ public class VectorTest {
 	void angle_upRightVector_45Degrees() {
 		Vector v = new Vector(1, 1);
 		
-		double angle = v.angle();
+		double angle = v.angleDegrees();
 		
 		assertEquals(45.0, angle);
 	}
@@ -36,7 +36,7 @@ public class VectorTest {
 	void angle_upLeftVector_135Degrees() {
 		Vector v = new Vector(-1, 1);
 		
-		double angle = v.angle();
+		double angle = v.angleDegrees();
 		
 		assertEquals(135.0, angle);
 	}
@@ -45,7 +45,7 @@ public class VectorTest {
 	void angle_leftVector_180Degrees() {
 		Vector v = new Vector(-1, 0);
 		
-		double angle = v.angle();
+		double angle = v.angleDegrees();
 		
 		assertEquals(180.0, angle);
 	}
@@ -54,7 +54,7 @@ public class VectorTest {
 	void angle_downLeftVector_225Degrees() {
 		Vector v = new Vector(-1, -1);
 		
-		double angle = v.angle();
+		double angle = v.angleDegrees();
 		
 		assertEquals(225.0, angle);
 	}
@@ -63,7 +63,7 @@ public class VectorTest {
 	void angle_downVector_270Degrees() {
 		Vector v = new Vector(0, -1);
 		
-		double angle = v.angle();
+		double angle = v.angleDegrees();
 		
 		assertEquals(270.0, angle);
 	}
@@ -72,7 +72,7 @@ public class VectorTest {
 	void angle_downRightVector_315Degrees() {
 		Vector v = new Vector(1, -1);
 		
-		double angle = v.angle();
+		double angle = v.angleDegrees();
 		
 		assertEquals(315.0, angle);
 	}
@@ -81,7 +81,7 @@ public class VectorTest {
 	void angle_rightVector_0Degrees() {
 		Vector v = new Vector(1, 0);
 		
-		double angle = v.angle();
+		double angle = v.angleDegrees();
 		
 		assertEquals(0.0, angle);
 	}
@@ -90,7 +90,7 @@ public class VectorTest {
 	void angle_unitCircleVector_60Degrees() {
 		Vector v = new Vector(0.5, Math.sqrt(3) / 2.0);
 		
-		double angle = v.angle();
+		double angle = v.angleDegrees();
 		
 		assertEquals(60, angle);
 	}	

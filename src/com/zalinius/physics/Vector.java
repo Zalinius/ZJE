@@ -40,10 +40,15 @@ public class Vector {
 		return Math.sqrt(x*x + y*y);
 	}
 	
+	
+	public double angle() {
+		return (angleDegrees() * (2 * Math.PI / 360d ));
+	}
+	
 	/**
 	 * @return the vector's angle in degrees
 	 */
-	public double angle() {
+	public double angleDegrees() {
 		if(x == 0 && y == 0) {
 			return Double.NaN;
 		}
