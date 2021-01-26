@@ -1,0 +1,21 @@
+package com.zalinius.zje.drawing.camera;
+
+import java.awt.geom.AffineTransform;
+
+import com.zalinius.zje.architecture.Locatable;
+
+public class FollowCam implements Camerable{
+
+	private Locatable loc;
+	public FollowCam(Locatable loc) {
+		this.loc = loc;
+	}
+
+	@Override
+	public AffineTransform getTransform() {
+		AffineTransform af = new AffineTransform();
+	//TODO		af.translate(-loc.center().x + GameStage.GAME_WIDTH/2, -loc.center().y + GameStage.GAME_HEIGHT/2);
+		return af;
+	}
+
+}
