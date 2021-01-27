@@ -42,7 +42,7 @@ public abstract class GameContainer implements Graphical, Logical {
 	}
 	
 	public void moveWindow(int x, int y) {
-        stage.moveWindow(x, y);
+      //  stage.moveWindow(x, y);
 	}
 
 	

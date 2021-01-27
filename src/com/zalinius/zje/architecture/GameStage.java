@@ -20,6 +20,7 @@ public class GameStage extends DoubleBufferedFrame{
 	private Camerable camera;
 	private double currentFPS;
 	private static InputListener input;
+	private GraphicsDevice graphicsDevice;
 
     public GameStage(Graphical graphics) {
         this(graphics, "Game!", 500, 500, Color.black);
@@ -28,9 +29,12 @@ public class GameStage extends DoubleBufferedFrame{
     public GameStage(Graphical graphics, String windowText, int width, int height, Color backgroundColor) {
     	super(windowText);
     	this.graphics = graphics;
-        setResizable(false);
+    	this.graphicsDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         setUndecorated(true);
-        setSize(width, height);
+    	graphicsDevice.setFullScreenWindow(this);
+    	setResizable(false);
+    	graphicsDevice.setDisplayMode(graphicsDevice.getDisplayMode());
+       // setSize(width, height);
         setBackground(backgroundColor);
         addWindowListener(defaultCloseAction());
         addKeyListener(getInput());
@@ -57,7 +61,7 @@ public class GameStage extends DoubleBufferedFrame{
     	//g.setTransform(trans);
 
     	graphics.render(g);
-    	
+
     	g.setColor(fpsColor());
     	g.setFont(new Font("SansSerif", Font.BOLD, 20));
     	
