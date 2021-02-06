@@ -5,7 +5,7 @@ import java.awt.Shape;
 
 /**
  * A Command-like pattern implementation, for connecting hardware mouse-input to game actions.
- * @author Zach
+ * @author Zalinius
  */
 public interface Clickable {
 	/**

@@ -1,2 +1,2 @@
 # ZJE
-Zach's Java game engine
+Zalinius' Java game Engine

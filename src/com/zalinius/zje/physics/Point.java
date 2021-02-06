@@ -7,7 +7,7 @@ import java.util.Iterator;
 /**
  * A class to represent a point in the 2D plane.
  * This class is IMMUTABLE.
- * @author Zach
+ * @author Zalinius
  *
  */
 public class Point {

@@ -2,7 +2,7 @@ package com.zalinius.zje.architecture.input;
 
 /**
  * A Command-like pattern implementation, for connecting hardware key-input to game actions.
- * @author Zach
+ * @author Zalinius
  */
 public interface Inputtable {
 	public int keyCode();
