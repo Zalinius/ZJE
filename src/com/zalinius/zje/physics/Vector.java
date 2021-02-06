@@ -121,8 +121,8 @@ public class Vector {
 		return(v1.x * v2.x + v1.y * v2.y);
 	}
 	
-	public Vector normalize() {
-		return scale(1/length());
+	public UnitVector normalize() {
+		return new UnitVector(this);
 	}
 		
 	@Override
