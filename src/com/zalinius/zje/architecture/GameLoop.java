@@ -1,22 +1,26 @@
 package com.zalinius.zje.architecture;
 
+import java.util.List;
+
+import com.zalinius.zje.plugins.Plugin;
 import com.zalinius.zje.utilities.time.GameClock;
 
 public class GameLoop {
-    final int TARGET_FPS = 60;
-    final long NS_IN_S = 1000000000;
+	private final int TARGET_FPS = 60;
+    private final long NS_IN_S = 1000000000;
     
-    long totalTime;
-    int framesInLastSecond;
+    private long totalTime;
 
-    GameStage stage;
-    Logical logic;
+    private GameStage stage;
+    private Logical logic;
+    
+    private List<Plugin> plugins;
 
-    public GameLoop(GameStage stage, Logical logic){
+    public GameLoop(GameStage stage, Logical logic, List<Plugin> plugins){
     	totalTime = 0;
-    	framesInLastSecond = 0;
         this.stage = stage;
         this.logic = logic;
+        this.plugins = plugins;
     }
     
     public void start() {
@@ -38,8 +42,6 @@ public class GameLoop {
             long now = System.nanoTime();
             long updateLength = now - lastLoopTime;
             totalTime += updateLength;
-            ++framesInLastSecond;
-            checkFramerate(updateLength);
             lastLoopTime = now;
             double delta = updateLength / 1E9;
 
@@ -72,22 +74,17 @@ public class GameLoop {
         }
     }
 
-    private void checkFramerate(long lastFrameLength) {
-    	long secondIndex = totalTime/NS_IN_S ;
-    	long lastSecondIndex = (totalTime-lastFrameLength)/NS_IN_S;
-    	if(lastSecondIndex < secondIndex) {
-    		stage.setFPS(framesInLastSecond);
-    		framesInLastSecond = 0;
-    	}
-	}
-
 	/**
      * Updates the gameContainer logic
      * @param delta The ratio of the last frame time, with respect to a perfect 60 FPS
      */
     public void update(double delta) {
+    	plugins.forEach((plugin) -> plugin.updateBefore(delta));
+    	
     	GameClock.update(delta);
     	logic.update(delta);
+    	
+    	plugins.forEach((plugin) -> plugin.updateAfter(delta));
     }
 
     public void render() {

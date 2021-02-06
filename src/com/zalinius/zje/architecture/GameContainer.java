@@ -1,20 +1,21 @@
 package com.zalinius.zje.architecture;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import com.zalinius.zje.architecture.input.Clickable;
 import com.zalinius.zje.architecture.input.Inputtable;
-import com.zalinius.zje.drawing.camera.Camerable;
+import com.zalinius.zje.plugins.Plugin;
 
 public abstract class GameContainer implements Graphical, Logical {
 	private GameLoop loop;
 	private GameStage stage;
 
-	public GameContainer(String windowText, int width, int height, Color backgroundColor) {
-		stage = new GameStage(this, windowText, width, height, backgroundColor);
-		loop = new GameLoop(stage, this);
+	public GameContainer(String windowText, int width, int height) {
+		List<Plugin> plugins = getPlugins();
+		stage = new GameStage(this, windowText, width, height, plugins);
+		loop = new GameLoop(stage, this, plugins);
 	}
 	
 	public void addControls(Collection<Inputtable> keyControls, Collection<Clickable> mouseControls) {
@@ -27,10 +28,6 @@ public abstract class GameContainer implements Graphical, Logical {
 		stage.addKeys(keyControls, mouseControls);
 	}
 	
-	public void setCamera(Camerable camera) {
-		stage.setCamera(camera);
-	}
-		
 	public void startGame() {
 		stage.setVisible(true);
 		loop.start();
@@ -49,6 +46,8 @@ public abstract class GameContainer implements Graphical, Logical {
 	public Locatable mouseLocator() {
 		return stage.mouseLocator();
 	}
+	
+	public List<Plugin> getPlugins(){return new ArrayList<>();};
 	
 
 }
