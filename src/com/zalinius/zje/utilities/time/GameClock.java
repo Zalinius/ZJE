@@ -8,9 +8,6 @@ public class GameClock{
 	private static Hashtable<Object, Timer> timers = new Hashtable<>();
 	private static double time = 0;
 	
-	public GameClock() {
-	}
-		
 	public static void addTimer(Object owner, double timerTime) {
 		if(owner == null) {
 			throw new NullPointerException();
@@ -64,6 +61,7 @@ public class GameClock{
 			t.nextElement().update(delta);
 		}
 		
+		//TODO remove timers from table when done
 	}
 
 	public static boolean removeTimer(Object owner) {
