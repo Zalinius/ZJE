@@ -11,4 +11,8 @@ public class ZRand {
 	public static boolean random(int chance, int denominator) {
 		return (chance-1) >= (random.nextInt(denominator));
 	}
+	
+	public static double randomAngle() {
+		return random.nextDouble() * 2 * Math.PI;
+	}
 }
