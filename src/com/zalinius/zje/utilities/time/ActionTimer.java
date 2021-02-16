@@ -20,7 +20,7 @@ public class ActionTimer implements Timer{
 		
 		if(length == 0.0) {
 			action.run();
-			GameClock.removeTimer(action);
+			GameClock.removeTimer(this);
 		}
 	}
 

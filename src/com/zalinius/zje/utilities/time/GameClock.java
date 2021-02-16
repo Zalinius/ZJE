@@ -17,7 +17,8 @@ public class GameClock{
 	}
 	
 	public static void addActionTimer(Runnable action, double timerTime) {
-		timers.put(action, new ActionTimer(action, timerTime));
+		Timer newActionTimer = new ActionTimer(action, timerTime);
+		timers.put(newActionTimer, newActionTimer);
 	}
 	
 	public static void addActionTimer(Runnable action, double timerTime, int instances) {
@@ -26,7 +27,8 @@ public class GameClock{
 		}
 		
 		for(int i = 0; i != instances; ++i) {
-			addActionTimer(action, timerTime * (i+1) );
+			Timer newActionTimer = new ActionTimer(action, timerTime * (i+1));
+			timers.put(newActionTimer, newActionTimer);
 		}
 	}
 	
