@@ -29,7 +29,6 @@ pipeline {
         	}
 			steps {
                 sh 'mvn --batch-mode -DskipTests clean install'  //Install publishes to the local jenkins Maven repo
-                												 //Only done with the main branch
 	        }
 	    }
     }
