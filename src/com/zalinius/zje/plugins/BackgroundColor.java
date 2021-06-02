@@ -3,7 +3,7 @@ package com.zalinius.zje.plugins;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class BackgroundColor extends Plugin {
+public class BackgroundColor extends RuntimePlugin {
 	private Color backgroundColor;
 
 	public BackgroundColor(Color backgroundColor) {

@@ -2,7 +2,11 @@ package com.zalinius.zje.plugins;
 
 import java.awt.Graphics2D;
 
-public abstract class Plugin {
+import com.zalinius.zje.architecture.DoubleBufferedFrame;
+import com.zalinius.zje.architecture.GameLoop;
+import com.zalinius.zje.architecture.GameStage;
+
+public abstract class RuntimePlugin extends AbstractPlugin{
 
 	/**
 	 * Called before the game gets updated
@@ -28,5 +32,12 @@ public abstract class Plugin {
 	 * @param g
 	 */
 	public void renderAfter(Graphics2D g) {};
+	
+	
+	@Override
+	public void registerPlugin(DoubleBufferedFrame frame, GameLoop gameLoop, GameStage gameStage) {
+		gameLoop.accept(this);
+		gameStage.accept(this);
+	}
 
 }

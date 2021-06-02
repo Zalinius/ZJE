@@ -3,6 +3,8 @@ package com.zalinius.zje.architecture;
 import java.awt.*;
 import java.awt.geom.*;
 
+import com.zalinius.zje.plugins.RenderSettings;
+
 /**
  * This class extends the standard FRAME capabilities to allow double buffering when drawing to the screen.
  * This is necessary to avoid severe flickering when rendering above 10 FPS.
@@ -68,6 +70,10 @@ public abstract class DoubleBufferedFrame extends Frame {
         bufferImage=createImage(bufferWidth,bufferHeight);
         bufferGraphics=(Graphics2D) bufferImage.getGraphics();
         bufferGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    }
+    
+    public void accept(RenderSettings renderSettingsVisitor) {
+    	renderSettingsVisitor.applySettings(this);
     }
 
 }

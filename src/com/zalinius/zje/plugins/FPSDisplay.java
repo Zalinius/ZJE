@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-public class FPSDisplay extends Plugin {
+public class FPSDisplay extends RuntimePlugin {
 	private double averageFrameTime;
 
 	private double secondTimer;

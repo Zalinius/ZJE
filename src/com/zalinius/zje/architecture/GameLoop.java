@@ -1,8 +1,9 @@
 package com.zalinius.zje.architecture;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.zalinius.zje.plugins.Plugin;
+import com.zalinius.zje.plugins.RuntimePlugin;
 import com.zalinius.zje.utilities.time.GameClock;
 
 public class GameLoop {
@@ -14,13 +15,13 @@ public class GameLoop {
     private GameStage stage;
     private Logical logic;
     
-    private List<Plugin> plugins;
+    private List<RuntimePlugin> plugins;
 
-    public GameLoop(GameStage stage, Logical logic, List<Plugin> plugins){
+    public GameLoop(GameStage stage, Logical logic){
     	totalTime = 0;
         this.stage = stage;
         this.logic = logic;
-        this.plugins = plugins;
+		this.plugins = new ArrayList<>();
     }
     
     public void start() {
@@ -90,4 +91,8 @@ public class GameLoop {
     public void render() {
         stage.repaint();
     }
+
+	public void accept(RuntimePlugin runtimePlugin) {
+		plugins.add(runtimePlugin);
+	}
 }
