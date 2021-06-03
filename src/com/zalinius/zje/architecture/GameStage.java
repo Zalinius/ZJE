@@ -3,22 +3,23 @@ package com.zalinius.zje.architecture;
 import java.awt.Graphics2D;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import com.zalinius.zje.architecture.input.Clickable;
 import com.zalinius.zje.architecture.input.Inputtable;
-import com.zalinius.zje.plugins.Plugin;
+import com.zalinius.zje.plugins.RuntimePlugin;
 
 public class GameStage extends DoubleBufferedFrame{
 	private static final long serialVersionUID = 1L;
 	private Graphical graphics;
 	private static InputListener input;
 
-	private List<Plugin> plugins;
+	private List<RuntimePlugin> plugins;
 
-	public GameStage(Graphical graphics, String windowText, int width, int height, List<Plugin> plugins) {
+	public GameStage(Graphical graphics, String windowText, int width, int height) {
 		super(windowText);
 		this.graphics = graphics;
 		setResizable(false);
@@ -27,7 +28,7 @@ public class GameStage extends DoubleBufferedFrame{
 		addKeyListener(getInput());
 		addMouseListener(getInput());
 		addMouseMotionListener(getInput());
-		this.plugins = plugins;
+		this.plugins = new ArrayList<>();
 	}
 
 	public void paintBuffer(Graphics2D g){
@@ -91,4 +92,9 @@ public class GameStage extends DoubleBufferedFrame{
 	public Locatable mouseLocator() {
 		return input;
 	}
+	
+	public void accept(RuntimePlugin runtimePlugin) {
+		plugins.add(runtimePlugin);
+	}
+
 }

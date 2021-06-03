@@ -6,16 +6,20 @@ import java.util.List;
 
 import com.zalinius.zje.architecture.input.Clickable;
 import com.zalinius.zje.architecture.input.Inputtable;
-import com.zalinius.zje.plugins.Plugin;
+import com.zalinius.zje.plugins.AbstractPlugin;
 
 public abstract class GameContainer implements Graphical, Logical {
 	private GameLoop loop;
 	private GameStage stage;
 
 	public GameContainer(String windowText, int width, int height) {
-		List<Plugin> plugins = getPlugins();
-		stage = new GameStage(this, windowText, width, height, plugins);
-		loop = new GameLoop(stage, this, plugins);
+		stage = new GameStage(this, windowText, width, height);
+		loop = new GameLoop(stage, this);
+		registerPlugins(getPlugins());
+	}
+	
+	private void registerPlugins(List<AbstractPlugin> plugins) {
+		plugins.forEach((plugin)-> plugin.registerPlugin(stage, loop, stage));
 	}
 	
 	public void addControls(Collection<Inputtable> keyControls, Collection<Clickable> mouseControls) {
@@ -47,7 +51,7 @@ public abstract class GameContainer implements Graphical, Logical {
 		return stage.mouseLocator();
 	}
 	
-	public List<Plugin> getPlugins(){return new ArrayList<>();};
+	public List<AbstractPlugin> getPlugins(){return new ArrayList<>();};
 	
 
 }
