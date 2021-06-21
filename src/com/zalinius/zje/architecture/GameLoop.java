@@ -10,15 +10,12 @@ public class GameLoop {
 	private final int TARGET_FPS = 60;
     private final long NS_IN_S = 1000000000;
     
-    private long totalTime;
-
     private GameStage stage;
     private Logical logic;
     
     private List<RuntimePlugin> plugins;
 
     public GameLoop(GameStage stage, Logical logic){
-    	totalTime = 0;
         this.stage = stage;
         this.logic = logic;
 		this.plugins = new ArrayList<>();
@@ -31,7 +28,7 @@ public class GameLoop {
     private void gameLoop()
     {
         long lastLoopTime = System.nanoTime();
-        final long OPTIMAL_TIME = 1000000000 / TARGET_FPS; //1 Second / 60 fps
+        final long OPTIMAL_TIME = NS_IN_S / TARGET_FPS; //1 Second / 60 fps
 
         // keep looping round till the gameContainer ends
         boolean gameRunning = true;
@@ -42,7 +39,6 @@ public class GameLoop {
             // move this loop
             long now = System.nanoTime();
             long updateLength = now - lastLoopTime;
-            totalTime += updateLength;
             lastLoopTime = now;
             double delta = updateLength / 1E9;
 

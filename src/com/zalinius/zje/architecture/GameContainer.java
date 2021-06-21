@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.zalinius.zje.architecture.input.Clickable;
 import com.zalinius.zje.architecture.input.Inputtable;
+import com.zalinius.zje.physics.Locatable;
 import com.zalinius.zje.plugins.AbstractPlugin;
 
 public abstract class GameContainer implements Graphical, Logical {

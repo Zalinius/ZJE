@@ -9,6 +9,7 @@ import java.util.HashMap;
 import com.zalinius.zje.architecture.input.Clickable;
 import com.zalinius.zje.architecture.input.Holding;
 import com.zalinius.zje.architecture.input.Inputtable;
+import com.zalinius.zje.physics.Locatable;
 
 public class InputListener extends KeyAdapter implements Holding, MouseListener, MouseMotionListener, Locatable{
 
@@ -152,7 +153,7 @@ public class InputListener extends KeyAdapter implements Holding, MouseListener,
 	}
 
 	@Override
-	public com.zalinius.zje.physics.Point center() {
+	public com.zalinius.zje.physics.Point position() {
 		return new com.zalinius.zje.physics.Point(mouseX, mouseY);
 	}
 
