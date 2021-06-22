@@ -21,7 +21,7 @@ public class Vertex implements Physical{
 	
 	/**
 	 * Adds an impulse (instantaneous change of momentum) to a vertex
-	 * @param momentum in kg*px/s
+	 * @param momentum in kg*unit/s
 	 */
 	public void impulse(Vector momentum) {
 		velocity = velocity.add(momentum.scale(1d/mass));

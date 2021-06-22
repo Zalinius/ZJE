@@ -18,7 +18,7 @@ public class ScaleFactory {
 			for (int i = 0; i < Pitch.major.length; i++) {
 				notes.add(Pitch.major[i]);
 			}
-			notes.add(12);
+			notes.add(AbsolutePitch.OCTAVE_LENGTH);
 			majorScale = makeEightNoteScale(notes, "major");
 		}
 		return majorScale;
@@ -30,14 +30,15 @@ public class ScaleFactory {
 			for (int i = 0; i < Pitch.minor.length; i++) {
 				notes.add(Pitch.minor[i]);
 			}
-			notes.add(12);
+			notes.add(AbsolutePitch.OCTAVE_LENGTH);
 			minorScale = makeEightNoteScale(notes, "minor");
 		}
 		return minorScale;
 	}
 
 	private static EightPitchScale makeEightNoteScale(List<Integer> relativeNotesNumbers, String name) {
-		if(relativeNotesNumbers.size() != 8) {
+		int notesInEightNoteScale = 8; //Hint: it's eight
+		if(relativeNotesNumbers.size() != notesInEightNoteScale) { 
 			throw new RuntimeException("Wrong number of notes: " + relativeNotesNumbers.size());
 		}
 		final List<RelativePitch> relativeNotes = new ArrayList<>();
