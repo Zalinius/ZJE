@@ -24,3 +24,7 @@ I develop this engine in a somewhat sporadic way, usually in the following fashi
 4. I extract reuseable features from the game into the engine.
 
 For example, I'm currently working on [Polygon Pal](https://github.com/Zalinius/SVG-Defender). The game features real-time dynamic music (using [The Beads Project](http://www.beadsproject.net)) which I'll likely extract into the engine when complete.
+
+
+## License
+The library is licensed under the Gnu Public License (GPL v3).
