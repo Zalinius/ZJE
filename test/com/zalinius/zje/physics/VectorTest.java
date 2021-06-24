@@ -1,10 +1,8 @@
 package com.zalinius.zje.physics;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
-
-import com.zalinius.zje.physics.Vector;
 
 public class VectorTest {
 	@Test

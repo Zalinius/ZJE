@@ -10,7 +10,7 @@ import java.util.Iterator;
  * @author Zalinius
  *
  */
-public class Point {
+public class Point{
 	
 	public final double x, y;
 
@@ -107,8 +107,5 @@ public class Point {
 	
 	public Point2D point2D() {
 		return new Point2D.Double(x, y);
-	}
-	
-	
-	
+	}	
 }

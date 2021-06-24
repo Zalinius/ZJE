@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.zalinius.zje.architecture.input.Clickable;
 import com.zalinius.zje.architecture.input.Inputtable;
+import com.zalinius.zje.physics.Locatable;
 import com.zalinius.zje.plugins.RuntimePlugin;
 
 public class GameStage extends DoubleBufferedFrame{

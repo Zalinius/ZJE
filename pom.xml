@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.zalinius</groupId>
 	<artifactId>zje</artifactId>
-	<version>0.2</version>
+	<version>0.3</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -34,5 +34,18 @@
 			<type>pom.sha512</type>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>net.beadsproject</groupId>
+			<artifactId>beads</artifactId>
+			<version>3.2</version>
+		</dependency>
 	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>clojars_repo</id>
+			<url>https://clojars.org/repo/</url>
+		</repository>
+	</repositories>
+
 </project>

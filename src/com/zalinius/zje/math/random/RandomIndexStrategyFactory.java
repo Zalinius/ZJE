@@ -92,9 +92,9 @@ public class RandomIndexStrategyFactory {
 	}
 	
 	/**
-	 * @param period
-	 * @param bound
-	 * @return
+	 * @param period how many increasing indices will be returned before resetting
+	 * @param bound the maximum index to be returned, exclusive, typically the size of a collection
+	 * @return returns a random index, which is guaranteed to be larger than the last if with the period
 	 */
 	public static RandomIndexStrategy periodIncreasing(final int period, final int bound, final boolean increasing) {
 		if(period > bound) {

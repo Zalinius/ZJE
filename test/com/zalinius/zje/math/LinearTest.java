@@ -1,10 +1,10 @@
 package com.zalinius.zje.math;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import com.zalinius.zje.math.Linear;
 import com.zalinius.zje.math.Linear.Intersection;
 
 public class LinearTest {
