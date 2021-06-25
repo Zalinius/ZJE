@@ -16,7 +16,7 @@ public abstract class GameContainer implements Graphical, Logical {
 	public GameContainer(String windowText, int width, int height) {
 		stage = new GameStage(this, windowText, width, height);
 		loop = new GameLoop(stage, this);
-		registerPlugins(getPlugins());
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> shutdownActions()));
 	}
 	
 	private void registerPlugins(List<AbstractPlugin> plugins) {
@@ -34,14 +34,17 @@ public abstract class GameContainer implements Graphical, Logical {
 	}
 	
 	public void startGame() {
+		registerPlugins(getPlugins());
 		stage.setVisible(true);
 		loop.start();
 	}
 
-	public void exit() {
+	public final void exit() {
 		stage.dispose();
 		System.exit(0);
 	}
+	
+	public void shutdownActions() {};
 	
 	public void moveWindow(int x, int y) {
         stage.moveWindow(x, y);
