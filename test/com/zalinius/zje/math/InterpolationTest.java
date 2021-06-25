@@ -1,8 +1,10 @@
 package com.zalinius.zje.math;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+
+import com.zalinius.zje.physics.Point;
 
 public class InterpolationTest {
 	
@@ -154,6 +156,41 @@ public class InterpolationTest {
 		double interpolatedResult = Interpolation.cosineInterpolation(start, end, interpolant);
 		
 		assertEquals(interpolatedExpected, interpolatedResult, ERROR_MARGIN);	
+	}
+	
+	
+	
+
+	@Test
+	void linearInterpolation_0Pointinterpolant_returnsStartValue() {
+		Point start = new Point();
+		Point end   = new Point(1,1);
+		double interpolantZero = 0;
+		
+		Point interpolatedResult = Interpolation.linearInterpolation(start, end, interpolantZero);
+		
+		assertEquals(start, interpolatedResult);
+	}
+	@Test
+	void linearInterpolation_1Pointinterpolant_returnsEndValue() {
+		Point start = new Point();
+		Point end   = new Point(1,1);
+		double interpolantOne = 1;
+		
+		Point interpolatedResult = Interpolation.linearInterpolation(start, end, interpolantOne);
+		
+		assertEquals(end, interpolatedResult);	
+	}
+	@Test
+	void linearInterpolation_halfPointInterpolant_returnsAverage() {
+		Point start = new Point();
+		Point end   = new Point(1,1);
+		double interpolant = 0.5;
+		
+		Point expected = new Point(0.5, 0.5);	
+		Point interpolatedResult = Interpolation.linearInterpolation(start, end, interpolant);
+		
+		assertEquals(expected, interpolatedResult);	
 	}
 
 }
