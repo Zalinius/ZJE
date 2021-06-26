@@ -1,5 +1,7 @@
 package com.zalinius.zje.math;
 
+import com.zalinius.zje.physics.Point;
+
 public class Interpolation {
 	
 	public static double linearInterpolant(double start, double end, double value) {
@@ -23,6 +25,12 @@ public class Interpolation {
 	
 	public static double quadraticInterpolation(double interpolant, double start, double end) {
 		return ((end - start) * Math.pow(interpolant, 2)) + start;
+	}
+		
+	public static Point linearInterpolation(Point start, Point end, double interpolant) {
+		double x = linearInterpolation(start.x, end.x, interpolant);
+		double y = linearInterpolation(start.y, end.y, interpolant);
+		return new Point(x, y);
 	}
 
 }

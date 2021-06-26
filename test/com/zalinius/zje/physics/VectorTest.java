@@ -2,9 +2,22 @@ package com.zalinius.zje.physics;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.awt.geom.Line2D;
+
 import org.junit.jupiter.api.Test;
 
 public class VectorTest {
+	
+	@Test
+	public void constructor_withLine2D_constructsVectorBetweenEnds() {
+		Line2D.Double line = new Line2D.Double(0, 1, 2, 3);
+		
+		Vector result = new Vector(line);
+		
+		Vector expected = new Vector(0, 1, 2, 3);
+		assertEquals(expected, result);
+	}
+	
 	@Test
 	public void length_rectangularTriangle3And4_5() {
 		Vector v1 = new Vector(3, 4);
@@ -154,7 +167,49 @@ public class VectorTest {
 		assertEquals(zeroVector, rejection1);
 		assertEquals(zeroVector, rejection2);
 	}	
+
 	
+	@Test
+	void reflection_parallelVectors_unchanged() {
+		Vector v1 = new Vector(1, 0);
+		Vector v2 = new Vector(2, 0);
+		Vector v3 = new Vector(2, 4);
+		Vector v4 = new Vector(4, 8);
+		
+		Vector projection1 = v1.reflection(v2);
+		Vector projection2 = v3.reflection(v4);
+		
+		Vector expected1 = new Vector(v2);
+		Vector expected2 = new Vector(v4);
+		
+		assertEquals(expected1, projection1);
+		assertEquals(expected2, projection2);
+	}	
+	
+
+	@Test
+	void reflection_onVector_createsReflection() {
+		Vector reflector = new Vector(1, 0);
+		Vector reflectee = new Vector(1, 1);
+		
+		Vector reflection = reflector.reflection(reflectee);
+	
+		Vector expected = new Vector(1, -1);
+		assertEquals(expected, reflection);
+	}	
+
+
+	@Test
+	void reflection_onInverseReflector_createsReflection() {
+		Vector reflector = new Vector(-1, 0);
+		Vector reflectee = new Vector(1, 1);
+		
+		Vector reflection = reflector.reflection(reflectee);
+	
+		Vector expected = new Vector(1, -1);
+		assertEquals(expected, reflection);
+	}	
+
 	
 	
 }

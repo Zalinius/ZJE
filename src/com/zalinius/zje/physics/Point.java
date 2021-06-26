@@ -23,6 +23,10 @@ public class Point{
 		this.y = y;
 	}
 	
+	public Point(Point2D point2D) {
+		this(point2D.getX(), point2D.getY());
+	}
+
 	public Point add(double dX, double dY) {
 		return new Point(x + dX, y + dY);
 	}

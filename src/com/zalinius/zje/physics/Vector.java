@@ -1,5 +1,7 @@
 package com.zalinius.zje.physics;
 
+import java.awt.geom.Line2D;
+
 public class Vector {
 	public final double x;
 	public final double y;
@@ -33,6 +35,10 @@ public class Vector {
 	
 	public Vector(Point start, Point end) {
 		this(start.x, start.y, end.x, end.y);
+	}
+	
+	public Vector(Line2D.Double line) {
+		this(line.x1, line.y1, line.x2, line.y2);
 	}
 	
 
@@ -124,6 +130,10 @@ public class Vector {
 	public UnitVector normalize() {
 		return new UnitVector(this);
 	}
+	
+	public Vector reflect() {
+		return scale(-1);
+	}
 		
 	@Override
 	public int hashCode() {
@@ -158,7 +168,7 @@ public class Vector {
 		return "<" + x + ", " + y + ">";
 	}
 
-	//Projects a pointonto a vector
+	//Projects a point onto a vector
 	public Point projection(Point point) {
 		Vector pointVector = new Vector(point);
 		Vector result = projection(pointVector);
@@ -178,6 +188,10 @@ public class Vector {
 	public double projectionMagnitude(Vector vector) {
 		double resultMagnitude = dotProduct(vector, this.normalize());
 		return resultMagnitude;
+	}
+	
+	public Vector reflection(Vector reflectee) {
+		return this.projection(reflectee).subtract(this.rejection(reflectee));
 	}
 
 	public Vector rejection(Vector vector) {
