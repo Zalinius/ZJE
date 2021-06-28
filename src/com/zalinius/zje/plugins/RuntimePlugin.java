@@ -12,26 +12,26 @@ public abstract class RuntimePlugin extends AbstractPlugin{
 	 * Called before the game gets updated
 	 * @param delta
 	 */
-	public void updateBefore(double delta) {};
+	public void updateBefore(double delta) {}
 
 	/**
 	 * Called after the game gets updated
 	 * @param delta
 	 */
-	public void updateAfter(double delta) {};
+	public void updateAfter(double delta) {}
 
 
 	/**
 	 * Rendered before (or under) the game
 	 * @param g
 	 */
-	public void renderBefore(Graphics2D g) {};
+	public void renderBefore(Graphics2D g) {}
 
 	/**
 	 * Rendered after (or over) the game
 	 * @param g
 	 */
-	public void renderAfter(Graphics2D g) {};
+	public void renderAfter(Graphics2D g) {}
 	
 	
 	@Override

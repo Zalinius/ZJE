@@ -93,12 +93,12 @@ public class RandomIndexStrategyFactory {
 	
 	/**
 	 * @param period how many increasing indices will be returned before resetting
-	 * @param bound the maximum index to be returned, exclusive, typically the size of a collection
+	 * @param end the maximum index to be returned, exclusive, typically the size of a collection
 	 * @return returns a random index, which is guaranteed to be larger than the last if with the period
 	 */
-	public static RandomIndexStrategy periodIncreasing(final int period, final int bound, final boolean increasing) {
-		if(period > bound) {
-			throw new RuntimeException("Period must be lesser or equal to bound: " + period + ", " + bound);
+	public static RandomIndexStrategy periodIncreasing(final int period, final int end, final boolean increasing) {
+		if(period > end) {
+			throw new RuntimeException("Period must be lesser or equal to bound: " + period + ", " + end);
 		}
 		
 		return new AbstractRandomRandomIndexStrategy() {
@@ -108,10 +108,10 @@ public class RandomIndexStrategyFactory {
 			private void initializeIndices() {
 				countInPeriod = 0;
 				indices.clear();
-				for (int i = 0; i < bound; i++) {
+				for (int i = 0; i < end; i++) {
 					indices.add(i);
 				}
-				for (int i = 0; i < bound-period; i++) {
+				for (int i = 0; i < end-period; i++) {
 					indices.remove(rand.nextInt(indices.size()));
 				}
 				if(!increasing) {

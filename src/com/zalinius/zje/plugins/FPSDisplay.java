@@ -40,7 +40,7 @@ public class FPSDisplay extends RuntimePlugin {
 		g.drawString(fpsText, 10,  60);
 	}
 
-	private Color fpsColor(double fps) {
+	private static Color fpsColor(double fps) {
 		if(fps >= 50) {
 			return Color.GREEN;
 		}

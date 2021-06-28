@@ -44,7 +44,7 @@ public abstract class GameContainer implements Graphical, Logical {
 		System.exit(0);
 	}
 	
-	public void shutdownActions() {};
+	public void shutdownActions() {}
 	
 	public void moveWindow(int x, int y) {
         stage.moveWindow(x, y);
@@ -55,7 +55,7 @@ public abstract class GameContainer implements Graphical, Logical {
 		return stage.mouseLocator();
 	}
 	
-	public List<AbstractPlugin> getPlugins(){return new ArrayList<>();};
+	public List<AbstractPlugin> getPlugins(){return new ArrayList<>();}
 	
 
 }
