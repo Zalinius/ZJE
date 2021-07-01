@@ -55,6 +55,9 @@ public class Point{
 		return new Point(x - dX, y - dY);
 	}
 
+	public Point subtract(Vector v) {
+		return subtract(v.x, v.y);
+	}
 	
 	public static double distance(Point p1, Point p2) {
 		double y = p1.y - p2.y;

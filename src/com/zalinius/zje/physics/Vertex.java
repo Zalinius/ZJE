@@ -1,6 +1,7 @@
 package com.zalinius.zje.physics;
 
 import java.awt.geom.Point2D;
+import java.util.List;
 
 public class Vertex implements Physical{
 	private Point position;
@@ -26,9 +27,17 @@ public class Vertex implements Physical{
 	public void impulse(Vector momentum) {
 		velocity = velocity.add(momentum.scale(1d/mass));
 	}
+	
+	public void update(List<Vector> forces, double delta) {
+		update(forces.stream().reduce(new Vector(), (v1, v2) -> v1.add(v2)), delta);
+	}
 
 	public void update(Vector force, double delta) {
 		velocity = velocity.add(force.scale(delta/mass));
+		if(velocity.length() < 0.01) {
+			velocity = new Vector();
+		}
+		
 		position = position.add(velocity.scale(delta));
 	}
 

@@ -16,7 +16,7 @@ public class Vector {
 	}
 	
 	/**
-	 * Creates a new vector pointin at Point.
+	 * Creates a new vector pointing at Point.
 	 * @param point The endpoint of the vector
 	 */
 	public Vector(Point point) {
@@ -131,8 +131,24 @@ public class Vector {
 		return new UnitVector(this);
 	}
 	
+	/**
+	 * @return A vector pointing in the opposite direction as this one
+	 */
 	public Vector reflect() {
 		return scale(-1);
+	}
+	
+	/**
+	 * @return A vector rotated a quarter turn in the clockwise direction
+	 */
+	public Vector perpendicularCW() {
+		return new Vector(-y, x);
+	}
+	/**
+	 * @return A vector rotated a quarter turn in the counter-clockwise direction
+	 */
+	public Vector perpendicularCCW() {
+		return new Vector(y, -x);
 	}
 		
 	@Override
