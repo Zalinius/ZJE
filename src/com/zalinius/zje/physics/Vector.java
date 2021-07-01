@@ -131,14 +131,23 @@ public class Vector {
 		return new UnitVector(this);
 	}
 	
+	/**
+	 * @return A vector pointing in the opposite direction as this one
+	 */
 	public Vector reflect() {
 		return scale(-1);
 	}
 	
-	public Vector perpCW() {
+	/**
+	 * @return A vector rotated a quarter turn in the clockwise direction
+	 */
+	public Vector perpendicularCW() {
 		return new Vector(-y, x);
 	}
-	public Vector perpCCW() {
+	/**
+	 * @return A vector rotated a quarter turn in the counter-clockwise direction
+	 */
+	public Vector perpendicularCCW() {
 		return new Vector(y, -x);
 	}
 		
