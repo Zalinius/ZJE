@@ -41,8 +41,8 @@ public class Collisions {
 
 		double projectionMagnitude = linePrime.projectionMagnitude(centerPrime);
 
-		Point closestPoint = linePrime.normalize().scale(projectionMagnitude).add(infiniteLine.x1, infiniteLine.y1).toPoint();
-		return Point.distance(center, closestPoint);
+		Point closestPoint = linePrime.normalize().scale(projectionMagnitude).toPoint();
+		return Point.distance(centerPrime, closestPoint);
 	}
 
 }
