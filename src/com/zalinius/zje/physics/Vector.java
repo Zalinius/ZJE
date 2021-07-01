@@ -16,7 +16,7 @@ public class Vector {
 	}
 	
 	/**
-	 * Creates a new vector pointin at Point.
+	 * Creates a new vector pointing at Point.
 	 * @param point The endpoint of the vector
 	 */
 	public Vector(Point point) {
@@ -133,6 +133,13 @@ public class Vector {
 	
 	public Vector reflect() {
 		return scale(-1);
+	}
+	
+	public Vector perpCW() {
+		return new Vector(-y, x);
+	}
+	public Vector perpCCW() {
+		return new Vector(y, -x);
 	}
 		
 	@Override
