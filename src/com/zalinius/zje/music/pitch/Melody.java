@@ -16,8 +16,11 @@ public class Melody implements Iterator<AbsolutePitch> {
 	}
 	
 	public void setScale(EightPitchScale newScale) {
-		System.out.println(newScale);
 		this.scale = newScale;
+	}
+	
+	public void setRoot(int root) {
+		this.root = root;
 	}
 	
 	

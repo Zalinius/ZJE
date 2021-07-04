@@ -10,6 +10,8 @@ public class ScaleFactory {
 
 	private static EightPitchScale majorScale;
 	private static EightPitchScale minorScale;
+	private static EightPitchScale minorHarmonicScale;
+	private static EightPitchScale wholeToneScale;
 
 
 	public static EightPitchScale majorScale() {
@@ -34,6 +36,31 @@ public class ScaleFactory {
 			minorScale = makeEightNoteScale(notes, "minor");
 		}
 		return minorScale;
+	}
+
+	public static EightPitchScale wholeToneScale() {
+		if(wholeToneScale == null) {
+			List<Integer> notes = new ArrayList<>();
+			for (int i = 0; i < PitchPlus.whole.length; i++) {
+				notes.add(PitchPlus.whole[i]);
+			}
+			notes.add(AbsolutePitch.OCTAVE_LENGTH+2);
+			wholeToneScale = makeEightNoteScale(notes, "whole");
+		}
+		return wholeToneScale;
+	}
+
+
+	public static EightPitchScale minorHarmonicScale() {
+		if(minorHarmonicScale == null) {
+			List<Integer> notes = new ArrayList<>();
+			for (int i = 0; i < PitchPlus.harmonic_minor.length; i++) {
+				notes.add(PitchPlus.harmonic_minor[i]);
+			}
+			notes.add(AbsolutePitch.OCTAVE_LENGTH);
+			minorHarmonicScale = makeEightNoteScale(notes, "harmonic minor");
+		}
+		return minorHarmonicScale;
 	}
 
 	private static EightPitchScale makeEightNoteScale(List<Integer> relativeNotesNumbers, String name) {
@@ -96,4 +123,6 @@ public class ScaleFactory {
 		}
 		return list;
 	}
+	
+
 }
