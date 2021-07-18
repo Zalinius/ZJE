@@ -1,6 +1,8 @@
-package com.zalinius.zje.architecture.input;
+package com.zalinius.zje.architecture.input.actions;
 
 import java.awt.Shape;
+
+import com.zalinius.zje.architecture.input.types.MouseInput;
 
 
 /**
@@ -8,6 +10,8 @@ import java.awt.Shape;
  * @author Zalinius
  */
 public interface Clickable {
+	
+	
 	/**
 	 * The clickable area of this clickable object.
 	 * @return A shape. If the mouse event was within the shape, the action will be called.
@@ -18,7 +22,7 @@ public interface Clickable {
 	 * 
 	 * @return The numeric code for the mouse button. See MouseEvent.
 	 */
-	public int mouseButtonCode();
+	public MouseInput mouseButton();
 	
 	/**
 	 * Called when the main mouse button is pressed down and then released, i.e. a full click.

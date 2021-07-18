@@ -24,6 +24,7 @@ public class RandomIndexStrategyFactory {
 		};
 	}
 	
+	
 	public static RandomIndexStrategy noConsecutiveRepetition() {
 		return new AbstractRandomRandomIndexStrategy() {
 			private int lastIndex = -1;
