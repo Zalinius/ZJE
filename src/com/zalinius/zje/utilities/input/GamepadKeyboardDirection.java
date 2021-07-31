@@ -18,7 +18,7 @@ public class GamepadKeyboardDirection implements Directional {
 	private GamepadDirection  gamepadDirection;
 	
 	public GamepadKeyboardDirection() {
-		ScalingStrategy strategy = ScalingStrategyFactory.scaleLengthBetweenZeroAndOne();
+		ScalingStrategy strategy = ScalingStrategyFactory.clampLengthBetweenZeroAndOne();
 		
 		this.wasdDirection = new KeyboardDirection(BinaryInput.KEY_W, BinaryInput.KEY_A, BinaryInput.KEY_S, BinaryInput.KEY_D, strategy);
 		this.arrowsDirection = new KeyboardDirection(BinaryInput.KEY_UP, BinaryInput.KEY_LEFT, BinaryInput.KEY_DOWN, BinaryInput.KEY_RIGHT, strategy);

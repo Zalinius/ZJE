@@ -3,9 +3,9 @@ package com.zalinius.zje.architecture.input.types;
 import java.awt.event.MouseEvent;
 
 public enum MouseInput{
-	MOUSE_PRIMARY(MouseEvent.BUTTON1),
-	MOUSE_SECONDARY(MouseEvent.BUTTON2),
-	MOUSE_TERTIARY(MouseEvent.BUTTON3),
+	MOUSE_LEFT(MouseEvent.BUTTON1),
+	MOUSE_MIDDLE(MouseEvent.BUTTON2),
+	MOUSE_RIGHT(MouseEvent.BUTTON3),
 	;
 	
 	private int code;
@@ -21,11 +21,11 @@ public enum MouseInput{
 	public static MouseInput getMouseInput(int awtEventCode) {
 		switch (awtEventCode) {
 		case MouseEvent.BUTTON1:
-			return MOUSE_PRIMARY;
+			return MOUSE_LEFT;
 		case MouseEvent.BUTTON2:
-			return MOUSE_PRIMARY;
+			return MOUSE_MIDDLE;
 		case MouseEvent.BUTTON3:
-			return MOUSE_PRIMARY;
+			return MOUSE_RIGHT;
 
 		default:
 			return null;

@@ -47,13 +47,13 @@ public class InputListener extends KeyAdapter implements MouseListener, MouseMot
 		gamepads.addAxisInput(axis);
 	}
 
-	public void addInput(Inputtable input) {
-		if(input.input().isKeyboardKey()) {
-			binaryInputs.put(input.input(), input);
-			binaryInputStates.put(input.input(), false);
+	public void addInput(Inputtable binaryInput) {
+		if(binaryInput.binaryInput().isKeyboardKey()) {
+			binaryInputs.put(binaryInput.binaryInput(), binaryInput);
+			binaryInputStates.put(binaryInput.binaryInput(), false);
 		}
 		else {
-			gamepads.addButtonInput(input);
+			gamepads.addButtonInput(binaryInput);
 		}
 
 	}

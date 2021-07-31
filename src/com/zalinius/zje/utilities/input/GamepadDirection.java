@@ -29,7 +29,7 @@ public class GamepadDirection implements Directional{
 	public Collection<Axisable> axisInputs(){
 		Axisable verticalAxis = new Axisable() {
 			@Override
-			public AxialInput input() {
+			public AxialInput axialInput() {
 				return AxialInput.LEFT_STICK_VERTICAL;
 			}
 			@Override
@@ -39,7 +39,7 @@ public class GamepadDirection implements Directional{
 		};
 		Axisable horizontalAxis = new Axisable() {
 			@Override
-			public AxialInput input() {
+			public AxialInput axialInput() {
 				return AxialInput.LEFT_STICK_HORIZONTAL;
 			}
 			@Override

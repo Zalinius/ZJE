@@ -117,12 +117,12 @@ public class GamepadManager implements Logical{
 	}
 
 	public void addAxisInput(Axisable axis) {
-		axisInputs.put(axis.input(), axis);		
+		axisInputs.put(axis.axialInput(), axis);		
 	}
 
 	public void addButtonInput(Inputtable buttonInput) {
-		buttonInputs.put(buttonInput.input(), buttonInput);
-		buttonInputStates.put(buttonInput.input(), false);
+		buttonInputs.put(buttonInput.binaryInput(), buttonInput);
+		buttonInputStates.put(buttonInput.binaryInput(), false);
 	}
 	
 	private void buttonPressSwitchBoard(BinaryInput button, boolean press){

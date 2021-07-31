@@ -9,7 +9,7 @@ import com.zalinius.zje.architecture.input.types.BinaryInput;
 public interface Inputtable {
 	public static final int BUTTON_OFFSET = 1000;
 	
-	public BinaryInput input();
+	public BinaryInput binaryInput();
 	public void pressed();
 	public void released();
 }

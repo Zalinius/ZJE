@@ -14,7 +14,7 @@ public class ScalingStrategyFactory {
 		};
 	}
 	
-	public static ScalingStrategy scaleLengthBetweenZeroAndOne() {
+	public static ScalingStrategy clampLengthBetweenZeroAndOne() {
 		return new ScalingStrategy() {
 			
 			@Override

@@ -59,7 +59,7 @@ public class KeyboardDirection implements Directional{
 			}
 
 			@Override
-			public BinaryInput input() {
+			public BinaryInput binaryInput() {
 				return input;
 			}
 		};

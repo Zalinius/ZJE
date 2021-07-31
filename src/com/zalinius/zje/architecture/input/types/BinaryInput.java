@@ -116,7 +116,7 @@ public enum BinaryInput {
 	
 	public int getGamePadCode() {
 		if(isGamepadButton()) {
-			return code - 1000;
+			return code - Inputtable.BUTTON_OFFSET;
 		}
 		else {
 			throw new RuntimeException(this.name() + " is not a gamepad button");
