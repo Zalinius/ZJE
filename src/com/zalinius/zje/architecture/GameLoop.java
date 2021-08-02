@@ -12,11 +12,13 @@ public class GameLoop {
     
     private GameStage stage;
     private Logical logic;
+    private Logical inputPolling;
     
     private List<RuntimePlugin> plugins;
 
     public GameLoop(GameStage stage, Logical logic){
         this.stage = stage;
+        this.inputPolling = stage.getInputPolling();
         this.logic = logic;
 		this.plugins = new ArrayList<>();
     }
@@ -79,6 +81,7 @@ public class GameLoop {
     	plugins.forEach((plugin) -> plugin.updateBefore(delta));
     	
     	GameClock.update(delta);
+    	inputPolling.update(delta);
     	logic.update(delta);
     	
     	plugins.forEach((plugin) -> plugin.updateAfter(delta));

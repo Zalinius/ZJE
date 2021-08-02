@@ -8,15 +8,18 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import com.zalinius.zje.architecture.input.Clickable;
-import com.zalinius.zje.architecture.input.Inputtable;
+import com.zalinius.zje.architecture.input.InputListener;
+import com.zalinius.zje.architecture.input.RumbleListener;
+import com.zalinius.zje.architecture.input.actions.Axisable;
+import com.zalinius.zje.architecture.input.actions.Clickable;
+import com.zalinius.zje.architecture.input.actions.Inputtable;
 import com.zalinius.zje.physics.Locatable;
 import com.zalinius.zje.plugins.RuntimePlugin;
 
 public class GameStage extends DoubleBufferedFrame{
 	private static final long serialVersionUID = 1L;
 	private Graphical graphics;
-	private static InputListener input;
+	private InputListener input;
 
 	private List<RuntimePlugin> plugins;
 
@@ -26,9 +29,10 @@ public class GameStage extends DoubleBufferedFrame{
 		setResizable(false);
 		setSize(width, height);
 		addWindowListener(defaultCloseAction());
-		addKeyListener(getInput());
-		addMouseListener(getInput());
-		addMouseMotionListener(getInput());
+		this.input = new InputListener();
+		addKeyListener(input);
+		addMouseListener(input);
+		addMouseMotionListener(input);
 		this.plugins = new ArrayList<>();
 	}
 
@@ -38,7 +42,7 @@ public class GameStage extends DoubleBufferedFrame{
 		plugins.forEach((plugin) -> plugin.renderAfter(g));		
 	}
 
-	public void addKeys(Collection<Inputtable> keys, Collection<Clickable> clicks){
+	public void addKeys(Collection<Inputtable> keys, Collection<Clickable> clicks, Collection<Axisable> axes){
 		for (Iterator<Clickable> it = clicks.iterator(); it.hasNext();) {
 			Clickable clickable = it.next();
 			input.addInput(clickable);
@@ -47,6 +51,10 @@ public class GameStage extends DoubleBufferedFrame{
 		for (Iterator<Inputtable> it = keys.iterator(); it.hasNext();) {
 			Inputtable inputtable = it.next();
 			input.addInput(inputtable);
+		}
+		for (Iterator<Axisable> it = axes.iterator(); it.hasNext();) {
+			Axisable axisable = it.next();
+			input.addInput(axisable);
 		}
 	}
 
@@ -63,32 +71,19 @@ public class GameStage extends DoubleBufferedFrame{
 		};
 	}
 
-
-	public static boolean isHeld(int keyCode) {
-		return input.isHeldDown(keyCode);
-	}
-
-
-	public static void addInput(Inputtable keyInput) {
+	public void addInput(Inputtable keyInput) {
 		if(input == null) {
 			input = new InputListener();
 		}
 		input.addInput(keyInput);
 	}
-	public static void addInput(Clickable mouseInput) {
+	public void addInput(Clickable mouseInput) {
 		if(input == null) {
 			input = new InputListener();
 		}
 		input.addInput(mouseInput);
 	}
 
-	private static InputListener getInput() {
-		if(input == null) {
-			input = new InputListener();
-		}
-
-		return input;
-	}
 
 	public Locatable mouseLocator() {
 		return input;
@@ -97,5 +92,12 @@ public class GameStage extends DoubleBufferedFrame{
 	public void accept(RuntimePlugin runtimePlugin) {
 		plugins.add(runtimePlugin);
 	}
-
+	
+	public RumbleListener rumbleListener() {
+		return input;
+	}
+	
+	public Logical getInputPolling() {
+		return input;
+	}
 }

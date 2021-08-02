@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.zalinius.zje.architecture.input.Clickable;
-import com.zalinius.zje.architecture.input.Inputtable;
+import com.zalinius.zje.architecture.input.RumbleListener;
+import com.zalinius.zje.architecture.input.actions.Axisable;
+import com.zalinius.zje.architecture.input.actions.Clickable;
+import com.zalinius.zje.architecture.input.actions.Inputtable;
 import com.zalinius.zje.physics.Locatable;
 import com.zalinius.zje.plugins.AbstractPlugin;
 
@@ -18,21 +20,28 @@ public abstract class GameContainer implements Graphical, Logical {
 		loop = new GameLoop(stage, this);
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> shutdownActions()));
 	}
-	
+
 	private void registerPlugins(List<AbstractPlugin> plugins) {
 		plugins.forEach((plugin)-> plugin.registerPlugin(stage, loop, stage));
 	}
-	
-	public void addControls(Collection<Inputtable> keyControls, Collection<Clickable> mouseControls) {
+
+	public void addControls(Collection<Inputtable> keyControls, Collection<Clickable> mouseControls, Collection<Axisable> axisControls) {
 		if(keyControls == null) {
 			keyControls = new ArrayList<>();
 		}
 		if(mouseControls == null) {
 			mouseControls = new ArrayList<>();
 		}
-		stage.addKeys(keyControls, mouseControls);
+		if(axisControls == null) {
+			axisControls = new ArrayList<>();
+		}
+		stage.addKeys(keyControls, mouseControls, axisControls);
 	}
-	
+
+	public RumbleListener getRumbleListener() {
+		return stage.rumbleListener();
+	}
+
 	public void startGame() {
 		registerPlugins(getPlugins());
 		stage.setVisible(true);
@@ -43,19 +52,19 @@ public abstract class GameContainer implements Graphical, Logical {
 		stage.dispose();
 		System.exit(0);
 	}
-	
+
 	public void shutdownActions() {}
-	
+
 	public void moveWindow(int x, int y) {
-        stage.moveWindow(x, y);
+		stage.moveWindow(x, y);
 	}
 
-	
+
 	public Locatable mouseLocator() {
 		return stage.mouseLocator();
 	}
-	
+
 	public List<AbstractPlugin> getPlugins(){return new ArrayList<>();}
-	
+
 
 }

@@ -99,6 +99,10 @@ public class Vector {
 	public boolean isZeroVector() {
 		return x == 0 && y == 0;
 	}
+
+	public boolean isNonZero() {
+		return x != 0 || y != 0;
+	}
 	
 	public boolean isUnitVector() {
 		return length() == 1.0;
