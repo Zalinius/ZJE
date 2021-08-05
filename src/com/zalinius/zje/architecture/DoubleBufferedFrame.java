@@ -14,7 +14,8 @@ public abstract class DoubleBufferedFrame extends Frame {
 
 	private static final long serialVersionUID = 1L;
 	
-	private int bufferWidth, bufferHeight;
+	private int bufferWidth;
+	private int bufferHeight;
     private Image bufferImage;
     private Graphics2D bufferGraphics;
 
@@ -23,10 +24,12 @@ public abstract class DoubleBufferedFrame extends Frame {
     }
 
     //We are overriding this to enforce buffering
+    @Override
     public final void update(Graphics g){
         paint(g);
     }
 
+    @Override
     public final void paint(Graphics g){
         if(bufferWidth!=getSize().width || bufferHeight!=getSize().height || bufferImage==null || bufferGraphics==null)
             resetBuffer();
@@ -64,7 +67,6 @@ public abstract class DoubleBufferedFrame extends Frame {
             bufferImage.flush();
             bufferImage=null;
         }
-        System.gc();
 
         //    create the new image with the size of the panel
         bufferImage=createImage(bufferWidth,bufferHeight);

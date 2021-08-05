@@ -7,6 +7,7 @@ import java.util.List;
 import net.beadsproject.beads.data.Pitch;
 
 public class ScaleFactory {
+	private ScaleFactory() {}
 
 	private static EightPitchScale majorScale;
 	private static EightPitchScale minorScale;
@@ -66,7 +67,7 @@ public class ScaleFactory {
 	private static EightPitchScale makeEightNoteScale(List<Integer> relativeNotesNumbers, String name) {
 		int notesInEightNoteScale = 8; //Hint: it's eight
 		if(relativeNotesNumbers.size() != notesInEightNoteScale) { 
-			throw new RuntimeException("Wrong number of notes: " + relativeNotesNumbers.size());
+			throw new IllegalArgumentException("Wrong number of notes: " + relativeNotesNumbers.size());
 		}
 		final List<RelativePitch> relativeNotes = new ArrayList<>();
 		for (Iterator<Integer> it = relativeNotesNumbers.iterator(); it.hasNext();) {
@@ -106,14 +107,6 @@ public class ScaleFactory {
 			}
 
 		};
-	}
-
-	public static <E> List<E> arrayToList(E[] array){
-		List<E> list = new ArrayList<>();
-		for (int i = 0; i < array.length; i++) {
-			list.add(array[i]);
-		}
-		return list;
 	}
 
 	public static List<Integer> arrayToList(int[] array){

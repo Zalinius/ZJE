@@ -3,6 +3,7 @@ package com.zalinius.zje.math;
 import com.zalinius.zje.physics.Point;
 
 public class Interpolation {
+	private Interpolation() {}
 	
 	public static double linearInterpolant(double start, double end, double value) {
 		return (value-start)/(end-start);

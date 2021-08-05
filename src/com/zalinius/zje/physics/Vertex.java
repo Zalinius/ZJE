@@ -46,9 +46,7 @@ public class Vertex implements Physical{
 	}
 
 	public double mass(){return mass;}
-	
-	public double x() {return position.x;}
-	public double y() {return position.y;}
+
 	public Point position() { return position;}
 	public Vector velocity() {return velocity;}
 	public Vector momentum() {return velocity.scale(mass);}

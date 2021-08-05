@@ -15,14 +15,14 @@ public abstract class GameContainer implements Graphical, Logical {
 	private GameLoop loop;
 	private GameStage stage;
 
-	public GameContainer(String windowText, int width, int height) {
+	protected GameContainer(String windowText, int width, int height) {
 		stage = new GameStage(this, windowText, width, height);
 		loop = new GameLoop(stage, this);
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> shutdownActions()));
+		Runtime.getRuntime().addShutdownHook(new Thread(this::shutdownActions));
 	}
 
 	private void registerPlugins(List<AbstractPlugin> plugins) {
-		plugins.forEach((plugin)-> plugin.registerPlugin(stage, loop, stage));
+		plugins.forEach( plugin -> plugin.registerPlugin(stage, loop, stage));
 	}
 
 	public void addControls(Collection<Inputtable> keyControls, Collection<Clickable> mouseControls, Collection<Axisable> axisControls) {

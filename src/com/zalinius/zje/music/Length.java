@@ -2,10 +2,10 @@ package com.zalinius.zje.music;
 
 public class Length {
 	
-	public final double length; //in beats
+	public final double lengthInBeats; //in beats
 	
 	public Length(double length) {
-		this.length = length;
+		this.lengthInBeats = length;
 	}
 	
 	public Length(Length ... lengths) {
@@ -14,7 +14,7 @@ public class Length {
 			totalLength += lengths.length;
 		}
 		
-		this.length = totalLength;
+		this.lengthInBeats = totalLength;
 	}
 	
 	

@@ -64,7 +64,7 @@ public class Vector {
 			else
 				return 180.0;
 		}
-		else if(x == 0 && y !=0) {
+		else if(x == 0) {
 			if(y > 0)
 				return 90.0;
 			else
@@ -206,8 +206,7 @@ public class Vector {
 	}
 	
 	public double projectionMagnitude(Vector vector) {
-		double resultMagnitude = dotProduct(vector, this.normalize());
-		return resultMagnitude;
+		return dotProduct(vector, this.normalize());
 	}
 	
 	public Vector reflection(Vector reflectee) {

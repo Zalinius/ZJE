@@ -9,6 +9,7 @@ import java.util.List;
 import com.zalinius.zje.physics.Point;
 
 public class Geometry {
+	private Geometry() {}
 	
 	public static Shape makePolygonShape(List<Point> points) {
 		Path2D.Double path = new Path2D.Double();

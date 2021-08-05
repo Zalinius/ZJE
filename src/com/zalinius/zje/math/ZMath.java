@@ -3,6 +3,7 @@ package com.zalinius.zje.math;
 import com.zalinius.zje.physics.Point;
 
 public class ZMath {
+	private ZMath() {}
 
 	/**
 	 * Constrains a value between two bounds (inclusive).

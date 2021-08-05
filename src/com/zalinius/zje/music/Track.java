@@ -11,7 +11,7 @@ public abstract class Track extends Bead{
 	protected final AudioContext ac;
 	protected final Clock clock;
 	
-	public Track(double initialBeatLength) {
+	protected Track(double initialBeatLength) {
 		ac = AudioContext.getDefaultContext();
 		clock = new Clock(ac, (float) initialBeatLength);
 		clock.addMessageListener(this);

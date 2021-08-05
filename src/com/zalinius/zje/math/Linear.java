@@ -2,7 +2,8 @@ package com.zalinius.zje.math;
 
 public class Linear {
 	
-	public double a, b;
+	public final double a;
+	public final double b;
 	private boolean isVertical;
 	
 	public Linear() {

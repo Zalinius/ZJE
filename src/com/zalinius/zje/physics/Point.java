@@ -12,7 +12,8 @@ import java.util.Iterator;
  */
 public class Point{
 	
-	public final double x, y;
+	public final double x;
+	public final double y;
 
 	public Point() {
 		this(0, 0);
@@ -34,7 +35,7 @@ public class Point{
 		return Point.add(this, v);
 	}
 	
-	public static Point CreatePolarPoint(double radius, double angle) {
+	public static Point createPolarPoint(double radius, double angle) {
 		return new Point(Math.cos(angle) * radius, Math.sin(angle) * radius);
 	}
 	
@@ -67,7 +68,8 @@ public class Point{
 	}
 	
 	public static Point center(Collection<Point> points) {
-		double x=0,y=0;
+		double x = 0;
+		double y = 0;
 		for (Iterator<Point> it = points.iterator(); it.hasNext();) {
 			Point point = it.next();
 			x += point.x;

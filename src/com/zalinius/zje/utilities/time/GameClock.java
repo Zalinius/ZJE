@@ -1,16 +1,19 @@
 package com.zalinius.zje.utilities.time;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameClock{
+	private static final String OWNER_IS_NULL = "owner is null";
 
-	private static Hashtable<Object, Timer> timers = new Hashtable<>();
+	private GameClock() {}
+
+	private static Map<Object, Timer> timers = new HashMap<>();
 	private static double time = 0;
 	
 	public static void addTimer(Object owner, double timerTime) {
 		if(owner == null) {
-			throw new NullPointerException();
+			throw new IllegalArgumentException(OWNER_IS_NULL);
 		}
 		
 		timers.put(owner, new PassiveTimer(timerTime));
@@ -23,7 +26,7 @@ public class GameClock{
 	
 	public static void addActionTimer(Runnable action, double timerTime, int instances) {
 		if(instances < 0) {
-			throw new RuntimeException("Negative number of instances: " + instances);
+			throw new IllegalArgumentException("Negative number of instances: " + instances);
 		}
 		
 		for(int i = 0; i != instances; ++i) {
@@ -34,7 +37,7 @@ public class GameClock{
 	
 	public static boolean isTimerDone(Object owner) {
 		if(owner == null) {
-			throw new NullPointerException();
+			throw new IllegalArgumentException(OWNER_IS_NULL);
 		}
 
 		if(timers.containsKey(owner)) {
@@ -46,10 +49,10 @@ public class GameClock{
 	
 	public static double timeLeft(Object owner) {
 		if(owner == null) {
-			throw new NullPointerException();
+			throw new IllegalArgumentException(OWNER_IS_NULL);
 		}
 		
-		if(timers.contains(owner)) {
+		if(timers.containsKey(owner)) {
 			return timers.get(owner).timeLeft();
 		}
 		else {
@@ -59,9 +62,7 @@ public class GameClock{
 
 	public static void update(double delta) {
 		time += delta;
-		for(Enumeration<Timer> t = timers.elements(); t.hasMoreElements();) {
-			t.nextElement().update(delta);
-		}
+		timers.values().forEach( t -> t.update(delta));
 		
 		//TODO remove timers from table when done
 	}

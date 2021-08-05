@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class RandomIndexStrategyFactory {
+	private RandomIndexStrategyFactory() {}
 
-	public static abstract class AbstractRandomRandomIndexStrategy implements RandomIndexStrategy{
+	public abstract static class AbstractRandomRandomIndexStrategy implements RandomIndexStrategy{
 		protected Random rand;
-		public AbstractRandomRandomIndexStrategy() {
+		protected AbstractRandomRandomIndexStrategy() {
 			rand = new Random();
 		}
 	}
@@ -99,7 +102,7 @@ public class RandomIndexStrategyFactory {
 	 */
 	public static RandomIndexStrategy periodIncreasing(final int period, final int end, final boolean increasing) {
 		if(period > end) {
-			throw new RuntimeException("Period must be lesser or equal to bound: " + period + ", " + end);
+			throw new IllegalArgumentException("Period must be lesser or equal to bound: " + period + ", " + end);
 		}
 		
 		return new AbstractRandomRandomIndexStrategy() {
@@ -109,10 +112,11 @@ public class RandomIndexStrategyFactory {
 			private void initializeIndices() {
 				countInPeriod = 0;
 				indices.clear();
-				for (int i = 0; i < end; i++) {
-					indices.add(i);
-				}
-				for (int i = 0; i < end-period; i++) {
+				indices = IntStream.range(0, end).boxed().collect(Collectors.toList());
+
+				int indicesToRemove = end-period;
+
+				for (int i = 0; i < indicesToRemove; i++) {
 					indices.remove(rand.nextInt(indices.size()));
 				}
 				if(!increasing) {
@@ -135,14 +139,4 @@ public class RandomIndexStrategyFactory {
 		};
 
 	}
-	
-	
-	
-	public static void main(String[] args) {
-		RandomIndexStrategy strat = periodIncreasing(3, 8, true);
-		for(int i = 0; i != 20; ++i) {
-			System.out.println(strat.nextIndex(8));
-		}
-	}
-	
 }
