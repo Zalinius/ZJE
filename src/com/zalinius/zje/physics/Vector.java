@@ -47,44 +47,19 @@ public class Vector {
 	}
 	
 	
-	public double angle() {
-		return (angleDegrees() * (2 * Math.PI / 360d ));
+	public double absoluteAngle() {
+		double angle = Math.atan2(y, x);
+		if(angle < 0) {
+			angle = 2*Math.PI + angle;
+		}
+		return angle;
 	}
 	
 	/**
 	 * @return the vector's angle in degrees
 	 */
-	public double angleDegrees() {
-		if(x == 0 && y == 0) {
-			return Double.NaN;
-		}
-		else if(x != 0 && y == 0) {
-			if(x > 0)
-				return 0.0;
-			else
-				return 180.0;
-		}
-		else if(x == 0) {
-			if(y > 0)
-				return 90.0;
-			else
-				return 270.0;
-		}
-		else {
-			double theta = Math.atan(y/x) / Math.PI * 180.0;
-			if(x > 0 && y > 0) {
-				return theta;
-			}
-			else if(x < 0 && y > 0) {
-				return theta + 180;
-			}
-			else if(x < 0 && y < 0) {
-				return theta + 180;
-			}
-			else {
-				return theta + 360;
-			}
-		}
+	public double absoluteAngleDegrees() {
+		return Math.toDegrees(absoluteAngle());
 	}
 
 	/**
