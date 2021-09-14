@@ -79,9 +79,9 @@ public class ScaleFactory {
 			@Override
 			public RelativePitch first() {return  relativeNotes.get(0);	}
 			@Override
-			public RelativePitch second() {return relativeNotes.get(1);  }
+			public RelativePitch second() {return relativeNotes.get(1); }
 			@Override
-			public RelativePitch third() {return  relativeNotes.get(2); 	}
+			public RelativePitch third() {return  relativeNotes.get(2); }
 			@Override
 			public RelativePitch fourth() {return relativeNotes.get(3);	}
 			@Override
@@ -91,7 +91,7 @@ public class ScaleFactory {
 			@Override
 			public RelativePitch seventh(){return relativeNotes.get(6);	}
 			@Override
-			public RelativePitch eighth() {return  relativeNotes.get(7);	}
+			public RelativePitch eighth() {return relativeNotes.get(7);	}
 			@Override
 			public Iterator<RelativePitch> iterator() {
 				return relativeNotes.iterator();
@@ -100,7 +100,7 @@ public class ScaleFactory {
 			public RelativePitch nth(int index) {
 				return relativeNotes.get(index);
 			}
-			
+
 			@Override
 			public String toString() {
 				return name + " scale";
