@@ -109,13 +109,4 @@ public class ScaleFactory {
 		};
 	}
 
-	public static List<Integer> arrayToList(int[] array){
-		List<Integer> list = new ArrayList<>();
-		for (int i = 0; i < array.length; i++) {
-			list.add(array[i]);
-		}
-		return list;
-	}
-	
-
 }

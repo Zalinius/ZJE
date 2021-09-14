@@ -14,8 +14,7 @@ public abstract class DoubleBufferedFrame extends Frame {
 
 	private static final long serialVersionUID = 1L;
 	
-	private int bufferWidth;
-	private int bufferHeight;
+	private Dimension bufferDimensions;
     private Image bufferImage;
     private Graphics2D bufferGraphics;
 
@@ -31,7 +30,7 @@ public abstract class DoubleBufferedFrame extends Frame {
 
     @Override
     public final void paint(Graphics g){
-        if(bufferWidth!=getSize().width || bufferHeight!=getSize().height || bufferImage==null || bufferGraphics==null)
+        if(!bufferDimensions.equals(getSize()) || bufferImage==null || bufferGraphics==null)
             resetBuffer();
 
         if(bufferGraphics != null){
@@ -39,7 +38,7 @@ public abstract class DoubleBufferedFrame extends Frame {
         	AffineTransform trans = bufferGraphics.getTransform();
         	int offSetX = (int) trans.getTranslateX();
         	int offSetY = (int) trans.getTranslateY();
-            bufferGraphics.clearRect(-offSetX -50, -offSetY -50,bufferWidth+50,bufferHeight+50);
+            bufferGraphics.clearRect(-offSetX -50, -offSetY -50,bufferDimensions.width+50,bufferDimensions.height+50);
 
             //calls the paintbuffer method with
             //the offscreen graphics as a param
@@ -55,8 +54,7 @@ public abstract class DoubleBufferedFrame extends Frame {
 
     private final void resetBuffer(){
         // always keep track of the image size
-        bufferWidth=getSize().width;
-        bufferHeight=getSize().height;
+    	bufferDimensions = getSize();
 
         //    clean up the previous image
         if(bufferGraphics!=null){
@@ -69,7 +67,7 @@ public abstract class DoubleBufferedFrame extends Frame {
         }
 
         //    create the new image with the size of the panel
-        bufferImage=createImage(bufferWidth,bufferHeight);
+        bufferImage=createImage(bufferDimensions.width, bufferDimensions.height);
         bufferGraphics=(Graphics2D) bufferImage.getGraphics();
         bufferGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     }

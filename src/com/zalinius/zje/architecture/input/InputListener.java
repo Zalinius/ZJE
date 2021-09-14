@@ -131,9 +131,7 @@ public class InputListener extends KeyAdapter implements MouseListener, MouseMot
 
 		if(mouseInputs.containsKey(input)) {
 			for (Clickable clickable : mouseInputs.get(input)) {
-				if(clickable.clickArea().contains(event.getPoint())) {
-					clickable.mouseReleased();
-				}
+				clickable.mouseReleased();
 			}
 		}				
 	}
