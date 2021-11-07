@@ -111,7 +111,6 @@ public class GamepadManager implements Logical{
 		try {
 			controllerManager.pollState();
 		} catch (SDL_Error e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 	}

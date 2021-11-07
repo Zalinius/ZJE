@@ -107,20 +107,15 @@ public class InputListener extends KeyAdapter implements MouseListener, MouseMot
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-	}
+	public void mouseEntered(MouseEvent arg0) { /*Purposefully empty, as no swing components*/}
 
 	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
+	public void mouseExited(MouseEvent arg0) { /*Purposefully empty, as no swing components*/	}
 
 	@Override
 	public void mousePressed(MouseEvent event) {
 		MouseInput input = MouseInput.getMouseInput(event.getButton());
-		
+
 		if(mouseInputs.containsKey(input)) {
 			for (Clickable clickable : mouseInputs.get(input)) {
 				if(clickable.clickArea().contains(event.getPoint())) {
@@ -136,18 +131,14 @@ public class InputListener extends KeyAdapter implements MouseListener, MouseMot
 
 		if(mouseInputs.containsKey(input)) {
 			for (Clickable clickable : mouseInputs.get(input)) {
-				//TODO		if(clickable.clickArea().contains(event.getPoint())) {
 				clickable.mouseReleased();
-				//}
 			}
 		}				
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		Point mouse = new Point(e.getPoint());
-		mouseX = (int) mouse.x;
-		mouseY = (int) mouse.y;
+		mouseMoved(e);
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import com.zalinius.zje.architecture.DoubleBufferedFrame;
 import com.zalinius.zje.architecture.GameLoop;
 import com.zalinius.zje.architecture.GameStage;
 
-public abstract class RuntimePlugin extends AbstractPlugin{
+public abstract class RuntimePlugin implements AbstractPlugin{
 
 	/**
 	 * Called before the game gets updated

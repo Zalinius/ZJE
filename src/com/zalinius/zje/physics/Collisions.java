@@ -4,6 +4,8 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 
 public class Collisions {
+	
+	private Collisions() {}
 
 	public static boolean intersection(Ellipse2D.Double circle, Line2D.Double segment) {
 		Point center = new Point(circle.getCenterX(), circle.getCenterY());

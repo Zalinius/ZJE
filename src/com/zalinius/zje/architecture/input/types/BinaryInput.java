@@ -110,7 +110,7 @@ public enum BinaryInput {
 			return code;
 		}
 		else {
-			throw new RuntimeException(this.name() + " is not a keyboard key");
+			throw new BinaryInputException(this.name() + " is not a keyboard key");
 		}
 	}
 	
@@ -119,7 +119,7 @@ public enum BinaryInput {
 			return code - Inputtable.BUTTON_OFFSET;
 		}
 		else {
-			throw new RuntimeException(this.name() + " is not a gamepad button");
+			throw new BinaryInputException(this.name() + " is not a gamepad button");
 		}
 	}
 	

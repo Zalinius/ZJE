@@ -3,6 +3,8 @@ package com.zalinius.zje.math.random;
 import java.util.Random;
 
 public class ZRand {
+	private ZRand() {}
+	
 	private static final Random random = new Random();
 	
 	public static boolean coinFlip() {

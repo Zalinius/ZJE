@@ -4,7 +4,7 @@ import com.zalinius.zje.architecture.DoubleBufferedFrame;
 import com.zalinius.zje.architecture.GameLoop;
 import com.zalinius.zje.architecture.GameStage;
 
-public abstract class RenderSettings extends AbstractPlugin {
+public abstract class RenderSettings implements AbstractPlugin {
 	
 	public abstract void applySettings(DoubleBufferedFrame frame);
 

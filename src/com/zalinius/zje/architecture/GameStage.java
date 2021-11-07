@@ -37,9 +37,9 @@ public class GameStage extends DoubleBufferedFrame{
 	}
 
 	public void paintBuffer(Graphics2D g){
-		plugins.forEach((plugin) -> plugin.renderBefore(g));		
+		plugins.forEach( plugin -> plugin.renderBefore(g));		
 		graphics.render(g);
-		plugins.forEach((plugin) -> plugin.renderAfter(g));		
+		plugins.forEach( plugin -> plugin.renderAfter(g));		
 	}
 
 	public void addKeys(Collection<Inputtable> keys, Collection<Clickable> clicks, Collection<Axisable> axes){
@@ -64,6 +64,7 @@ public class GameStage extends DoubleBufferedFrame{
 
 	public WindowAdapter defaultCloseAction() {
 		return new WindowAdapter() {
+			@Override
 			public void windowClosing(WindowEvent e) {
 				dispose();
 				System.exit(0);
