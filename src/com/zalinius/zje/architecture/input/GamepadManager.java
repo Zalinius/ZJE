@@ -93,8 +93,11 @@ public class GamepadManager implements Logical{
 					value = 0f;
 				}
 				
-				Axisable axisable = axisInputs.get(axis);
-				axisable.axisMoved(value);
+				
+				if(axisInputs.containsKey(axis)) {
+					Axisable axisable = axisInputs.get(axis);
+					axisable.axisMoved(value);					
+				}
 
 				return false;
 			}

@@ -20,6 +20,7 @@ public abstract class DoubleBufferedFrame extends Frame {
 
     DoubleBufferedFrame(String title){
         super(title);
+    	bufferDimensions = getSize(); 
     }
 
     //We are overriding this to enforce buffering

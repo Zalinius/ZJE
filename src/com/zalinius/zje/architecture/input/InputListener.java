@@ -76,9 +76,11 @@ public class InputListener extends KeyAdapter implements MouseListener, MouseMot
 				}
 			}
 			else {
-				Inputtable input = binaryInputs.get(keyboardInput);
-				input.released();
-				binaryInputStates.put(keyboardInput, false);
+				if(Boolean.TRUE.equals(binaryInputStates.get(keyboardInput))) {
+					Inputtable input = binaryInputs.get(keyboardInput);
+					input.released();
+					binaryInputStates.put(keyboardInput, false);
+				}
 			}
 		}
 	}
