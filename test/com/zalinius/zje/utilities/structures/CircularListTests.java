@@ -2,30 +2,53 @@ package com.zalinius.zje.utilities.structures;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 public class CircularListTests {
 
 	@Test
-	public void constructList_negativeOrZeroSize_throwsIndexOutOfBoundsException() {
-		assertThrows(IndexOutOfBoundsException.class, () -> new CircularList<>(0));
+	public void add_anObjectToTheList_addsTheObject() {
+		CircularList<Integer> circularList = new CircularList<>();
+		
+		circularList.add(0);
+		
+		assertEquals(1, circularList.size());
+		assertEquals(0, circularList.get(0));
+	}
+
+
+	@Test
+	public void addAll_anExistingListToTheList_addsAllTheObject() {
+		CircularList<Integer> circularList = new CircularList<>();
+		
+		circularList.addAll(List.of(0, 1, 2, 3, 4));
+		
+		assertEquals(5, circularList.size());
+		assertEquals(0, circularList.get(0));
+		assertEquals(1, circularList.get(1));
+		assertEquals(2, circularList.get(2));
+		assertEquals(3, circularList.get(3));
+		assertEquals(4, circularList.get(4));
 	}
 	
 	@Test
-	public void next_onSize5List_canBeCalled20TimesWithoutThrowing() {
-		CircularList<Integer> cl = new CircularList<>(5);
+	public void isEmpty_aListWithNoObjects_returnsTrue() {
+		CircularList<Integer> circularList = new CircularList<>();
+				
 		
-		for(int i = 0; i != 20; ++i) {
-			cl.next();
-		}
+		assertTrue(circularList.isEmpty());
 	}
 
 	@Test
-	public void previous_onSize5List_canBeCalled20TimesWithoutThrowing() {
-		CircularList<Integer> cl = new CircularList<>(5);
+	public void isEmpty_aListWithOneObject_returnsFalse() {
+		CircularList<Integer> circularList = new CircularList<>();
 		
-		for(int i = 0; i != 20; ++i) {
-			cl.previous();
-		}
+		circularList.add(0);
+		
+		assertFalse(circularList.isEmpty());
 	}
+
+
 }

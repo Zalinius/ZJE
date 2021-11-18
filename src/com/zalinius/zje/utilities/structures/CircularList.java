@@ -1,100 +1,145 @@
 package com.zalinius.zje.utilities.structures;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
-public class CircularList<E>{
-
-	private int maxSize;
-	private int position;
-	private List<E> content;
+public class CircularList<E> extends ArrayList<E>{
 	
-	public CircularList(int maxSize) {
-		this.maxSize = maxSize;
-		position = 0;
-		if(maxSize < 1) {
-			throw new IndexOutOfBoundsException();
+	private static final long serialVersionUID = -1486069477056861855L;
+
+	@Override
+	public Iterator<E> iterator() {
+		return new CircularIterator();
+	}
+
+	@Override
+	public ListIterator<E> listIterator() {
+		return new CircularIterator();
+	}
+
+	@Override
+	public ListIterator<E> listIterator(int index) {
+		return new CircularIterator(index);
+	}
+	
+	public class CircularIterator implements ListIterator<E>{
+		
+        private int cursor;
+        private Integer lastElementIndex;
+
+		public CircularIterator() {
+			this(0);
 		}
-		this.content = new ArrayList<>(maxSize);
-		for(int i = 0; i != maxSize; ++i) {
-			this.content.add(null);
+		
+		public CircularIterator(int index) {
+			if(index < 0 || index >= size()) {
+				throw new IllegalArgumentException();
+			}
+			cursor = index;
+			lastElementIndex = null;
 		}
-	}
-	
-	public E current() {
-		return content.get(position);
-	}
-	
-	public int position() {
-		return position;
-	}
 
-	/**
-	 * Replaces first null slot with object, unless there is none.
-	 * Does not change the position of the list
-	 */
-	public void add(E e) {
-		boolean set = false;
-		for(int i = 0; i < maxSize; ++i) {
-			if(content.get(i) == null) {
-				content.set(i, e);
-				set = true;
-				i = maxSize;
+		@Override
+		public boolean hasNext() {
+			return !isEmpty();
+		}
+
+		@Override
+		public E next() {
+			if(!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			else {
+				E element = get(cursor);
+				lastElementIndex = cursor;
+				incrementIndex();
+				return element;
+			}
+		}
+
+		@Override
+		public boolean hasPrevious() {
+			return !isEmpty();
+		}
+
+		@Override
+		public E previous() {
+			if(!hasPrevious()) {
+				throw new NoSuchElementException();
+			}
+			else {
+				decrementIndex();
+				E element = get(cursor);
+				lastElementIndex = cursor;
+				return element;
+			}
+		}
+
+		@Override
+		public int nextIndex() {
+			incrementIndex();
+			int result = cursor;
+			decrementIndex();
+			return result;
+		}
+
+		@Override
+		public int previousIndex() {
+			decrementIndex();
+			int result = cursor;
+			incrementIndex();
+			return result;
+		}
+
+		@Override
+		public void remove() {
+			if(lastElementIndex == null) {
+				throw new IllegalStateException();
+			}
+			else {
+	     		CircularList.this.remove(lastElementIndex);
+	     		lastElementIndex = null;
+			}
+		}
+
+		@Override
+		public void set(E e) {
+			if(lastElementIndex == null) {
+				throw new IllegalStateException();
+			}
+			else {
+	     		CircularList.this.set(lastElementIndex, e);
+			}			
+		}
+
+		@Override
+		public void add(E e) {
+			if(lastElementIndex == null) {
+				throw new IllegalStateException();
+			}
+			else {
+	     		CircularList.this.add(lastElementIndex, e);
+	     		lastElementIndex = null;
+			}
+			
+		}
+		
+		
+		private void incrementIndex() {
+			cursor++;
+			if(cursor >= size()) {
+				cursor = 0;
+			}
+		}
+		private void decrementIndex() {
+			cursor--;			
+			if(cursor < 0) {
+				cursor = size() - 1;
 			}
 		}
 		
-		if(!set) {
-			throw new RuntimeException();
-		}
-	}
-
-
-	public boolean hasNext() {
-		return true;
-	}
-
-
-	public boolean hasPrevious() {
-		return true;
-	}
-
-
-	public E next() {
-		position = nextIndex();
-		return current();
-	}
-
-
-	public int nextIndex() {
-		int nextPosition = position + 1;
-		nextPosition %= maxSize;
-		
-		return nextPosition;
-	}
-
-
-	public E previous() {
-		position = previousIndex();
-		return current();
-	}
-
-
-	public int previousIndex() {
-		int previousPosition = position - 1;
-		if(previousPosition < 0) {
-			previousPosition += maxSize;
-		}
-		return previousPosition;
-	}
-
-
-	public E remove() {
-		E removed = content.set(position, null);
-		return removed;
-	}
-
-	public boolean contains(E e) {
-		return content.contains(e);
 	}
 
 }

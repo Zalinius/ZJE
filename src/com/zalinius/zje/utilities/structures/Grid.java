@@ -12,10 +12,10 @@ import java.util.Map.Entry;
  * @param <E> The type to be stored, on which there is no restriction..
  */
 public class Grid<E> {
-	Map<Coordinate, E> grid;
+	private Map<Coordinate, E> gridData;
 
 	public Grid() {
-		grid = new HashMap<>();
+		gridData = new HashMap<>();
 	}
 	
 	/**
@@ -26,21 +26,28 @@ public class Grid<E> {
 	 * @return The element previously at (i,j), or null if the point was empty.
 	 */
 	public E put(int i, int j, E element) {
-		E oldValue = grid.put(new Coordinate(i, j), element);
-		return oldValue;
+		return gridData.put(new Coordinate(i, j), element);
 	}
 	
 	public int size() {
-		return grid.size();
+		return gridData.size();
 	}
 	
 	public E get(int i, int j) {
-		return grid.get(new Coordinate(i, j));
+		return gridData.get(new Coordinate(i, j));
 	}
 	
+	public E remove(int i, int j) {
+		return gridData.remove(new Coordinate(i, j));		
+	}
+	
+	public boolean pointIsOccupied(int i, int j) {
+		Coordinate coord = new Coordinate(i, j);
+		return gridData.containsKey(coord) && gridData.get(coord) != null;
+	}
 	
 	public void clear() {
-		grid.clear();
+		gridData.clear();
 	}
 	
 	public boolean isEmpty() {
@@ -48,14 +55,16 @@ public class Grid<E> {
 	}
 
 	public Iterator<E> elements() {
-		return grid.values().iterator();
+		return gridData.values().iterator();
 	}
 	
 	public Iterator<Coordinate> points() {
-		return grid.keySet().iterator();
+		return gridData.keySet().iterator();
 	}
 	
 	public Iterator<Entry<Coordinate,E>> tiles(){
-		return grid.entrySet().iterator();
+		return gridData.entrySet().iterator();
 	}
+	
+	
 }

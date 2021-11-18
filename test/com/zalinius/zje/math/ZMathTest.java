@@ -14,7 +14,19 @@ public class ZMathTest {
 		
 		double result = ZMath.clamp(value, left, right);
 				
-		assertEquals(value, result);	}
+		assertEquals(value, result);	
+	}
+
+	@Test
+	void doubleClamp_insideWithInvertedBounds_isUnchanged() {
+		double value = 5.2;
+		double left = 4.5;
+		double right = 6.2;
+		
+		double result = ZMath.clamp(value, right, left);
+				
+		assertEquals(value, result);
+	}	
 	
 	@Test
 	void doubleClamp_onBound_isUnchanged() {
@@ -24,10 +36,22 @@ public class ZMathTest {
 		
 		double result = ZMath.clamp(value, left, right);
 				
-		assertEquals(value, result);	}
-	
+		assertEquals(value, result);
+	}
+
 	@Test
-	void doubleClamp_outside_isClamped() {
+	void doubleClamp_onBoundWithInvertedBounds_isUnchanged() {
+		double value = 3.2;
+		double left = value;
+		double right = 6.2;
+		
+		double result = ZMath.clamp(value, right, left);
+				
+		assertEquals(value, result);
+	}
+
+	@Test
+	void doubleClamp_outsideOnLeft_isClampedToLeftBound() {
 		double value = 3.2;
 		double left = 4.5;
 		double right = 6.2;
@@ -35,6 +59,17 @@ public class ZMathTest {
 		double result = ZMath.clamp(value, left, right);
 				
 		assertEquals(left, result);
+	}
+	
+	@Test
+	void doubleClamp_outsideOnRight_isClampedToRightBound() {
+		double value = 7.4;
+		double left = 4.5;
+		double right = 6.2;
+		
+		double result = ZMath.clamp(value, left, right);
+				
+		assertEquals(right, result);
 	}
 	
 	@Test
