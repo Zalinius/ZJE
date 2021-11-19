@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-public class CircularListTests {
+public class CircularListTest {
 
 	@Test
 	public void add_anObjectToTheList_addsTheObject() {

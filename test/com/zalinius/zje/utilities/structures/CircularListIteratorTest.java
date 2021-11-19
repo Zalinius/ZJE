@@ -7,7 +7,7 @@ import java.util.ListIterator;
 
 import org.junit.jupiter.api.Test;
 
-public class CircularListIteratorTests {
+public class CircularListIteratorTest {
 
 
 	@Test

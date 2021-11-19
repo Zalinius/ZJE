@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-public class UnitVectorTests {
+public class UnitVectorTest {
 
 	@Test
 	public void unitVector_length_is1() {
