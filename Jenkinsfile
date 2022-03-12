@@ -13,6 +13,10 @@ void setBuildStatus(String message, String state) {
 //ZJE Jenkinsfile
 pipeline {
     agent any
+    tools {
+        jdk 'jdk17'
+    }
+
     stages {
    		// Note that the agent automatically checks out the source code from Github	
         stage('Compile') { 
