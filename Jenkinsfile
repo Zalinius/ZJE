@@ -22,27 +22,15 @@ pipeline {
             steps {
                 sh 'mvn --batch-mode clean test'
             }
-            post {
-                always {
-                    junit '**/target/*-reports/*.xml'
-                }
-            }
         }
         stage('Deploy') {
             when {
                 branch 'main'
             }
             steps {
-                sh "mvn -U clean test cobertura:cobertura -Dcobertura.report.format=xml"
                 sh "mvn sonar:sonar -Dsonar.host.url=${env.SONARQUBE_HOST}"
                 sh 'mvn --batch-mode -DskipTests clean install'  //Install publishes to the local jenkins Maven repo
 	        }
-            post {
-                always {
-                    junit '**/target/*-reports/TEST-*.xml'
-                    step([$class: 'CoberturaPublisher', coberturaReportFile: 'target/site/cobertura/coverage.xml'])
-                }
-            }
 	    }
     }
     
