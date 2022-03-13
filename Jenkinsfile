@@ -18,42 +18,44 @@ pipeline {
     }
     stages {
    		// Note that the agent automatically checks out the source code from Github	
-        stage('Compile') { 
+        stage('Build') {
             steps {
-            	sh 'mvn --batch-mode compile'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'mvn --batch-mode test'
+                sh 'mvn --batch-mode clean test'
             }
             post {
                 always {
-                    junit 'target/surefire-reports/*.xml'
+                    junit '**/target/*-reports/*.xml'
                 }
             }
         }
-        stage('Package Jar') {
-            steps {
-                sh 'mvn --batch-mode -DskipTests clean package'
-            }
-        }
         stage('Deploy') {
-        	when {
- 				branch 'main'
-        	}
-			steps {
+            when {
+                branch 'main'
+            }
+            steps {
+                sh "mvn -U clean test cobertura:cobertura -Dcobertura.report.format=xml"
+                sh "mvn sonar:sonar -Dsonar.host.url=${env.SONARQUBE_HOST}"
                 sh 'mvn --batch-mode -DskipTests clean install'  //Install publishes to the local jenkins Maven repo
 	        }
+            post {
+                always {
+                    junit '**/target/*-reports/TEST-*.xml'
+                    step([$class: 'CoberturaPublisher', coberturaReportFile: 'target/site/cobertura/coverage.xml'])
+                }
+            }
 	    }
     }
     
     post {
-    success {
-        setBuildStatus("Build succeeded", "SUCCESS");
+        always {
+            junit '**/target/*-reports/TEST-*.xml'
+        }
+    
+        success {
+            setBuildStatus("Build succeeded", "SUCCESS");
+        }
+        failure {
+            setBuildStatus("Build failed", "FAILURE");
+        }
     }
-    failure {
-        setBuildStatus("Build failed", "FAILURE");
-    }
-  }
 }
