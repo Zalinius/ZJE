@@ -14,8 +14,12 @@ void setBuildStatus(String message, String state) {
 pipeline {
     agent any
     tools {
-	maven 'maven3'
+        maven 'maven3'
     }
+    environment{
+        SONAR_CREDS=credentials('sonar')
+    }
+    
     stages {
    		// Note that the agent automatically checks out the source code from Github	
         stage('Build') {
@@ -28,13 +32,14 @@ pipeline {
                 branch 'main'
             }
             steps {
-                sh "mvn sonar:sonar -Dsonar.host.url=${env.SONARQUBE_HOST}"
+                sh 'mvn sonar:sonar -Dsonar.host.url=$SONARQUBE_HOST -Dsonar.login=$SONAR_CREDS' //Send test coverage to Sonarqube, and let it know there is a new version of main to cover
                 sh 'mvn --batch-mode -DskipTests clean install'  //Install publishes to the local jenkins Maven repo
 	        }
 	    }
     }
     
     post {
+
         always {
             junit '**/target/*-reports/TEST-*.xml'
         }
