@@ -28,7 +28,7 @@ pipeline {
                 branch 'main'
             }
             steps {
-                sh "mvn sonar:sonar -Dsonar.host.url=${env.SONARQUBE_HOST}"
+                sh 'mvn sonar:sonar -Dsonar.host.url=$SONARQUBE_HOST -Dsonar.login=$SONAR_CREDS'
                 sh 'mvn --batch-mode -DskipTests clean install'  //Install publishes to the local jenkins Maven repo
 	        }
 	    }
