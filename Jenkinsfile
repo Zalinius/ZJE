@@ -8,9 +8,9 @@ pipeline {
     }    
     stages {
    	// Note that the agent automatically checks out the source code from Github
-        stage('Build') { buildAndTest() }
-        stage('Deploy') { deployLibrary() }
-        stage('Sonar') { sonarScan(sonarcubeHost: $SONARQUBE_HOST, sonarcubeCredentials: credentials('sonar')) }
+        stage('Build') { steps{ buildAndTest() }}
+        stage('Deploy') { steps{ deployLibrary() }}
+        stage('Sonar') { steps{ sonarScan(sonarcubeHost: $SONARQUBE_HOST, sonarcubeCredentials: credentials('sonar')) }}
     }
     post {
 	reportResults()
