@@ -13,6 +13,8 @@ pipeline {
         stage('Sonar') { steps{ sonarScan(sonarcubeHost: $SONARQUBE_HOST, sonarcubeCredentials: credentials('sonar')) }}
     }
     post {
-	reportResults()
+        always  { testReport() }    
+        success { githubSuccess() }    
+        failure { githubFailure() }    
     }
 }
