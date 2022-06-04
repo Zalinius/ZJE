@@ -25,7 +25,7 @@ pipeline {
    		// Note that the agent automatically checks out the source code from Github	
         stage('Build') {
             steps {
-                sh 'mvn --batch-mode clean test'
+                buildAndTest()
             }
         }
         stage('Deploy') {
