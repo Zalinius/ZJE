@@ -1,3 +1,4 @@
+@Library('zalinius-shared-library') _
 
 void setBuildStatus(String message, String state) {
   step([
