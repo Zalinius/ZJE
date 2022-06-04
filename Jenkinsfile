@@ -33,10 +33,10 @@ pipeline {
                 branch 'main'
             }
             steps {
-                sh 'mvn sonar:sonar -Dsonar.host.url=$SONARQUBE_HOST -Dsonar.login=$SONAR_CREDS' //Send test coverage to Sonarqube, and let it know there is a new version of main to cover
-		    deployLibrary()
-	        }
+                sonarScan(sonarcubeHost: $SONARQUBE_HOST, sonarcubeCredentials: credentials('sonar'))
+                deployLibrary()
 	    }
+	}
     }
     
     post {
