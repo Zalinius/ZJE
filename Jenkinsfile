@@ -11,8 +11,9 @@ pipeline {
         stage('Build') { steps { buildAndTest()}}
         stage('Deploy') {
             when { branch 'main'}
+            environment { SONAR_CREDS = credentials('sonar')}
             steps {
-                sonarScan(sonarcubeHost: $SONARQUBE_HOST, sonarcubeCredentials: credentials('sonar'))
+                sonarScan()
                 deployLibrary()
     }}}
     post {
