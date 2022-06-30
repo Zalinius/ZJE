@@ -2,9 +2,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
 	<groupId>com.zalinius</groupId>
 	<artifactId>zje</artifactId>
-	<version>0.4.1</version>
+	<version>0.4.2</version>
 	<name>ZJE</name>
 
 	<properties>
@@ -47,7 +48,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
 	<dependencies>
@@ -68,6 +68,12 @@
 			<groupId>uk.co.electronstudio.sdl2gdx</groupId>
 			<artifactId>sdl2gdx</artifactId>
 			<version>1.0.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.zalinius</groupId>
+			<artifactId>darzal-common</artifactId>
+			<version>0.1.7</version>
 		</dependency>
 	</dependencies>
 
