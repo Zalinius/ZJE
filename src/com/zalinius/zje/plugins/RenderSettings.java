@@ -9,7 +9,7 @@ public abstract class RenderSettings implements AbstractPlugin {
 	public abstract void applySettings(DoubleBufferedFrame frame);
 
 	@Override
-	public final void registerPlugin(DoubleBufferedFrame frame, GameLoop gameLoop, GameStage gameStage) {
-		frame.accept(this);
+	public final void registerPlugin(GameLoop gameLoop, GameStage gameStage) {
+		gameStage.accept(this);
 	}
 }

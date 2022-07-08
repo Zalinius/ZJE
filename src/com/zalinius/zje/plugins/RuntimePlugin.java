@@ -2,7 +2,6 @@ package com.zalinius.zje.plugins;
 
 import java.awt.Graphics2D;
 
-import com.zalinius.zje.architecture.DoubleBufferedFrame;
 import com.zalinius.zje.architecture.GameLoop;
 import com.zalinius.zje.architecture.GameStage;
 
@@ -35,9 +34,16 @@ public abstract class RuntimePlugin implements AbstractPlugin{
 	
 	
 	@Override
-	public void registerPlugin(DoubleBufferedFrame frame, GameLoop gameLoop, GameStage gameStage) {
+	public final void registerPlugin(GameLoop gameLoop, GameStage gameStage) {
 		gameLoop.accept(this);
 		gameStage.accept(this);
+		renderInitialize(gameStage);
 	}
+
+	/**
+	 * Called at application start before any rendering
+	 * @param gameStage 
+	 */
+	public void renderInitialize(GameStage gameStage) {}
 
 }
