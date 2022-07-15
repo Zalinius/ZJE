@@ -22,7 +22,7 @@ public abstract class GameContainer implements Graphical, Logical {
 	}
 
 	private void registerPlugins(List<AbstractPlugin> plugins) {
-		plugins.forEach( plugin -> plugin.registerPlugin(stage, loop, stage));
+		plugins.forEach( plugin -> plugin.registerPlugin(loop, stage));
 	}
 
 	public void addControls(Collection<Inputtable> keyControls, Collection<Clickable> mouseControls, Collection<Axisable> axisControls) {

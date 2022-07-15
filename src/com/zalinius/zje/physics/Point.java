@@ -60,6 +60,11 @@ public class Point{
 		return subtract(v.x, v.y);
 	}
 	
+	public static Point subtract(Point p1, Point p2) {
+		return p1.subtract(p2.x, p2.y);
+	}
+
+	
 	public static double distance(Point p1, Point p2) {
 		double y = p1.y - p2.y;
 		double x = p1.x - p2.x;

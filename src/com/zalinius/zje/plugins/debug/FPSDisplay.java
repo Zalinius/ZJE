@@ -1,10 +1,12 @@
-package com.zalinius.zje.plugins;
+package com.zalinius.zje.plugins.debug;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+
+import com.zalinius.zje.plugins.RuntimePlugin;
 
 public class FPSDisplay extends RuntimePlugin {
 	private double averageFrameTime;

@@ -5,7 +5,7 @@
 	
 	<groupId>com.zalinius</groupId>
 	<artifactId>zje</artifactId>
-	<version>0.4.2</version>
+	<version>0.4.3</version>
 	<name>ZJE</name>
 
 	<properties>
@@ -54,7 +54,7 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>
-			<version>5.8.0-M1</version>
+			<version>5.9.0-M1</version>
 			<type>pom.sha512</type>
 			<scope>test</scope>
 		</dependency>
@@ -73,7 +73,7 @@
 		<dependency>
 			<groupId>com.zalinius</groupId>
 			<artifactId>darzal-common</artifactId>
-			<version>0.1.7</version>
+			<version>0.1.9</version>
 		</dependency>
 	</dependencies>
 

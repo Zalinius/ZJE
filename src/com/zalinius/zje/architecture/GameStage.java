@@ -3,6 +3,7 @@ package com.zalinius.zje.architecture;
 import java.awt.Graphics2D;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -22,12 +23,16 @@ public class GameStage extends DoubleBufferedFrame{
 	private InputListener input;
 
 	private List<RuntimePlugin> plugins;
+	
+	private double scale;
 
 	public GameStage(Graphical graphics, String windowText, int width, int height) {
 		super(windowText);
 		this.graphics = graphics;
-		setResizable(false);
+		setResizable(true);
 		setSize(width, height);
+		setPreferredSize(getSize());
+		scale = 1;
 		addWindowListener(defaultCloseAction());
 		this.input = new InputListener();
 		addKeyListener(input);
@@ -37,7 +42,8 @@ public class GameStage extends DoubleBufferedFrame{
 	}
 
 	public void paintBuffer(Graphics2D g){
-		plugins.forEach( plugin -> plugin.renderBefore(g));		
+		g.setTransform(new AffineTransform());
+		plugins.forEach( plugin -> plugin.renderBefore(g));	
 		graphics.render(g);
 		plugins.forEach( plugin -> plugin.renderAfter(g));		
 	}
@@ -100,5 +106,12 @@ public class GameStage extends DoubleBufferedFrame{
 	
 	public Logical getInputPolling() {
 		return input;
+	}
+	
+	public void setScale(double scale) {
+		this.scale = scale;
+	}
+	public double getScale() {
+		return scale;
 	}
 }
