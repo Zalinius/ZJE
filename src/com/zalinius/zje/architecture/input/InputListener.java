@@ -15,6 +15,7 @@ import com.zalinius.zje.architecture.Logical;
 import com.zalinius.zje.architecture.input.actions.Axisable;
 import com.zalinius.zje.architecture.input.actions.Clickable;
 import com.zalinius.zje.architecture.input.actions.Inputtable;
+import com.zalinius.zje.architecture.input.types.AxialInput;
 import com.zalinius.zje.architecture.input.types.BinaryInput;
 import com.zalinius.zje.architecture.input.types.MouseInput;
 import com.zalinius.zje.physics.Locatable;
@@ -28,23 +29,41 @@ public class InputListener extends KeyAdapter implements MouseListener, MouseMot
 	private Map<BinaryInput, Boolean> binaryInputStates; //pressed or not
 
 	private Map<MouseInput, Collection<Clickable>> mouseInputs;
+	
+	private Map<AxialInput, Collection<Axisable>> mouseAxesInputs;
 
 	private int mouseX;
 	private int mouseY;
+	
+	private Locatable screenSize;
 
 	private GamepadManager gamepads;
 
-	public InputListener(){
+	public InputListener(Locatable screenSize){
+		this.screenSize = screenSize;
 		this.binaryInputs = new EnumMap<>(BinaryInput.class);
 		this.binaryInputStates = new EnumMap<>(BinaryInput.class);
 		this.mouseInputs = new EnumMap<>(MouseInput.class);
-		mouseX = mouseY = 0;
+		this.mouseAxesInputs = new EnumMap<>(AxialInput.class);
+		this.mouseAxesInputs.put(AxialInput.MOUSE_X, new ArrayList<>());
+		this.mouseAxesInputs.put(AxialInput.MOUSE_Y, new ArrayList<>());
 
+		mouseX = mouseY = 0;
+		 
 		gamepads = new GamepadManager(); 
 	}
 
 	public void addInput(Axisable axis) {
-		gamepads.addAxisInput(axis);
+		if(axis.axialInput().mouseBased()) {
+			if(!this.mouseAxesInputs.containsKey(axis.axialInput() )) {
+				this.mouseAxesInputs.put(axis.axialInput(), new ArrayList<>());
+			}	
+
+			mouseAxesInputs.get(axis.axialInput()).add(axis);
+		}
+		else {
+			gamepads.addAxisInput(axis);			
+		}
 	}
 
 	public void addInput(Inputtable binaryInput) {
@@ -146,6 +165,10 @@ public class InputListener extends KeyAdapter implements MouseListener, MouseMot
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		Point mouse = new Point(e.getPoint());
+		
+		mouseAxesInputs.get(AxialInput.MOUSE_X).forEach(mouseXInput -> mouseXInput.axisMoved((float)(mouse.x / screenSize.x())));
+		mouseAxesInputs.get(AxialInput.MOUSE_Y).forEach(mouseYInput -> mouseYInput.axisMoved((float)(mouse.y / screenSize.y())));
+		
 		mouseX = (int) mouse.x;
 		mouseY = (int) mouse.y;
 	}

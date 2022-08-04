@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import com.zalinius.zje.architecture.input.actions.Inputtable;
 import com.zalinius.zje.architecture.input.types.BinaryInput;
+import com.zalinius.zje.physics.Point;
 
 public class InputListenerTest {
 	
@@ -17,7 +18,7 @@ public class InputListenerTest {
 	
 	@BeforeEach
 	void setup() {
-		inputListener = new InputListener();
+		inputListener = new InputListener(() -> new Point());
 	}
 	
 	@Test

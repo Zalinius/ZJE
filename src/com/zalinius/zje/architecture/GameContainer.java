@@ -8,7 +8,6 @@ import com.zalinius.zje.architecture.input.RumbleListener;
 import com.zalinius.zje.architecture.input.actions.Axisable;
 import com.zalinius.zje.architecture.input.actions.Clickable;
 import com.zalinius.zje.architecture.input.actions.Inputtable;
-import com.zalinius.zje.physics.Locatable;
 import com.zalinius.zje.plugins.AbstractPlugin;
 
 public abstract class GameContainer implements Graphical, Logical {
@@ -57,11 +56,6 @@ public abstract class GameContainer implements Graphical, Logical {
 
 	public void moveWindow(int x, int y) {
 		stage.moveWindow(x, y);
-	}
-
-
-	public Locatable mouseLocator() {
-		return stage.mouseLocator();
 	}
 
 	public List<AbstractPlugin> getPlugins(){return new ArrayList<>();}

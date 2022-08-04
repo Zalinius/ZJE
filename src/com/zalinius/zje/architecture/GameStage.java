@@ -1,5 +1,6 @@
 package com.zalinius.zje.architecture;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -15,6 +16,7 @@ import com.zalinius.zje.architecture.input.actions.Axisable;
 import com.zalinius.zje.architecture.input.actions.Clickable;
 import com.zalinius.zje.architecture.input.actions.Inputtable;
 import com.zalinius.zje.physics.Locatable;
+import com.zalinius.zje.physics.Point;
 import com.zalinius.zje.plugins.RuntimePlugin;
 
 public class GameStage extends DoubleBufferedFrame{
@@ -34,7 +36,7 @@ public class GameStage extends DoubleBufferedFrame{
 		setPreferredSize(getSize());
 		scale = 1;
 		addWindowListener(defaultCloseAction());
-		this.input = new InputListener();
+		this.input = new InputListener(screenSize());
 		addKeyListener(input);
 		addMouseListener(input);
 		addMouseMotionListener(input);
@@ -80,20 +82,23 @@ public class GameStage extends DoubleBufferedFrame{
 
 	public void addInput(Inputtable keyInput) {
 		if(input == null) {
-			input = new InputListener();
+			input = new InputListener(screenSize());
 		}
 		input.addInput(keyInput);
 	}
 	public void addInput(Clickable mouseInput) {
 		if(input == null) {
-			input = new InputListener();
+			input = new InputListener(screenSize());
 		}
 		input.addInput(mouseInput);
 	}
 
 
-	public Locatable mouseLocator() {
-		return input;
+	public Locatable screenSize() {
+		return () -> {
+			Dimension d = getSize();
+			return new Point(d.getWidth(), d.getHeight());			
+		};
 	}
 	
 	public void accept(RuntimePlugin runtimePlugin) {

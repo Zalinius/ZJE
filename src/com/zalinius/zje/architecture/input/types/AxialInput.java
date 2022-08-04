@@ -13,6 +13,8 @@ public enum AxialInput {
 	RIGHT_STICK_VERTICAL(SDL.SDL_CONTROLLER_AXIS_RIGHTY),
 	LEFT_TRIGGER(SDL.SDL_CONTROLLER_AXIS_TRIGGERLEFT),
 	RIGHT_TRIGGER(SDL.SDL_CONTROLLER_AXIS_TRIGGERRIGHT),
+	MOUSE_X(4000),
+	MOUSE_Y(4001)
 	;
 
 	private int code;
@@ -37,6 +39,10 @@ public enum AxialInput {
 		}
 
 		return axiscodeToEnumMap.get(axisCode);
+	}
+	
+	public boolean mouseBased() {
+		return code >= 4000;
 	}
 
 }
