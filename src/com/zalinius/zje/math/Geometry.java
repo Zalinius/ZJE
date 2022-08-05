@@ -1,7 +1,9 @@
 package com.zalinius.zje.math;
 
 import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -40,4 +42,22 @@ public class Geometry {
 		
 		return points;
 	}
+	
+	public static Rectangle2D.Double centeredSquare(Point center, double width){
+		return centeredRectangle(center, width, width);
+	}
+	
+	public static Rectangle2D.Double centeredRectangle(Point center, double width, double height){
+		return new Rectangle2D.Double(center.x - width/2, center.y - height/2, width, height);
+	}
+
+	public static Ellipse2D.Double centeredCircle(Point center, double radius){
+		return centeredEllipse(center, 2*radius, 2*radius);
+	}
+
+	public static Ellipse2D.Double centeredEllipse(Point center, double width, double height){
+		return new Ellipse2D.Double(center.x - width/2, center.y - height/2, width, height);
+	}
+	
+
 }
