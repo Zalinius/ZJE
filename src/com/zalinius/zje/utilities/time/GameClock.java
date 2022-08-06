@@ -1,14 +1,14 @@
 package com.zalinius.zje.utilities.time;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class GameClock{
 	private static final String OWNER_IS_NULL = "owner is null";
 
 	private GameClock() {}
 
-	private static Map<Object, Timer> timers = new HashMap<>();
+	private static Map<Object, Timer> timers = new ConcurrentHashMap<>();
 	private static double time = 0;
 	
 	public static void addTimer(Object owner, double timerTime) {
