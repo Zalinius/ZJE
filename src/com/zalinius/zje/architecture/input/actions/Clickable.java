@@ -38,4 +38,16 @@ public interface Clickable {
 	 * Called when the main mouse button is released.
 	 */
 	public void mouseReleased();
+	
+	/**
+	 * Called when the mouse enters the shape.
+	 */	
+	public void mouseEntered();
+	
+
+	/**
+	 * Called when the mouse leaves the shape.
+	 */	
+	public void mouseLeft();
+	
 }

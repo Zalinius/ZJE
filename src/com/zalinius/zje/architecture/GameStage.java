@@ -65,6 +65,11 @@ public class GameStage extends DoubleBufferedFrame{
 			input.addInput(axisable);
 		}
 	}
+	
+	public void resetClickables(Collection<Clickable> newClickables) {
+		input.resetClickables(newClickables);
+	}
+
 
 	public void moveWindow(int x, int y) {
 		setBounds(x, y, getWidth(), getHeight());
