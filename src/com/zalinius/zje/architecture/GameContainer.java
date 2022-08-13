@@ -36,6 +36,13 @@ public abstract class GameContainer implements Graphical, Logical {
 		}
 		stage.addKeys(keyControls, mouseControls, axisControls);
 	}
+	
+	public void resetClickables(Collection<Clickable> newClickables) {
+		if(newClickables == null) {
+			newClickables = new ArrayList<>();
+		}
+		stage.resetClickables(newClickables);
+	}
 
 	public RumbleListener getRumbleListener() {
 		return stage.rumbleListener();

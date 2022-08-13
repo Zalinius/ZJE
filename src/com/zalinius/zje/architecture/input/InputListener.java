@@ -9,6 +9,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import com.zalinius.zje.architecture.Logical;
@@ -29,6 +31,7 @@ public class InputListener extends KeyAdapter implements MouseListener, MouseMot
 	private Map<BinaryInput, Boolean> binaryInputStates; //pressed or not
 
 	private Map<MouseInput, Collection<Clickable>> mouseInputs;
+	private Map<Clickable, Boolean> mouseAreasStatus;
 	
 	private Map<AxialInput, Collection<Axisable>> mouseAxesInputs;
 
@@ -43,7 +46,9 @@ public class InputListener extends KeyAdapter implements MouseListener, MouseMot
 		this.screenSize = screenSize;
 		this.binaryInputs = new EnumMap<>(BinaryInput.class);
 		this.binaryInputStates = new EnumMap<>(BinaryInput.class);
+		
 		this.mouseInputs = new EnumMap<>(MouseInput.class);
+		this.mouseAreasStatus = new HashMap<>();
 		this.mouseAxesInputs = new EnumMap<>(AxialInput.class);
 		this.mouseAxesInputs.put(AxialInput.MOUSE_X, new ArrayList<>());
 		this.mouseAxesInputs.put(AxialInput.MOUSE_Y, new ArrayList<>());
@@ -82,6 +87,15 @@ public class InputListener extends KeyAdapter implements MouseListener, MouseMot
 			this.mouseInputs.put(click.mouseButton(), new ArrayList<>());
 		}	
 		mouseInputs.get(click.mouseButton()).add(click);
+		
+		mouseAreasStatus.put(click, click.clickArea().contains(mouseX, mouseY));
+	}
+	
+	public void resetClickables(Collection<Clickable> newClickables) {
+		mouseInputs.clear();
+		mouseAreasStatus.clear();
+		
+		newClickables.forEach(Clickable -> addInput(Clickable));
 	}
 
 	private void keyPressSwitchBoard(int keycode, boolean press){
@@ -171,6 +185,25 @@ public class InputListener extends KeyAdapter implements MouseListener, MouseMot
 		
 		mouseX = (int) mouse.x;
 		mouseY = (int) mouse.y;
+		
+		for (Iterator<Clickable> it = mouseAreasStatus.keySet().iterator(); it.hasNext();) {
+			Clickable clickable = it.next();
+			
+			if(Boolean.TRUE.equals(mouseAreasStatus.get(clickable))) {
+				//Area was already entered
+				if(!clickable.clickArea().contains(mouseX, mouseY)) {
+					mouseAreasStatus.put(clickable, false);
+					clickable.mouseLeft();
+				}
+			}
+			else {				//Area was not yet entered
+
+				if(clickable.clickArea().contains(mouseX, mouseY)) {
+					mouseAreasStatus.put(clickable, true);
+					clickable.mouseEntered();
+				}
+			}
+		}
 	}
 
 	@Override
