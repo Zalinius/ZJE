@@ -1,6 +1,5 @@
 package com.zalinius.zje.math;
 
-import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
@@ -13,7 +12,7 @@ import com.zalinius.zje.physics.Point;
 public class Geometry {
 	private Geometry() {}
 	
-	public static Shape makePolygonShape(List<Point> points) {
+	public static Path2D.Double makePolygonShape(List<Point> points) {
 		Path2D.Double path = new Path2D.Double();
 		
 		Iterator<Point> it = points.iterator();
