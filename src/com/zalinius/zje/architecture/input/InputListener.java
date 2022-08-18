@@ -95,7 +95,7 @@ public class InputListener extends KeyAdapter implements MouseListener, MouseMot
 		mouseInputs.clear();
 		mouseAreasStatus.clear();
 		
-		newClickables.forEach(Clickable -> addInput(Clickable));
+		newClickables.forEach(this::addInput);
 	}
 
 	private void keyPressSwitchBoard(int keycode, boolean press){
