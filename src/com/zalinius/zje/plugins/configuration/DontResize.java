@@ -15,18 +15,22 @@ public class DontResize extends ScreenStrategy{
 
 	@Override
 	public void componentHidden(ComponentEvent arg0) {
+		//not needed
 	}
 
 	@Override
 	public void componentMoved(ComponentEvent arg0) {
+		//not needed
 	}
 
 	@Override
 	public void componentResized(ComponentEvent arg0) {
+		//not possible
 	}
 
 	@Override
 	public void componentShown(ComponentEvent arg0) {
+		//not needed
 	}
 
 	@Override
