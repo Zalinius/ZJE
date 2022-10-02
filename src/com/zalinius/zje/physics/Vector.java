@@ -85,8 +85,6 @@ public class Vector {
 	
 	/**
 	 * Adds the v2 to v1
-	 * @param v1
-	 * @param v2
 	 * @return A new vector, which starts at this vectors source
 	 */
 	public Vector add(Vector other) {
