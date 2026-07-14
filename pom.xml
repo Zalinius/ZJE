@@ -3,42 +3,63 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
-	<groupId>com.zalinius</groupId>
+	<groupId>com.darzalgames</groupId>
 	<artifactId>zje</artifactId>
-	<version>0.5.1</version>
+	<version>0.6.0</version>
 	<name>ZJE</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.release>21</maven.compiler.release>
 	</properties>
 
 	<build>
-		<sourceDirectory>src</sourceDirectory>
-		<testSourceDirectory>test</testSourceDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
-				<configuration>
-					<release>11</release>
-				</configuration>
+				<version>3.14.0</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.3.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.11.2</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.0.0-M5</version>
+				<version>3.5.3</version>
 			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.7</version>
+				<version>0.8.13</version>
 				<executions>
 					<execution>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
 					</execution>
-					<!-- attached to Maven test phase -->
 					<execution>
 						<id>report</id>
 						<phase>test</phase>
@@ -47,74 +68,22 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>3.2.1</version>
-				<executions>
-				    <execution>
-				        <id>attach-sources</id>
-				        <goals>
-					        <goal>jar</goal>
-				        </goals>
-			        </execution>
-	            </executions>
-	        </plugin>
-			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.4.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            
+			</plugin>            
 		</plugins>
 	</build>
 	<dependencies>
 		<dependency>
+			<groupId>com.darzalgames</groupId>
+			<artifactId>darzal-common</artifactId>
+			<version>0.7.29</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>
-			<version>5.9.0-M1</version>
-			<type>pom.sha512</type>
+			<version>5.12.2</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>net.beadsproject</groupId>
-			<artifactId>beads</artifactId>
-			<version>3.2</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/uk.co.electronstudio.sdl2gdx/sdl2gdx -->
-		<dependency>
-			<groupId>uk.co.electronstudio.sdl2gdx</groupId>
-			<artifactId>sdl2gdx</artifactId>
-			<version>1.0.4</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.zalinius</groupId>
-			<artifactId>darzal-common</artifactId>
-			<version>0.1.10</version>
-		</dependency>
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<id>clojars_repo</id>
-			<url>https://clojars.org/repo/</url>
-		</repository>
-		<repository>
-			<id>jcenter</id>
-			<name>jcenter</name>
-			<url>https://jcenter.bintray.com</url>
-		</repository>
-	</repositories>
 
 </project>
