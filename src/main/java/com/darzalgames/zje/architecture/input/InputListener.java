@@ -25,6 +25,7 @@ public class InputListener extends KeyAdapter implements MouseListener, MouseMot
 
 	private int mouseX;
 	private int mouseY;
+	private double scale;
 
 	private final Locatable screenSize;
 
@@ -40,6 +41,7 @@ public class InputListener extends KeyAdapter implements MouseListener, MouseMot
 		mouseAxesInputs.put(AxialInput.MOUSE_Y, new ArrayList<>());
 
 		mouseX = mouseY = 0;
+		scale = 1.0;
 	}
 
 	public void addInput(Axisable axis) {
@@ -102,8 +104,12 @@ public class InputListener extends KeyAdapter implements MouseListener, MouseMot
 	public void mouseClicked(MouseEvent event) {
 		MouseInput input = MouseInput.getMouseInput(event.getButton());
 		if (mouseInputs.containsKey(input)) {
+			Point mouse = new Point(event.getPoint());
+			mouseX = (int) (mouse.x / scale);
+			mouseY = (int) (mouse.y / scale);
+
 			for (Clickable clickable : mouseInputs.get(input)) {
-				if (clickable.clickArea().contains(event.getPoint())) {
+				if (clickable.clickArea().contains(mouseX, mouseY)) {
 					clickable.mouseClicked();
 				}
 			}
@@ -121,8 +127,11 @@ public class InputListener extends KeyAdapter implements MouseListener, MouseMot
 		MouseInput input = MouseInput.getMouseInput(event.getButton());
 
 		if (mouseInputs.containsKey(input)) {
+			Point mouse = new Point(event.getPoint());
+			mouseX = (int) (mouse.x / scale);
+			mouseY = (int) (mouse.y / scale);
 			for (Clickable clickable : mouseInputs.get(input)) {
-				if (clickable.clickArea().contains(event.getPoint())) {
+				if (clickable.clickArea().contains(mouseX, mouseY)) {
 					clickable.mousePressed();
 				}
 			}
@@ -148,16 +157,14 @@ public class InputListener extends KeyAdapter implements MouseListener, MouseMot
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		Point mouse = new Point(e.getPoint());
+		mouseX = (int) (mouse.x / scale);
+		mouseY = (int) (mouse.y / scale);
 
 		mouseAxesInputs.get(AxialInput.MOUSE_X).forEach(mouseXInput -> mouseXInput.axisMoved((float) (mouse.x / screenSize.x())));
 		mouseAxesInputs.get(AxialInput.MOUSE_Y).forEach(mouseYInput -> mouseYInput.axisMoved((float) (mouse.y / screenSize.y())));
 
-		mouseX = (int) mouse.x;
-		mouseY = (int) mouse.y;
-
 		for (Iterator<Clickable> it = mouseAreasStatus.keySet().iterator(); it.hasNext();) {
 			Clickable clickable = it.next();
-
 			if (Boolean.TRUE.equals(mouseAreasStatus.get(clickable))) {
 				// Area was already entered
 				if (!clickable.clickArea().contains(mouseX, mouseY)) {
@@ -173,10 +180,14 @@ public class InputListener extends KeyAdapter implements MouseListener, MouseMot
 
 	@Override
 	public Point position() {
-		return new Point(mouseX, mouseY);
+		return new Point(mouseX / scale, mouseY / scale);
 	}
 
 	@Override
 	public void update(double delta) {}
+
+	public void setScale(double scale) {
+		this.scale = scale;
+	}
 
 }

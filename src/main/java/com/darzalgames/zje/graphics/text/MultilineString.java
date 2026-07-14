@@ -13,14 +13,20 @@ import com.darzalgames.zje.physics.Point;
  * A multi-line String, which can be rendered in Java AWT.
  * The lines are delimited by newline characters (\n)
  */
-public class MultilineString implements Graphical{
+public class MultilineString implements Graphical {
 
-	private Point center;
+	private final Point position;
 	private List<String> textString;
+	private final boolean centered;
 
-	public MultilineString(Point center, String textString) {
-		this.center = center;
+	public MultilineString(Point position, String textString) {
+		this(position, textString, true);
+	}
+
+	public MultilineString(Point position, String textString, boolean centered) {
+		this.position = position;
 		setTextString(textString);
+		this.centered = centered;
 	}
 
 	@Override
@@ -41,16 +47,23 @@ public class MultilineString implements Graphical{
 		for (Iterator<String> it = textString.iterator(); it.hasNext();) {
 			String string = it.next();
 
-			double xText = center.x - metrics.stringWidth(string) / 2.0  ;				
-			double yText = center.y - totalHeight/2 + currentHeight + metrics.getAscent();
+			double xText;
+			double yText;
 
+			if (centered) {
+				xText = position.x - metrics.stringWidth(string) / 2.0;
+				yText = position.y - totalHeight / 2 + currentHeight + metrics.getAscent();
+			} else {
+				xText = position.x;
+				yText = position.y + currentHeight + metrics.getAscent();
+			}
 			currentHeight += metrics.getHeight();
 
-			g.drawString(string,(float) xText,(float) yText);
+			g.drawString(string, (float) xText, (float) yText);
 		}
 	}
 
 	public void setTextString(String newTextString) {
-		this.textString = Arrays.asList(newTextString.split("\n"));
+		textString = Arrays.asList(newTextString.split("\n"));
 	}
 }

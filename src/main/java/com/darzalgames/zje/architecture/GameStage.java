@@ -22,6 +22,9 @@ public class GameStage extends DoubleBufferedFrame {
 
 	private final List<RuntimePlugin> plugins;
 
+	private final int originalWidth;
+	private final int originalHeight;
+
 	private double scale;
 
 	public GameStage(Graphical graphics, String windowText, int width, int height) {
@@ -29,6 +32,9 @@ public class GameStage extends DoubleBufferedFrame {
 		this.graphics = graphics;
 		setResizable(true);
 		setSize(width, height);
+		originalWidth = width;
+		originalHeight = height;
+		setLocationRelativeTo(null);
 		setPreferredSize(getSize());
 		scale = 1;
 		addWindowListener(defaultCloseAction());
@@ -41,7 +47,10 @@ public class GameStage extends DoubleBufferedFrame {
 
 	@Override
 	public void paintBuffer(Graphics2D g) {
-		g.setTransform(new AffineTransform());
+		updateScale();
+		AffineTransform scaling = new AffineTransform();
+		scaling.setToScale(scale, scale);
+		g.setTransform(scaling);
 		plugins.forEach(plugin -> plugin.renderBefore(g));
 		graphics.render(g);
 		plugins.forEach(plugin -> plugin.renderAfter(g));
@@ -110,11 +119,18 @@ public class GameStage extends DoubleBufferedFrame {
 		return input;
 	}
 
-	public void setScale(double scale) {
-		this.scale = scale;
+	private void updateScale() {
+		double originalRatio = originalWidth / (double) originalHeight;
+		Dimension size = getSize();
+		double currentRatio = size.getWidth() / size.getHeight();
+		if (originalRatio > currentRatio) {
+			scale = size.getWidth() / originalWidth;
+		} else {
+			scale = size.getHeight() / originalHeight;
+		}
+
+		input.setScale(scale);
+
 	}
 
-	public double getScale() {
-		return scale;
-	}
 }
