@@ -5,7 +5,7 @@
 	
 	<groupId>com.darzalgames</groupId>
 	<artifactId>zje</artifactId>
-	<version>0.6.0</version>
+	<version>0.6.1</version>
 	<name>ZJE</name>
 
 	<properties>

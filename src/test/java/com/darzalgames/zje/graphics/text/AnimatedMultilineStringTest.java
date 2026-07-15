@@ -9,7 +9,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.Test;
 
 import com.darzalgames.darzalcommon.functional.Do;
-import com.darzalgames.zje.graphics.text.AnimatedMultilineString;
 import com.darzalgames.zje.physics.Point;
 
 public class AnimatedMultilineStringTest {
