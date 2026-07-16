@@ -108,7 +108,9 @@ public class InputListener extends KeyAdapter implements MouseListener, MouseMot
 			mouseX = (int) (mouse.x / scale);
 			mouseY = (int) (mouse.y / scale);
 
-			for (Clickable clickable : mouseInputs.get(input)) {
+			Collection<Clickable> copy = new ArrayList<>(mouseInputs.get(input));
+
+			for (Clickable clickable : copy) {
 				if (clickable.clickArea().contains(mouseX, mouseY)) {
 					clickable.mouseClicked();
 				}
